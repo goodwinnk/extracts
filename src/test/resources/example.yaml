@@ -1,5 +1,31 @@
 ---
 extracts:
-  - YouTrack
-  - Minor
-  - Refactoring
+  - name: YouTrack
+    title-pattern: "^.*KT-(\\d+).*$"
+    icon: path
+    hint: "${0}"
+    url: "https://youtrack.jetbrains.com/issue/${0}"
+
+  - name: Minor
+    title-pattern: "^(Minor|Refactoring):.*"
+    icon: path1
+
+  - name: IDE
+    files: [
+      idea/**
+    ]
+
+  - name: ChangeLog
+    icon: path3
+    files: [
+      ChangeLog.md
+    ]
+
+  - name: IdeaProject
+    icon: path4
+    files: [
+      .idea/**,
+      .gitignore,
+      .gitattributes
+    ]
+...

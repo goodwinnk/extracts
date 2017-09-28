@@ -1,20 +1,35 @@
 package extract.demo
 
-import org.yaml.snakeyaml.Yaml
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import java.io.File
-import java.io.FileInputStream
 
 
 fun main(args: Array<String>) {
-    val yaml = Yaml()
+    val mapper = ObjectMapper(YAMLFactory())
+    val extracts = mapper.readValue(File("src/test/resources/example.yaml"), Extracts::class.java)
 
-    val extracts = yaml.loadAs(FileInputStream(File("src/test/resources/example.yaml")), Extracts::class.java)
-
-    extracts.forEach { println(it) }
+    println(extracts)
 }
 
-data class Extract(val name: String)
-class Extracts : Iterable<Extract> {
+private class Extract {
+    var name: String? = null
+
+    @JsonProperty("title-pattern")
+    var titlePattern: String? = null
+    var files: List<String> = listOf()
+
+    var icon: String? = null
+    var hint: String? = null
+    var url: String? = null
+
+    override fun toString(): String {
+        return "$name, $titlePattern, $files, $icon, $hint, $url"
+    }
+}
+
+private class Extracts : Iterable<Extract> {
     var extracts: List<Extract>? = null
 
     override fun iterator() = extracts!!.iterator()
