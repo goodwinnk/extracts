@@ -11,3 +11,24 @@ data class Extract(
 )
 
 data class Extracts(val extracts: List<Extract>)
+
+const val EMPTY_HASH = "EMPTY_HASH"
+
+data class CommitInfo(
+    val hash: String,
+    val parentHashes: List<String>,
+
+    val author: User,
+    val committer: User,
+
+    val time: Int,
+    val title: String,
+    val message: String,
+
+    val fileActions: Iterable<FileAction>
+)
+
+enum class Action { DELETE, MODIFY, ADD }
+
+data class FileAction(val action: Action, val path: String)
+data class User(val name: String, val email: String)
