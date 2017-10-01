@@ -6,14 +6,14 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import java.io.File
 
 
-fun main(args: Array<String>) {
+fun parseFile(path: String): Extracts {
     val mapper = ObjectMapper(YAMLFactory())
-    val extracts = mapper.readValue(File("src/test/resources/example.yaml"), Extracts::class.java)
+    val extractsInternal = mapper.readValue(File(path), ExtractsInternal::class.java)
 
-    println(extracts)
+    return extractsInternal.toExtracts()
 }
 
-private class Extract {
+private class ExtractInternal {
     var name: String? = null
 
     @JsonProperty("title-pattern")
@@ -27,11 +27,26 @@ private class Extract {
     override fun toString(): String {
         return "$name, $titlePattern, $files, $icon, $hint, $url"
     }
+
+    fun toExtract(): Extract {
+        if (name == null) {
+            throw IllegalStateException("Extract doesn't have name: $this")
+        }
+
+        return Extract(name!!, titlePattern, files, icon, hint, url)
+    }
 }
 
-private class Extracts : Iterable<Extract> {
-    var extracts: List<Extract>? = null
+private class ExtractsInternal : Iterable<ExtractInternal> {
+    var extracts: List<ExtractInternal>? = null
 
     override fun iterator() = extracts!!.iterator()
     override fun toString() = extracts.toString()
+
+    fun toExtracts(): Extracts {
+        if (extracts == null) {
+            throw IllegalStateException("Extracts wasn't parsed properly: $this")
+        }
+        return Extracts(extracts!!.map { it.toExtract() })
+    }
 }
