@@ -28,7 +28,13 @@ data class CommitInfo(
     val fileActions: Iterable<FileAction>
 )
 
-enum class Action { DELETE, MODIFY, ADD }
+enum class Action {
+    ADD,
+    MODIFY,
+    DELETE,
+    RENAME,
+    COPY;
+}
 
 data class FileAction(val action: Action, val path: String)
 data class User(val name: String, val email: String)
