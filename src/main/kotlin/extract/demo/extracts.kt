@@ -25,7 +25,7 @@ data class CommitInfo(
     val title: String,
     val message: String,
 
-    val fileActions: Iterable<FileAction>
+    val fileActions: List<FileAction>
 )
 
 enum class Action {

@@ -7,16 +7,17 @@ import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.PersonIdent
 import org.eclipse.jgit.revwalk.RevCommit
 import org.eclipse.jgit.treewalk.CanonicalTreeParser
+import org.eclipse.jgit.treewalk.EmptyTreeIterator
 import java.io.File
 
 
-fun main(args: Array<String>) {
-    val repository = FileRepository(File("C:/Projects/kotlin/.git"))
+fun readCommits(repositoryPath: String, revisionString: String, numberOfCommits: Int): List<CommitInfo> {
+    val repository = FileRepository(File(repositoryPath))
     Git(repository).use { git ->
-        val masterBranch = repository.resolve("refs/heads/master")
+        val branch = repository.resolve(revisionString)
 
-        for (commit in git.log().add(masterBranch).setMaxCount(50).call()) {
-            val commitInfo = with(commit) {
+        return git.log().add(branch).setMaxCount(numberOfCommits).call().map { commit ->
+            with(commit) {
                 CommitInfo(
                         hash = ObjectId.toString(id),
                         parentHashes = parents.map { ObjectId.toString(it) },
@@ -28,8 +29,6 @@ fun main(args: Array<String>) {
                         fileActions = collectActions(git, commit)
                 )
             }
-
-            println(commitInfo)
         }
     }
 }
@@ -39,17 +38,23 @@ fun PersonIdent.toUser() = User(name, emailAddress)
 fun collectActions(git: Git, commit: RevCommit): List<FileAction> {
     val reader = git.repository.newObjectReader()
 
-    val oldTreeIter = CanonicalTreeParser().apply {
-        reset(reader, commit.getParent(0).tree)
-    }
+    val oldTreeIterator =
+            if (commit.parentCount != 0) {
+                CanonicalTreeParser().apply {
+                    reset(reader, commit.getParent(0).tree)
+                }
 
-    val newTreeIter = CanonicalTreeParser().apply {
+            } else {
+                EmptyTreeIterator()
+            }
+
+    val newTreeIterator = CanonicalTreeParser().apply {
         reset(reader, commit.tree)
     }
 
     val diffCommand = git.diff().apply {
-        setOldTree(oldTreeIter)
-        setNewTree(newTreeIter)
+        setOldTree(oldTreeIterator)
+        setNewTree(newTreeIterator)
     }
 
     return diffCommand.call().map { entry ->
