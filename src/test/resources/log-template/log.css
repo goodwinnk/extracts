@@ -1,0 +1,123 @@
+/*! CSS Used from: http://localhost:63342/extract/extract_main/log/actual.css */
+body {
+    margin: 0;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background: wheat;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    color: #24292e;
+    background-color: #fff;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+ol {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.avatar-parent-child {
+    position: relative;
+}
+
+.table-list {
+    display: table;
+    width: 100%;
+    color: #6a737d;
+    table-layout: fixed;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.table-list-bordered {
+    border-bottom-color: #eaecef;
+}
+
+.table-list-bordered .table-list-cell:first-child {
+    border-left: 1px solid #eaecef;
+}
+
+.table-list-bordered .table-list-cell:last-child {
+    border-right: 1px solid #eaecef;
+}
+
+.table-list-item {
+    position: relative;
+    display: table-row;
+    list-style: none;
+}
+
+.table-list-cell {
+    position: relative;
+    display: table-cell;
+    padding: 8px 10px;
+    font-size: 12px;
+    vertical-align: top;
+    border-top: 1px solid #eaecef;
+}
+
+.commit .commit-title {
+    color: #444d56;
+}
+
+.commit-author-section {
+    color: #24292e;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.commit-group {
+    margin-top: 10px;
+    list-style-type: none;
+}
+
+.commits-list-item .commit-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #24292e;
+}
+
+.commits-list-item .commit-meta {
+    margin-top: 1px;
+    font-weight: normal;
+    color: #586069;
+}
+
+.commits-list-item .commit-author {
+    font-weight: 600;
+    color: #24292e;
+    white-space: nowrap;
+}
+
+.commit-avatar-cell {
+    width: 47px;
+}
+
+.commit-avatar-cell.table-list-cell {
+    padding-right: 0;
+}
+
+.commit-links-cell {
+    width: 335px;
+    text-align: right;
+}
+
+body {
+    min-width: 1020px;
+    word-wrap: break-word;
+}
