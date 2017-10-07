@@ -18,19 +18,23 @@ fun main(args: Array<String>) {
     val mainTextTemplate = mainFile.readText()
     val commitTemplateText = templateFile.readText()
 
-    val commitText = commitTemplateText
-            .replace("<!--title-->", "Commit title")
-            .replace("<!--author-->", "author")
-            .replace("<!--date-->", "2017, Jun 1")
+    val commitsTextBuilder = StringBuilder()
+    val commits = readCommits(".git", "refs/heads/master", 50)
+    for (commit in commits) {
+        val commitText = commitTemplateText
+                .replace("<!--title-->", commit.title)
+                .replace("<!--author-->", commit.author.name)
+                .replace("<!--date-->", epochSecondsToString(commit.time))
 
-    val commitsText = commitText.repeat(5, "\n\n")
+        commitsTextBuilder.append(commitText)
+    }
+
+    val commitsText = commitsTextBuilder.toString()
     val mainText = mainTextTemplate.replace("<!--commits-->", commitsText)
 
     val logOutFile = File(demoDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(mainText)
-
-//    val commits = readCommits(".git", "refs/heads/master", 50)
 }
 
 fun CharSequence.repeat(n: Int, separator: String): String {
