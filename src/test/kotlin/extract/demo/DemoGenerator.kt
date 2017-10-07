@@ -3,6 +3,13 @@ package extract.demo
 import java.io.File
 
 fun main(args: Array<String>) {
+    val gitFile = File("src/test/resources/demo-git.txt")
+    val git = if (gitFile.exists()) {
+        gitFile.readText().trim()
+    } else {
+        ".git"
+    }
+
     val demoDir = File("src/test/resources/demo")
     demoDir.deleteRecursively()
     demoDir.mkdir()
@@ -19,7 +26,7 @@ fun main(args: Array<String>) {
     val commitTemplateText = templateFile.readText()
 
     val commitsTextBuilder = StringBuilder()
-    val commits = readCommits(".git", "refs/heads/master", 50)
+    val commits = readCommits(git, "refs/heads/master", 50)
     for (commit in commits) {
         val commitText = commitTemplateText
                 .replace("<!--title-->", commit.title)
