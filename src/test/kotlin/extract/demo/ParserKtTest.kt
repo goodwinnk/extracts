@@ -1,7 +1,6 @@
 package extract.demo
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class ParserKtTest {
@@ -11,11 +10,12 @@ class ParserKtTest {
         assertEquals(5, extracts.size)
 
         assertEquals(
-                Extract("YouTrack", "^.*KT-(\\d+).*$", listOf(), "path", "\${0}", "https://youtrack.jetbrains.com/issue/\${0}"),
+                Extract("YouTrack", "^.*KT-(\\d+).*$", listOf(),
+                        "path", "\${0}", "\${0}", "https://youtrack.jetbrains.com/issue/\${0}"),
                 extracts[0])
 
         assertEquals(
-                Extract("IDE", null, listOf("idea/**"), null, null, null),
+                Extract("IDE", null, listOf("idea/**"), null, null,null, null),
                 extracts[2]
         )
     }

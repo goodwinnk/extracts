@@ -20,12 +20,13 @@ private class ExtractInternal {
     var titlePattern: String? = null
     var files: List<String> = listOf()
 
+    var text: String? = null
     var icon: String? = null
     var hint: String? = null
     var url: String? = null
 
     override fun toString(): String {
-        return "$name, $titlePattern, $files, $icon, $hint, $url"
+        return "$name, $titlePattern, $files, $icon, $text, $hint, $url"
     }
 
     fun toExtract(): Extract {
@@ -33,7 +34,7 @@ private class ExtractInternal {
             throw IllegalStateException("Extract doesn't have name: $this")
         }
 
-        return Extract(name!!, titlePattern, files, icon, hint, url)
+        return Extract(name!!, titlePattern, files, icon, text, hint ?: text, url)
     }
 }
 

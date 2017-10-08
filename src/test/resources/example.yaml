@@ -3,7 +3,7 @@ extracts:
   - name: YouTrack
     title-pattern: "^.*KT-(\\d+).*$"
     icon: path
-    hint: "${0}"
+    text: "${0}"
     url: "https://youtrack.jetbrains.com/issue/${0}"
 
   - name: Minor
