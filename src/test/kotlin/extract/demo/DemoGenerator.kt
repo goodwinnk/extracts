@@ -2,6 +2,19 @@ package extract.demo
 
 import java.io.File
 
+val COLORS = listOf(
+        "PowderBlue",
+        "FireBrick",
+        "DarkGoldenRod",
+        "DarkKhaki",
+        "Silver",
+        "MediumVioletRed",
+        "IndianRed ",
+        "Peru",
+        "Chocolate",
+        "Tan"
+)
+
 fun main(args: Array<String>) {
     val gitFile = File("src/test/resources/demo-git.txt")
     val git = if (gitFile.exists()) {
@@ -27,11 +40,15 @@ fun main(args: Array<String>) {
 
     val commitsTextBuilder = StringBuilder()
     val commits = readCommits(git, "refs/heads/master", 50)
+    val colors = HashMap<String, String>()
     for (commit in commits) {
+        val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
+
         val commitText = commitTemplateText
                 .replace("<!--title-->", commit.title)
                 .replace("<!--author-->", commit.author.name)
                 .replace("<!--date-->", epochSecondsToString(commit.time))
+                .replace("<!--author-style-->", "background: $color;")
 
         commitsTextBuilder.append(commitText)
     }
