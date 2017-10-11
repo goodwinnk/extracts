@@ -1,5 +1,6 @@
 package extract.demo
 
+import java.nio.file.FileSystem
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -30,6 +31,18 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
         }
     }
 
+    if (extract.files.isNotEmpty()) {
+        if (commitInfo.fileActions.any { fileAction -> pathMatch(fileAction.path, extract.files) }) {
+            return ExtractLabel(
+                    extract.name,
+                    text = extract.text,
+                    icon = extract.icon,
+                    hint = extract.hint,
+                    url = extract.url
+            )
+        }
+    }
+
     return null
 }
 
@@ -44,5 +57,15 @@ fun String.rewrite(matcher: Matcher): String {
     }
 
     return result
+}
+
+fun pathMatch(path: String, patterns: List<String>): Boolean {
+    return patterns.any { pattern ->
+        when {
+            pattern.startsWith("**") -> path.endsWith(pattern.removePrefix("**"))
+            pattern.endsWith("**") -> path.startsWith(pattern.removeSuffix("**"))
+            else -> path == pattern
+        }
+    }
 }
 

@@ -20,6 +20,12 @@ internal class EngineKtTest {
         )
 
     }
+
+    @Test
+    fun fileMatchTest() {
+        Assertions.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
+        Assertions.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
+    }
 }
 
 val DUMMY_USER = User("dummyUserName", "dummyUserEmail")
