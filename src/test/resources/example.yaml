@@ -1,10 +1,10 @@
 ---
 extracts:
   - name: YouTrack
-    title-pattern: "^.*KT-(\\d+).*$"
+    title-pattern: "^.*(KT-\\d+).*$"
     icon: path
-    text: "${0}"
-    url: "https://youtrack.jetbrains.com/issue/${0}"
+    text: "${1}"
+    url: "https://youtrack.jetbrains.com/issue/${1}"
 
   - name: Minor
     title-pattern: "^(Minor|Refactoring):.*"

@@ -31,17 +31,31 @@ fun main(args: Array<String>) {
     val cssFile = File(templateDir, "log.css")
     val mainFile = File(templateDir, "log.html")
     val templateFile = File(templateDir, "commit.html")
+    val tagTemplateFile = File(templateDir, "tag.html")
 
     val cssOutFile = File(demoDir, "log.css")
     cssFile.copyTo(cssOutFile)
 
     val mainTextTemplate = mainFile.readText()
     val commitTemplateText = templateFile.readText()
+    val tagTemplateText = tagTemplateFile.readText()
 
     val commitsTextBuilder = StringBuilder()
     val commits = readCommits(git, "refs/heads/master", 50)
     val colors = HashMap<String, String>()
+
+    val extracts = parseFile("src/test/resources/example.yaml")
+    val labelsMapping = assignLabels(commits, extracts)
+
     for (commit in commits) {
+        val labels = labelsMapping[commit.hash]
+        val tagsHtml = labels?.map { label ->
+            tagTemplateText
+                    .replace("<!--tag-class-->", "t0")
+                    .replace("<!--hint-->", label.hint ?: label.text ?: label.name)
+                    .replace("<!--text-->", label.text ?: label.name)
+        }?.joinToString(separator = "\n")
+
         val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
 
         val commitText = commitTemplateText
@@ -49,6 +63,7 @@ fun main(args: Array<String>) {
                 .replace("<!--author-->", commit.author.name)
                 .replace("<!--date-->", epochSecondsToString(commit.time))
                 .replace("<!--author-style-->", "background: $color;")
+                .replace("<!--tags-->", tagsHtml ?: "<!-- no tags -->")
 
         commitsTextBuilder.append(commitText)
     }
@@ -59,30 +74,4 @@ fun main(args: Array<String>) {
     val logOutFile = File(demoDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(mainText)
-}
-
-fun CharSequence.repeat(n: Int, separator: String): String {
-    require(n >= 0) { "Count 'n' must be non-negative, but was $n." }
-    if (separator.isEmpty()) {
-        return repeat(n)
-    }
-
-    return when (n) {
-        0 -> ""
-        1 -> this.toString()
-        else -> {
-            when (length) {
-                0 -> "" // empty string if base is empty
-                else -> {
-                    val sb = StringBuilder(n * length + (n - 1) * separator.length)
-                    sb.append(this)
-                    for (i in 2..n) {
-                        sb.append(separator)
-                        sb.append(this)
-                    }
-                    sb.toString()
-                }
-            }
-        }
-    }
 }

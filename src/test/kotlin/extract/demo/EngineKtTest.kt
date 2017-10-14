@@ -9,13 +9,14 @@ internal class EngineKtTest {
         val label = assignLabel(
                 testCommit(title = "Open created actual class in editor #KT-20135 Fixed"),
                 Extract("YouTrack", "^.*(KT-\\d+).*$", listOf(),
-                        "path", "\${1}", "\${1}", "https://youtrack.jetbrains.com/issue/\${1}")
+                        "path", "\${1}", "\${0}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
         Assertions.assertEquals(
                 ExtractLabel(
                         "YouTrack", "KT-20135",
-                        hint = "KT-20135", icon = "path", url = "https://youtrack.jetbrains.com/issue/KT-20135"),
+                        hint = "Open created actual class in editor #KT-20135 Fixed",
+                        icon = "path", url = "https://youtrack.jetbrains.com/issue/KT-20135"),
                 label
         )
 
