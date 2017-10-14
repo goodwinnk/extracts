@@ -9,7 +9,7 @@ val COLORS = listOf(
         "DarkKhaki",
         "Silver",
         "MediumVioletRed",
-        "IndianRed ",
+        "IndianRed",
         "Peru",
         "Chocolate",
         "Tan"
@@ -59,6 +59,8 @@ fun main(args: Array<String>) {
         val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
 
         val commitText = commitTemplateText
+                .replace("<!--popup-id-->", "popup-${commit.hash}")
+                .replace("<!--popup-content-->", "Demo popup")
                 .replace("<!--title-->", commit.title)
                 .replace("<!--author-->", commit.author.name)
                 .replace("<!--date-->", epochSecondsToString(commit.time))
