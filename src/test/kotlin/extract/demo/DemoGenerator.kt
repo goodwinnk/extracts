@@ -79,7 +79,7 @@ fun main(args: Array<String>) {
 }
 
 private fun CommitInfo.toHtml(): String {
-    val messageHtml = message.replace("\n", "<br/>")
+    val messageHtml = message.escapeHTML().replace("\n", "<br/>")
     val actionsHtml = fileActions.map { it.toHtml() }.joinToString(separator = "<br/>")
     return "$messageHtml<br/>$actionsHtml"
 }
@@ -94,4 +94,14 @@ private fun FileAction.toHtml(): String {
     }
 
     return "$actionHtml: $path"
+}
+
+fun String.escapeHTML(): String {
+    return map { ch ->
+        if (ch.toInt() > 127 || ch == '"' || ch == '<' || ch == '>' || ch == '&') {
+            "&#${ch.toInt()};"
+        } else {
+            ch.toString()
+        }
+    }.joinToString(separator = "")
 }
