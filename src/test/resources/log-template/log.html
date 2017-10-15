@@ -14,9 +14,18 @@
 </div>
 
 <script>
+    var activePopupId = null;
     function togglePopup(popupId) {
+        if (activePopupId != null) {
+            var popupIdTemp = activePopupId;
+            activePopupId = null;
+            togglePopup(popupIdTemp);
+        }
+
         var popup = document.getElementById(popupId);
-        popup.classList.toggle("show");
+        if (popup.classList.toggle("show")) {
+            activePopupId = popupId;
+        }
     }
 </script>
 
