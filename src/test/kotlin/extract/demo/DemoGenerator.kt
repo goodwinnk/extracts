@@ -60,7 +60,7 @@ fun main(args: Array<String>) {
 
         val commitText = commitTemplateText
                 .replace("<!--popup-id-->", "popup-${commit.hash}")
-                .replace("<!--popup-content-->", "Demo popup")
+                .replace("<!--popup-content-->", commit.toHtml())
                 .replace("<!--title-->", commit.title)
                 .replace("<!--author-->", commit.author.name)
                 .replace("<!--date-->", epochSecondsToString(commit.time))
@@ -76,4 +76,22 @@ fun main(args: Array<String>) {
     val logOutFile = File(demoDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(mainText)
+}
+
+private fun CommitInfo.toHtml(): String {
+    val messageHtml = message.replace("\n", "<br/>")
+    val actionsHtml = fileActions.map { it.toHtml() }.joinToString(separator = "<br/>")
+    return "$messageHtml<br/>$actionsHtml"
+}
+
+private fun FileAction.toHtml(): String {
+    val actionHtml = when (action) {
+        Action.ADD -> "A"
+        Action.MODIFY -> "M"
+        Action.DELETE -> "D"
+        Action.RENAME -> "R"
+        Action.COPY -> "C"
+    }
+
+    return "$actionHtml: $path"
 }

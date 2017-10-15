@@ -162,12 +162,13 @@ body {
 /* The actual popup */
 .popup .popuptext {
     visibility: hidden;
-    width: 160px;
     background-color: #555;
+    font-size: 10px;
     color: #fff;
-    text-align: center;
+    text-align: left;
+    white-space: nowrap;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px;
     position: absolute;
     z-index: 1;
     bottom: 125%;
