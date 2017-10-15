@@ -1,0 +1,74 @@
+---
+extracts:
+  - name: YouTrack
+    title-pattern: "^.*(KT-\\d+).*$"
+    icon: path
+    text: "${1}"
+    url: "https://youtrack.jetbrains.com/issue/${1}"
+
+  - name: Minor
+    title-pattern: "^(Minor|Refactoring):.*"
+    icon: path1
+
+  - name: UAST
+    files: [
+      plugins/uast-kotlin/**
+    ]
+
+  - name: Lint
+    files: [
+      plugins/lint/**
+    ]
+
+  - name: IDE
+    files: [
+      idea/**
+    ]
+
+  - name: Compiler
+    files: [
+      compiler/**
+    ]
+
+  - name: Libraries
+    files: [
+      libraries/**
+    ]
+
+  - name: StdLib
+    files: [
+      libraries/stdlib/**
+    ]
+
+  - name: JS
+    files: [
+      js/**
+    ]
+
+  - name: ChangeLog
+    icon: path3
+    files: [
+      ChangeLog.md
+    ]
+
+  - name: Gradle
+    files: [
+      libraries/tools/kotlin-gradle-plugin**
+    ]
+
+  - name: Build
+    files: [
+      "**/build.gradle.kts",
+      build.gradle.kts,
+      "**/build.gradle",
+      build.gradle
+    ]
+
+  - name: IdeaProject
+    icon: path4
+    files: [
+      .idea/**,
+      .gitignore,
+      .gitattributes
+    ]
+...

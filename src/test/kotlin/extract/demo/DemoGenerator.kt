@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
     val commits = readCommits(git, "refs/heads/master", 50)
     val colors = HashMap<String, String>()
 
-    val extracts = parseFile("src/test/resources/example.yaml")
+    val extracts = parseFile("src/test/resources/kotlin.yaml")
     val labelsMapping = assignLabels(commits, extracts)
 
     for (commit in commits) {
