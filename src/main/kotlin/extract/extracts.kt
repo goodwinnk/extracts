@@ -1,4 +1,4 @@
-package extract.demo
+package extract
 
 data class Extract(
         val name: String,
@@ -25,17 +25,17 @@ data class Extracts(val extracts: List<Extract>)
 const val EMPTY_HASH = "EMPTY_HASH"
 
 data class CommitInfo(
-    val hash: String,
-    val parentHashes: List<String>,
+        val hash: String,
+        val parentHashes: List<String>,
 
-    val author: User,
-    val committer: User,
+        val author: User,
+        val committer: User,
 
-    val time: Int,
-    val title: String,
-    val message: String,
+        val time: Int,
+        val title: String,
+        val message: String,
 
-    val fileActions: List<FileAction>
+        val fileActions: List<FileAction>
 )
 
 enum class Action {

@@ -1,4 +1,4 @@
-package extract.demo
+package extract
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern

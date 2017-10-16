@@ -1,4 +1,4 @@
-package extract.demo
+package extract
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

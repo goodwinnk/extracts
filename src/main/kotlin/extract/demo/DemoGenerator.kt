@@ -1,5 +1,6 @@
 package extract.demo
 
+import extract.*
 import java.io.File
 
 val COLORS = listOf(
@@ -16,18 +17,18 @@ val COLORS = listOf(
 )
 
 fun main(args: Array<String>) {
-    val gitFile = File("src/test/resources/demo-git.txt")
+    val gitFile = File("src/main/resources/demo-git.txt")
     val git = if (gitFile.exists()) {
         gitFile.readText().trim()
     } else {
         ".git"
     }
 
-    val demoDir = File("src/test/resources/demo")
+    val demoDir = File("out/demo")
     demoDir.deleteRecursively()
     demoDir.mkdir()
 
-    val templateDir = File("src/test/resources/log-template")
+    val templateDir = File("src/main/resources/log-template")
     val cssFile = File(templateDir, "log.css")
     val mainFile = File(templateDir, "log.html")
     val templateFile = File(templateDir, "commit.html")
@@ -44,7 +45,7 @@ fun main(args: Array<String>) {
     val commits = readCommits(git, "refs/heads/master", 50)
     val colors = HashMap<String, String>()
 
-    val extracts = parseFile("src/test/resources/kotlin.yaml")
+    val extracts = parseFile("src/main/resources/kotlin.yaml")
     val labelsMapping = assignLabels(commits, extracts)
 
     for (commit in commits) {

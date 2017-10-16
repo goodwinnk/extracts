@@ -11,6 +11,3 @@
 out/
 .gradle/
 build/
-
-/src/test/resources/demo/
-/src/test/resources/demo-git.txt

@@ -1,13 +1,15 @@
-package extract.demo
+package extract
 
+import extract.Extract
+import extract.parseFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class ParserKtTest {
     @Test
     fun example() {
-        val extracts = parseFile("src/test/resources/kotlin.yaml").extracts
-        assertEquals(13, extracts.size)
+        val extracts = parseFile("src/test/resources/test.yaml").extracts
+        assertEquals(2, extracts.size)
 
         assertEquals(
                 Extract("YouTrack", "^.*(KT-\\d+).*$", listOf(),
@@ -15,8 +17,8 @@ class ParserKtTest {
                 extracts[0])
 
         assertEquals(
-                Extract("IDE", null, listOf("idea/**"), null, null,null, null),
-                extracts[4]
+                Extract("IDE", null, listOf("idea/**"), null, null, null, null),
+                extracts[1]
         )
     }
 }
