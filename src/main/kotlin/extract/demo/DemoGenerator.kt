@@ -52,7 +52,7 @@ fun main(args: Array<String>) {
         val labels = labelsMapping[commit.hash]
         val tagsHtml = labels?.map { label ->
             tagTemplateText
-                    .replace("<!--tag-class-->", "t0")
+                    .replace("<!--tag-class-->", label.style ?: "e0")
                     .replace("<!--hint-->", label.hint ?: label.text ?: label.name)
                     .replace("<!--text-->", label.text ?: label.name)
         }?.joinToString(separator = "\n")

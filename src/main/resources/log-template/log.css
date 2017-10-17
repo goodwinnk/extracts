@@ -135,18 +135,38 @@ body {
     border-radius: 3px;
 }
 
-.t0 {
+.e0 {
 
 }
 
-.t1 {
+.e1 {
     color: #3d85c6!important;
     background-color: #e0f1fb!important;
 }
 
-.t2 {
+.e2 {
     color: #444 !important;
     background-color: #fed74a !important;
+}
+
+.e3 {
+    color: #fff!important;
+    background-color: #7dbd36!important;
+}
+
+.e4 {
+    color: #fff!important;
+    background-color: #ce6700!important;
+}
+
+.e5 {
+    color: #4da400!important;
+    background-color: #e6f6cf!important;
+}
+
+.e6 {
+    color: #fff!important;
+    background-color: #878787!important;
 }
 
 /*=========== popup ========== */

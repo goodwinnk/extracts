@@ -16,7 +16,9 @@ internal class EngineKtTest {
                 ExtractLabel(
                         "YouTrack", "KT-20135",
                         hint = "Open created actual class in editor #KT-20135 Fixed",
-                        icon = "path", url = "https://youtrack.jetbrains.com/issue/KT-20135"),
+                        icon = "path",
+                        url = "https://youtrack.jetbrains.com/issue/KT-20135",
+                        style = null),
                 label
         )
 

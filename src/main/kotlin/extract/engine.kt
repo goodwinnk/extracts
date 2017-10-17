@@ -25,7 +25,8 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
                     text = extract.text?.rewrite(matcher),
                     icon = extract.icon,
                     hint = extract.hint?.rewrite(matcher),
-                    url = extract.url?.rewrite(matcher)
+                    url = extract.url?.rewrite(matcher),
+                    style = extract.style
             )
         }
     }
@@ -37,7 +38,8 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
                     text = extract.text,
                     icon = extract.icon,
                     hint = extract.hint,
-                    url = extract.url
+                    url = extract.url,
+                    style = extract.style
             )
         }
     }

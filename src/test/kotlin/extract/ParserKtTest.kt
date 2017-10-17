@@ -9,16 +9,21 @@ class ParserKtTest {
     @Test
     fun example() {
         val extracts = parseFile("src/test/resources/test.yaml").extracts
-        assertEquals(2, extracts.size)
+        assertEquals(3, extracts.size)
 
         assertEquals(
                 Extract("YouTrack", "^.*(KT-\\d+).*$", listOf(),
-                        "path", "\${1}", "\${1}", "https://youtrack.jetbrains.com/issue/\${1}"),
+                        icon = "path", text = "\${1}", hint = "\${1}", url = "https://youtrack.jetbrains.com/issue/\${1}"),
                 extracts[0])
 
         assertEquals(
-                Extract("IDE", null, listOf("idea/**"), null, null, null, null),
+                Extract("IDE", null, listOf("idea/**")),
                 extracts[1]
+        )
+
+        assertEquals(
+                Extract("Minor", null, listOf(), style = "e1"),
+                extracts[2]
         )
     }
 }

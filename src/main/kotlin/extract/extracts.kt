@@ -6,10 +6,11 @@ data class Extract(
         val titlePattern: String? = null,
         val files: List<String> = listOf(),
 
-        val icon: String?,
-        val text: String?,
-        val hint: String?,
-        val url: String?
+        val icon: String? = null,
+        val text: String? = null,
+        val hint: String? = null,
+        val url: String? = null,
+        val style: String? = null
 )
 
 data class ExtractLabel(
@@ -17,7 +18,8 @@ data class ExtractLabel(
         val text: String?,
         val icon: String?,
         val hint: String?,
-        val url: String?
+        val url: String?,
+        val style: String?
 )
 
 data class Extracts(val extracts: List<Extract>)

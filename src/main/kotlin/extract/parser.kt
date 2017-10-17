@@ -24,9 +24,10 @@ private class ExtractInternal {
     var icon: String? = null
     var hint: String? = null
     var url: String? = null
+    var style: String? = null
 
     override fun toString(): String {
-        return "$name, $titlePattern, $files, $icon, $text, $hint, $url"
+        return "$name, $titlePattern, $files, $icon, $text, $hint, $url, $style"
     }
 
     fun toExtract(): Extract {
@@ -34,7 +35,12 @@ private class ExtractInternal {
             throw IllegalStateException("Extract doesn't have name: $this")
         }
 
-        return Extract(name!!, titlePattern, files, icon, text, hint ?: text, url)
+        return Extract(name!!, titlePattern, files,
+                icon = icon,
+                text = text,
+                hint = hint ?: text,
+                url = url,
+                style = style)
     }
 }
 

@@ -5,6 +5,7 @@ extracts:
     icon: path
     text: "${1}"
     url: "https://youtrack.jetbrains.com/issue/${1}"
+    style: e6
 
   - name: Minor
     title-pattern: "^(Minor|Refactoring):.*"
@@ -24,21 +25,25 @@ extracts:
     files: [
       idea/**
     ]
+    style: e4
 
   - name: Compiler
     files: [
       compiler/**
     ]
+    style: e3
 
   - name: Libraries
     files: [
       libraries/**
     ]
+    style: e5
 
   - name: StdLib
     files: [
       libraries/stdlib/**
     ]
+    style: e5
 
   - name: JS
     files: [
