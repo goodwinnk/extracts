@@ -51,10 +51,18 @@ fun main(args: Array<String>) {
     for (commit in commits) {
         val labels = labelsMapping[commit.hash]
         val tagsHtml = labels?.map { label ->
+            val tagClass = label.style ?: "e0"
+            val text = label.text ?: label.name
+            val labelContent = if (label.url != null) {
+                """<a class="$tagClass" href="${label.url}">$text</a>"""
+            } else {
+                text
+            }
+
             tagTemplateText
-                    .replace("<!--tag-class-->", label.style ?: "e0")
+                    .replace("<!--tag-class-->", tagClass)
                     .replace("<!--hint-->", label.hint ?: label.text ?: label.name)
-                    .replace("<!--text-->", label.text ?: label.name)
+                    .replace("<!--text-->", labelContent)
         }?.joinToString(separator = "\n")
 
         val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
