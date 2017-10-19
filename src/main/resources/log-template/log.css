@@ -135,8 +135,17 @@ body {
     border-radius: 3px;
 }
 
-.e0 {
+.badge {
+    font-size: 10px;
+    padding: 0 0 0 3px;
+    margin-left: 3px;
+    border-left-width: 1px;
+    border-left-style: dotted;
+}
 
+.e0 {
+    color: gray!important;
+    background-color: white!important;
 }
 
 .e1 {
