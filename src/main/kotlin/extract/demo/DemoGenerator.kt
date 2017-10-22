@@ -16,6 +16,8 @@ private val colors = listOf(
         "Tan"
 )
 
+private const val OUT_PATH = "out/demo"
+
 data class DemoRepository(val name: String, val gitPath: String, val yamlPath: String, val generate: Boolean)
 
 fun main(args: Array<String>) {
@@ -42,17 +44,20 @@ fun main(args: Array<String>) {
         repositories = listOf(DemoRepository("extract", ".git", "src/main/resources/default.yaml", true))
     }
 
-    repositories.filter { it.generate }.forEach {
-        generateForRepository(it)
+    val repositoriesToGenerate = repositories.filter { it.generate }
+    if (!repositoriesToGenerate.isEmpty()) {
+        val demoDir = File(OUT_PATH)
+        demoDir.deleteRecursively()
+        demoDir.mkdir()
+
+        repositoriesToGenerate.forEach {
+            generateForRepository(it)
+        }
     }
 }
 
 private fun generateForRepository(repository: DemoRepository) {
-    val demoDir = File("out/demo")
-    demoDir.deleteRecursively()
-    demoDir.mkdir()
-
-    val repoOutDir = File(demoDir, repository.name)
+    val repoOutDir = File(OUT_PATH, repository.name)
     repoOutDir.mkdir()
 
     val templateDir = File("src/main/resources/log-template")
@@ -69,7 +74,7 @@ private fun generateForRepository(repository: DemoRepository) {
     val tagTemplateText = tagTemplateFile.readText()
 
     val commitsTextBuilder = StringBuilder()
-    val commits = readCommits(repository.gitPath, "refs/heads/master", 50)
+    val commits = readCommits(repository.gitPath, "refs/heads/master", 100)
     val colors = HashMap<String, String>()
 
     val extracts = parseFile(repository.yamlPath)
