@@ -3,7 +3,7 @@ package extract.demo
 import extract.*
 import java.io.File
 
-val COLORS = listOf(
+private val colors = listOf(
         "PowderBlue",
         "FireBrick",
         "DarkGoldenRod",
@@ -50,9 +50,9 @@ fun main(args: Array<String>) {
 
     for (commit in commits) {
         val labels = labelsMapping[commit.hash]
-        val tagsHtml = labels?.map { label -> label.toHtml(tagTemplateText) }?.joinToString(separator = "\n")
+        val tagsHtml = labels?.joinToString(separator = "\n") { label -> label.toHtml(tagTemplateText) }
 
-        val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
+        val color = colors.getOrPut(commit.author.name, { extract.demo.colors[colors.size % extract.demo.colors.size] })
 
         val commitText = commitTemplateText
                 .replace("<!--popup-id-->", "popup-${commit.hash}")
@@ -78,25 +78,25 @@ private fun ExtractLabel.toHtml(template: String): String {
     val tagClass = style ?: "e0"
     val text = text ?: name
     val labelContent = if (url != null) {
-        """<a class="$tagClass" href="${url}">$text</a>"""
+        """<a class="$tagClass" href="$url">$text</a>"""
     } else {
         text
     }
-    val badgesHtml = badges.map {
+    val badgesHtml = badges.joinToString(separator = "") {
         """<span class="badge">$it</span>"""
-    }.joinToString(separator = "")
+    }
 
     val withBadges = "$labelContent$badgesHtml"
 
     return template
             .replace("<!--tag-class-->", tagClass)
-            .replace("<!--hint-->", hint ?: text ?: name)
+            .replace("<!--hint-->", hint ?: text)
             .replace("<!--text-->", withBadges)
 }
 
 private fun CommitInfo.toHtml(): String {
     val messageHtml = message.escapeHTML().replace("\n", "<br/>")
-    val actionsHtml = fileActions.map { it.toHtml() }.joinToString(separator = "<br/>")
+    val actionsHtml = fileActions.joinToString(separator = "<br/>") { it.toHtml() }
     return "$messageHtml<br/>$actionsHtml"
 }
 
