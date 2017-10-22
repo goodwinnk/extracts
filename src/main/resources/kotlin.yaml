@@ -94,4 +94,10 @@ extracts:
     files: [
       "**.java"
     ]
+
+  - name: .txt
+    badge: "${matches}/${count}"
+    files: [
+      "**.txt"
+    ]
 ...
