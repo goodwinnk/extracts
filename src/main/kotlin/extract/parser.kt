@@ -25,9 +25,10 @@ private class ExtractInternal {
     var hint: String? = null
     var url: String? = null
     var style: String? = null
+    var badge: String? = null
 
     override fun toString(): String {
-        return "$name, $titlePattern, $files, $icon, $text, $hint, $url, $style"
+        return "$name, $titlePattern, $files, $icon, $text, $hint, $url, $style, $badge"
     }
 
     fun toExtract(): Extract {
@@ -40,7 +41,8 @@ private class ExtractInternal {
                 text = text,
                 hint = hint ?: text,
                 url = url,
-                style = style)
+                style = style,
+                badge = badge)
     }
 }
 

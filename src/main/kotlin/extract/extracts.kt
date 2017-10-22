@@ -10,7 +10,8 @@ data class Extract(
         val text: String? = null,
         val hint: String? = null,
         val url: String? = null,
-        val style: String? = null
+        val style: String? = null,
+        val badge: String? = null
 )
 
 data class ExtractLabel(
@@ -19,8 +20,19 @@ data class ExtractLabel(
         val icon: String?,
         val hint: String?,
         val url: String?,
-        val style: String?
+        val style: String?,
+        val badges: List<String>
 )
+
+interface PredefinedValues {
+    val count: Int
+    val matches: Int
+}
+
+object PredefinedVariables {
+    const val COUNT = "count"
+    const val MATCHES = "matches"
+}
 
 data class Extracts(val extracts: List<Extract>)
 

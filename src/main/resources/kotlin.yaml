@@ -76,4 +76,22 @@ extracts:
       .gitignore,
       .gitattributes
     ]
+
+  - name: .js
+    badge: "${matched}/${changes}"
+    files: [
+      "**.js"
+    ]
+
+  - name: .kt
+    badge: "${matched}/${changes}"
+    files: [
+      "**.kt"
+    ]
+
+  - name: .java
+    badge: "${matched}/${changes}"
+    files: [
+      "**.java"
+    ]
 ...

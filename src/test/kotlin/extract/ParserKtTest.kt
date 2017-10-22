@@ -1,7 +1,5 @@
 package extract
 
-import extract.Extract
-import extract.parseFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -9,7 +7,7 @@ class ParserKtTest {
     @Test
     fun example() {
         val extracts = parseFile("src/test/resources/test.yaml").extracts
-        assertEquals(3, extracts.size)
+        assertEquals(4, extracts.size)
 
         assertEquals(
                 Extract("YouTrack", "^.*(KT-\\d+).*$", listOf(),
@@ -24,6 +22,11 @@ class ParserKtTest {
         assertEquals(
                 Extract("Minor", null, listOf(), style = "e1"),
                 extracts[2]
+        )
+
+        assertEquals(
+                Extract("WithBadge", null, listOf(), badge = "\${matched}"),
+                extracts[3]
         )
     }
 }

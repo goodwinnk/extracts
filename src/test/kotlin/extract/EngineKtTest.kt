@@ -18,7 +18,8 @@ internal class EngineKtTest {
                         hint = "Open created actual class in editor #KT-20135 Fixed",
                         icon = "path",
                         url = "https://youtrack.jetbrains.com/issue/KT-20135",
-                        style = null),
+                        style = null,
+                        badges = listOf()),
                 label
         )
 
@@ -29,10 +30,41 @@ internal class EngineKtTest {
         Assertions.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
         Assertions.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
     }
+
+    @Test
+    fun matchesVariable() {
+        val label = assignLabel(
+                testCommit(
+                        title = "Some",
+                        fileActions = listOf(
+                                FileAction(Action.ADD, "first.test"),
+                                FileAction(Action.MODIFY, "second.test"),
+                                FileAction(Action.RENAME, "second.other")
+                        )),
+                Extract("YouTrack",
+                        titlePattern = null, files = listOf("**.test"),
+                        icon = "path",
+                        text = "\${matches}\\\${count}",
+                        hint = "\${matches}\\\${count}",
+                        url = "\${matches}\\\${count}",
+                        badge = "\${matches}\\\${count}")
+        )
+
+        Assertions.assertEquals(
+                ExtractLabel(
+                        "YouTrack",
+                        text = "2\\3",
+                        hint = "2\\3",
+                        icon = "path",
+                        url = "2\\3",
+                        style = null,
+                        badges = listOf("2\\3")),
+                label
+        )
+    }
 }
 
-val DUMMY_USER = User("dummyUserName", "dummyUserEmail")
-val DUMMY_ACTION = FileAction(Action.ADD, "dummyFileActionPath")
+private val DUMMY_USER = User("dummyUserName", "dummyUserEmail")
 
 fun testCommit(
         hash: String = "dummyHash",

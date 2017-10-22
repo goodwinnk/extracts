@@ -13,3 +13,6 @@ extracts:
 
   - name: Minor
     style: e1
+
+  - name: WithBadge
+    badge: "${matched}"
