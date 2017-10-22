@@ -50,20 +50,7 @@ fun main(args: Array<String>) {
 
     for (commit in commits) {
         val labels = labelsMapping[commit.hash]
-        val tagsHtml = labels?.map { label ->
-            val tagClass = label.style ?: "e0"
-            val text = label.text ?: label.name
-            val labelContent = if (label.url != null) {
-                """<a class="$tagClass" href="${label.url}">$text</a>"""
-            } else {
-                text
-            }
-
-            tagTemplateText
-                    .replace("<!--tag-class-->", tagClass)
-                    .replace("<!--hint-->", label.hint ?: label.text ?: label.name)
-                    .replace("<!--text-->", labelContent)
-        }?.joinToString(separator = "\n")
+        val tagsHtml = labels?.map { label -> label.toHtml(tagTemplateText) }?.joinToString(separator = "\n")
 
         val color = colors.getOrPut(commit.author.name, { COLORS[colors.size % COLORS.size] })
 
@@ -85,6 +72,26 @@ fun main(args: Array<String>) {
     val logOutFile = File(demoDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(mainText)
+}
+
+private fun ExtractLabel.toHtml(template: String): String {
+    val tagClass = style ?: "e0"
+    val text = text ?: name
+    val labelContent = if (url != null) {
+        """<a class="$tagClass" href="${url}">$text</a>"""
+    } else {
+        text
+    }
+    val badgesHtml = badges.map {
+        """<span class="badge">$it</span>"""
+    }.joinToString(separator = "")
+
+    val withBadges = "$labelContent$badgesHtml"
+
+    return template
+            .replace("<!--tag-class-->", tagClass)
+            .replace("<!--hint-->", hint ?: text ?: name)
+            .replace("<!--text-->", withBadges)
 }
 
 private fun CommitInfo.toHtml(): String {

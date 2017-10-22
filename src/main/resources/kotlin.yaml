@@ -78,19 +78,19 @@ extracts:
     ]
 
   - name: .js
-    badge: "${matched}/${changes}"
+    badge: "${matches}/${count}"
     files: [
       "**.js"
     ]
 
   - name: .kt
-    badge: "${matched}/${changes}"
+    badge: "${matches}/${count}"
     files: [
       "**.kt"
     ]
 
   - name: .java
-    badge: "${matched}/${changes}"
+    badge: "${matches}/${count}"
     files: [
       "**.java"
     ]
