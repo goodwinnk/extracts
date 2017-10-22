@@ -54,7 +54,7 @@ private class ExtractsInternal : Iterable<ExtractInternal> {
 
     fun toExtracts(): Extracts {
         if (extracts == null) {
-            throw IllegalStateException("Extracts wasn't parsed properly: $this")
+            return Extracts(listOf())
         }
         return Extracts(extracts!!.map { it.toExtract() })
     }
