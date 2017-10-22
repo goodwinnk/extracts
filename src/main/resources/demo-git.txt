@@ -1,1 +1,3 @@
-C:\Projects\kotlin\.git
+kotlin C:/Projects/kotlin/.git src/main/resources/kotlin.yaml
+extract .git src/main/resources/default.yaml
+anki C:/Projects/anki/.git src/main/resources/anki.yaml *

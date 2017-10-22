@@ -1,0 +1,18 @@
+---
+extracts:
+  - name: Main
+    files: [
+      "src/main/kotlin/**",
+      "src/main/java/**",
+    ]
+
+  - name: Tests
+    files: [
+      "src/test/**"
+    ]
+
+  - name: Data
+    files: [
+      "src/main/resources/**"
+    ]
+---

@@ -16,17 +16,44 @@ private val colors = listOf(
         "Tan"
 )
 
+data class DemoRepository(val name: String, val gitPath: String, val yamlPath: String, val generate: Boolean)
+
 fun main(args: Array<String>) {
     val gitFile = File("src/main/resources/demo-git.txt")
-    val git = if (gitFile.exists()) {
-        gitFile.readText().trim()
+    var repositories = if (gitFile.exists()) {
+        gitFile.readLines().asSequence()
+                .map { it.trim() }
+                .filter { !it.isEmpty() }
+                .map { line ->
+                    val params = line.split(" ").map { it.trim() }
+                    if (params.size !in 3..4) {
+                        throw IllegalStateException("Bad line in '$line' in $gitFile")
+                    }
+
+                    val shouldGenerate = params.getOrNull(3) == "*"
+                    DemoRepository(params[0], params[1], params[2], shouldGenerate)
+                }
+                .toList()
     } else {
-        ".git"
+        listOf()
     }
 
+    if (repositories.isEmpty()) {
+        repositories = listOf(DemoRepository("extract", ".git", "src/main/resources/default.yaml", true))
+    }
+
+    repositories.filter { it.generate }.forEach {
+        generateForRepository(it)
+    }
+}
+
+private fun generateForRepository(repository: DemoRepository) {
     val demoDir = File("out/demo")
     demoDir.deleteRecursively()
     demoDir.mkdir()
+
+    val repoOutDir = File(demoDir, repository.name)
+    repoOutDir.mkdir()
 
     val templateDir = File("src/main/resources/log-template")
     val cssFile = File(templateDir, "log.css")
@@ -34,7 +61,7 @@ fun main(args: Array<String>) {
     val templateFile = File(templateDir, "commit.html")
     val tagTemplateFile = File(templateDir, "tag.html")
 
-    val cssOutFile = File(demoDir, "log.css")
+    val cssOutFile = File(repoOutDir, "log.css")
     cssFile.copyTo(cssOutFile)
 
     val mainTextTemplate = mainFile.readText()
@@ -42,10 +69,10 @@ fun main(args: Array<String>) {
     val tagTemplateText = tagTemplateFile.readText()
 
     val commitsTextBuilder = StringBuilder()
-    val commits = readCommits(git, "refs/heads/master", 50)
+    val commits = readCommits(repository.gitPath, "refs/heads/master", 50)
     val colors = HashMap<String, String>()
 
-    val extracts = parseFile("src/main/resources/kotlin.yaml")
+    val extracts = parseFile(repository.yamlPath)
     val labelsMapping = assignLabels(commits, extracts)
 
     for (commit in commits) {
@@ -69,7 +96,7 @@ fun main(args: Array<String>) {
     val commitsText = commitsTextBuilder.toString()
     val mainText = mainTextTemplate.replace("<!--commits-->", commitsText)
 
-    val logOutFile = File(demoDir, "log.html")
+    val logOutFile = File(repoOutDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(mainText)
 }
