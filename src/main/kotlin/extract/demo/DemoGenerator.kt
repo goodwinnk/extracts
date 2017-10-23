@@ -99,7 +99,9 @@ private fun generateForRepository(repository: DemoRepository) {
     }
 
     val commitsText = commitsTextBuilder.toString()
-    val mainText = mainTextTemplate.replace("<!--commits-->", commitsText)
+    val mainText = mainTextTemplate
+            .replace("<!--title-->", repository.name)
+            .replace("<!--commits-->", commitsText)
 
     val logOutFile = File(repoOutDir, "log.html")
     logOutFile.createNewFile()
