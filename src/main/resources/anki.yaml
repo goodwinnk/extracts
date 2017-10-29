@@ -1,2 +1,95 @@
 ---
 extracts:
+  - name: GitHub
+    title-pattern: "^.*#(\\d+).*$"
+    icon: path
+    text: "#${1}"
+    url: "https://github.com/ankidroid/Anki-Android/pull/${1}"
+    style: e6
+
+  - name: Travis
+    files: [".travis.yml"]
+    style: e4
+
+  - name: Gradle
+    badge: "${matches}/${count}"
+    files: ["**.gradle", "gradle/**"]
+    style: e3
+
+  - name: Manifest
+    files: [
+      "AnkiDroid/src/main/AndroidManifest.xml"
+    ]
+    style: e5
+
+  - name: res
+    files: [
+      "AnkiDroid/src/main/res/**"
+    ]
+    style: e2
+
+  - name: assets
+    files: [
+      "AnkiDroid/src/main/assets/**"
+    ]
+    style: e2
+
+  - name: main
+    files: [
+      "AnkiDroid/src/main/java/**"
+    ]
+    style: e2
+
+  - name: Tools
+    files: [
+      "tools/**"
+    ]
+    style: e2
+
+  - name: docs
+    files: [
+      "docs/**"
+    ]
+    style: e2
+
+  - name: api
+    files: [
+      api/**
+    ]
+    style: e2
+
+  - name: .java
+    badge: "${matches}/${count}"
+    files: [
+      "**.java"
+    ]
+
+  - name: .xml
+    badge: "${matches}/${count}"
+    files: [
+      "**.xml"
+    ]
+
+  - name: .png
+    badge: "${matches}/${count}"
+    files: [
+      "**.png"
+    ]
+
+  - name: .py
+    badge: "${matches}/${count}"
+    files: [
+      "**.py"
+    ]
+
+  - name: .js
+    badge: "${matches}/${count}"
+    files: [
+      "**.py"
+    ]
+
+  - name: .txt
+    badge: "${matches}/${count}"
+    files: [
+      "**.txt"
+    ]
