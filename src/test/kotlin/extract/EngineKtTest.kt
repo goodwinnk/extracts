@@ -29,6 +29,7 @@ internal class EngineKtTest {
     fun fileMatchTest() {
         Assertions.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
         Assertions.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
+        Assertions.assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
     }
 
     @Test

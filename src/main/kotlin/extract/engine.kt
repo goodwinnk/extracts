@@ -103,9 +103,13 @@ private fun toTemplate(name: String) = "\${$name}"
 
 fun pathMatch(path: String, patterns: List<String>): Boolean {
     return patterns.any { pattern ->
+        val startsWithStars = pattern.startsWith("**")
+        val endsWithStars = pattern.endsWith("**")
+
         when {
-            pattern.startsWith("**") -> path.endsWith(pattern.removePrefix("**"))
-            pattern.endsWith("**") -> path.startsWith(pattern.removeSuffix("**"))
+            startsWithStars && endsWithStars -> path.contains(pattern.removePrefix("**").removeSuffix("**"))
+            startsWithStars -> path.endsWith(pattern.removePrefix("**"))
+            endsWithStars -> path.startsWith(pattern.removeSuffix("**"))
             else -> path == pattern
         }
     }
