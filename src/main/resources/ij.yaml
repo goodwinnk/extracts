@@ -1,0 +1,136 @@
+---
+extracts:
+  - name: YouTrack
+    title-pattern: "^.*((IDEA|EDU|PY|DBE|IDEA-CR|WEB)-\\d+).*$"
+    icon: path
+    text: "${1}"
+    url: "https://youtrack.jetbrains.com/issue/${1}"
+    style: e6
+
+  - name: EA
+    title-pattern: "^.*(EA-\\d+).*$"
+    icon: path
+    text: "${1}"
+    url: "https://youtrack.jetbrains.com/issue/${1}"
+    style: e6
+
+  - name: Build
+    files: [
+      "build/**"
+    ]
+    style: e2
+
+  - name: TF
+    files: [
+      "platform/testFramework/**"
+    ]
+    style: e2
+
+  - name: ProjectModel
+    files: [
+      "platform/projectModel**"
+    ]
+    style: e2
+
+  - name: VCS
+    files: [
+      "platform/vcs**"
+    ]
+    style: e2
+
+  - name: Diff
+    files: [
+      "platform/diff**"
+    ]
+    style: e2
+
+  - name: GUI-Test
+    files: [
+      "platform/testGuiFramework/**"
+    ]
+    style: e2
+
+  - name: SSR
+    files: [
+      "platform/structuralsearch/**"
+    ]
+    style: e2
+
+  - name: DevKit
+    files: [
+      "plugins/devkit/**"
+    ]
+    style: e4
+
+  - name: Groovy
+    files: [
+      "plugins/groovy/**"
+    ]
+    style: e4
+
+  - name: Stats
+    files: [
+      "plugins/stats-collector/**"
+    ]
+    style: e4
+
+  - name: SVN
+    files: [
+      "plugins/svn**"
+    ]
+    style: e4
+
+  - name: Coverage
+    files: [
+      "plugins/coverage**"
+    ]
+    style: e4
+
+  - name: IIP
+    files: [
+      "plugins/IntentionPowerPak/**"
+    ]
+    style: e4
+
+  - name: Java
+    files: [
+      "java/**"
+    ]
+    style: e4
+
+  - name: XML
+    files: [
+      "xml/**"
+    ]
+    style: e4
+
+  - name: PY
+    files: [
+      "python/**"
+    ]
+    style: e4
+
+  - name: EDU
+    files: [
+      "python/education**"
+    ]
+    style: e4
+
+  - name: UI
+    files: [
+      "**/ui/**"
+    ]
+    style: e3
+
+  - name: .kt
+    badge: "${matches}/${count}"
+    files: [
+      "**.kt"
+    ]
+
+  - name: .java
+    badge: "${matches}/${count}"
+    files: [
+      "**.java"
+    ]
+---

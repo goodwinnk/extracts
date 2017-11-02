@@ -1,3 +1,4 @@
 kotlin C:/Projects/kotlin/.git src/main/resources/kotlin.yaml
 extract .git src/main/resources/default.yaml
-anki C:/Projects/Anki-Android/.git src/main/resources/anki.yaml *
+anki C:/Projects/Anki-Android/.git src/main/resources/anki.yaml
+community C:/Projects/intellij-community/.git src/main/resources/ij.yaml *
