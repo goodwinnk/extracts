@@ -2,4 +2,4 @@
 
 ## Concept 
 
-[[https://raw.githubusercontent.com/goodwinnk/extract/master/docs/Concept.png|alt=Concept]] 
+![Concept](docs/Concept.png?raw=true "Concept")
