@@ -1,6 +1,6 @@
 package extract.demo
 
-import extract.*
+import extract.core.*
 import java.io.File
 
 private val colors = listOf(
@@ -16,12 +16,13 @@ private val colors = listOf(
         "Tan"
 )
 
-private const val OUT_PATH = "out/demo"
+private const val OUT_PATH = "demo/out/extracts"
+private const val RESOURCES_PATH = "demo/src/main/resources"
 
 data class DemoRepository(val name: String, val gitPath: String, val yamlPath: String, val generate: Boolean)
 
 fun main(args: Array<String>) {
-    val gitFile = File("src/main/resources/demo-git.txt")
+    val gitFile = File("$RESOURCES_PATH/demo-git.txt")
     var repositories = if (gitFile.exists()) {
         gitFile.readLines().asSequence()
                 .map { it.trim() }
@@ -41,7 +42,7 @@ fun main(args: Array<String>) {
     }
 
     if (repositories.isEmpty()) {
-        repositories = listOf(DemoRepository("extract", ".git", "src/main/resources/default.yaml", true))
+        repositories = listOf(DemoRepository("extract", ".git", "$RESOURCES_PATH/default.yaml", true))
     }
 
     val repositoriesToGenerate = repositories.filter { it.generate }
@@ -60,7 +61,7 @@ private fun generateForRepository(repository: DemoRepository) {
     val repoOutDir = File(OUT_PATH, repository.name)
     repoOutDir.mkdir()
 
-    val templateDir = File("src/main/resources/log-template")
+    val templateDir = File("$RESOURCES_PATH/log-template")
     val cssFile = File(templateDir, "log.css")
     val mainFile = File(templateDir, "log.html")
     val templateFile = File(templateDir, "commit.html")
@@ -77,7 +78,7 @@ private fun generateForRepository(repository: DemoRepository) {
     val commits = readCommits(repository.gitPath, "refs/heads/master", 100)
     val colors = HashMap<String, String>()
 
-    val extracts = parseFile(repository.yamlPath)
+    val extracts = parseFile("$RESOURCES_PATH/${repository.yamlPath}")
     val labelsMapping = assignLabels(commits, extracts)
 
     for (commit in commits) {

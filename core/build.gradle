@@ -1,9 +1,9 @@
 buildscript {
-    ext.kotlin_version = '1.2-Beta-eap-14'
+    ext.kotlin_version = '1.2.0-rc-39'
 
     repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
         mavenCentral()
-        maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -13,14 +13,11 @@ buildscript {
 group 'domik'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
 apply plugin: 'kotlin'
 
-sourceCompatibility = 1.8
-
 repositories {
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
     mavenCentral()
-    maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
 }
 
 dependencies {

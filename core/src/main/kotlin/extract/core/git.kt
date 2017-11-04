@@ -1,4 +1,4 @@
-package extract
+package extract.core
 
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.diff.DiffEntry

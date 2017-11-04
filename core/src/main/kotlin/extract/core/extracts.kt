@@ -1,4 +1,4 @@
-package extract
+package extract.core
 
 data class Extract(
         val name: String,
