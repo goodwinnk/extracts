@@ -1,3 +1,5 @@
 rootProject.name = 'extract'
 include 'core'
 include 'demo'
+include 'cli'
+

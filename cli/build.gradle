@@ -1,0 +1,5 @@
+applyKotlin()
+
+dependencies {
+    compile project(":core")
+}
