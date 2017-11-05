@@ -1,36 +1,8 @@
-buildscript {
-    ext.kotlin_version = '1.2.0-rc-39'
-
-    repositories {
-        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-group 'domik'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'kotlin'
-
-repositories {
-    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
-    mavenCentral()
-}
+applyKotlin()
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     testCompile "org.junit.jupiter:junit-jupiter-api:5.0.0"
     compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.1'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.1'
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
 }
