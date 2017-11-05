@@ -1,5 +1,5 @@
 applyKotlin()
 
 dependencies {
-    compile project(":core")
+    compile project(":cli")
 }

@@ -10,7 +10,6 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser
 import org.eclipse.jgit.treewalk.EmptyTreeIterator
 import java.io.File
 
-
 fun readCommits(repositoryPath: String, revisionString: String, numberOfCommits: Int): List<CommitInfo> {
     val repository = FileRepository(File(repositoryPath))
     Git(repository).use { git ->
