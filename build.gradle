@@ -25,6 +25,7 @@ allprojects {
 
         dependencies {
             compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+            testCompile "org.junit.jupiter:junit-jupiter-api:5.0.0"
         }
 
         compileKotlin {
