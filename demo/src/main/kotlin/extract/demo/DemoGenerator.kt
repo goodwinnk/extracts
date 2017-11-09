@@ -57,10 +57,6 @@ private fun generateForRepository(repository: DemoRepository) {
             )
     )
 
-    val cssOutFile = File(repoOutDir, "log.css")
-    cssOutFile.createNewFile()
-    cssOutFile.writeText(htmlOutput.cssText)
-
     val logOutFile = File(repoOutDir, "log.html")
     logOutFile.createNewFile()
     logOutFile.writeText(htmlOutput.htmlText)

@@ -18,7 +18,7 @@ private val colors = listOf(
 
 private const val TEMPLATE_PATH = "cli/src/main/resources/log-template"
 
-data class LogToHtml(val htmlText: String, val cssText: String)
+data class LogToHtml(val htmlText: String)
 
 data class GenerateOptions(
         val repositoryName: String,
@@ -64,10 +64,11 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
 
     val commitsText = commitsTextBuilder.toString()
     val htmlText = mainTextTemplate
+            .replace("#css-file", cssFile.readText())
             .replace("<!--title-->", generateOptions.repositoryName)
             .replace("<!--commits-->", commitsText)
 
-    return LogToHtml(htmlText, cssFile.readText())
+    return LogToHtml(htmlText)
 }
 
 private fun ExtractLabel.toHtml(template: String): String {
