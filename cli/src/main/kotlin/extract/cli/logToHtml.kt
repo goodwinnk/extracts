@@ -23,7 +23,8 @@ data class LogToHtml(val htmlText: String)
 data class GenerateOptions(
         val repositoryName: String,
         val gitPath: String,
-        val extractsFilePath: String
+        val extractsFilePath: String,
+        val numberOfCommits: Int
 )
 
 fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
@@ -38,7 +39,8 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
     val tagTemplateText = tagTemplateFile.readText()
 
     val commitsTextBuilder = StringBuilder()
-    val commits = readCommits(generateOptions.gitPath, "refs/heads/master", 100)
+    val commits = readCommits(
+            generateOptions.gitPath, "refs/heads/master", generateOptions.numberOfCommits)
     val colors = HashMap<String, String>()
 
     val extracts = parseFile(generateOptions.extractsFilePath)
