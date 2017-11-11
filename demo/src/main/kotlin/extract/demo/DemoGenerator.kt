@@ -53,7 +53,8 @@ private fun generateForRepository(repository: DemoRepository) {
             GenerateOptions(
                     repositoryName = repository.name,
                     gitPath = repository.gitPath,
-                    extractsFilePath = "$RESOURCES_PATH/${repository.yamlPath}"
+                    extractsFilePath = "$RESOURCES_PATH/${repository.yamlPath}",
+                    numberOfCommits = 100
             )
     )
 
