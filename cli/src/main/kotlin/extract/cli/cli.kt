@@ -51,7 +51,16 @@ object Runner {
 
         val repository = options.repository
         val gitFile = childFile(repository, ".git")
+        if (!gitFile.exists()) {
+            System.err.println("Can't find git repository at ${repository.canonicalPath}")
+            return
+        }
+
         val extractsFile = options.extracts ?: childFile(repository, ".extracts")
+        if (!extractsFile.exists()) {
+            System.err.println("Can't find file with extracts at ${extractsFile.canonicalPath}")
+            return
+        }
 
         val repositoryDirName = repository.canonicalFile.name
 
