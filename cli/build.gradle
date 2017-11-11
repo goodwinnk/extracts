@@ -1,4 +1,23 @@
+apply plugin: 'application'
+mainClassName = "extract.cli.Runner"
+
+def DIST_NAME = 'extracts'
+
 applyKotlin()
+
+distributions {
+    main {
+        baseName = DIST_NAME
+    }
+}
+
+startScripts {
+    doLast {
+        def scriptPath = "build/scripts"
+        file("$scriptPath/${project.name}.bat").renameTo("$scriptPath/${DIST_NAME}.bat")
+        file("$scriptPath/${project.name}").renameTo("$scriptPath/$DIST_NAME")
+    }
+}
 
 dependencies {
     compile group: 'args4j', name: 'args4j', version: '2.33'
