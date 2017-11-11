@@ -1,18 +1,44 @@
 ---
 extracts:
-  - name: Main
+  - name: cli
     files: [
-      "src/main/kotlin/**",
-      "src/main/java/**",
+      "cli/**",
     ]
+    style: e3
+
+  - name: core
+    files: [
+      "core/**",
+    ]
+    style: e3
+
+  - name: demo
+    files: [
+      "demo/**",
+    ]
+    style: e3
+
+  - name: docs
+    files: [
+      "docs/**",
+    ]
+    style: e3
+
+  - name: build
+    files: [
+      "**.gradle",
+    ]
+    style: e4
+
+  - name: .idea
+    files: [
+      ".idea/**",
+    ]
+    style: e4
 
   - name: Tests
     files: [
-      "src/test/**"
+      "**/src/test/**"
     ]
-
-  - name: Data
-    files: [
-      "src/main/resources/**"
-    ]
+    style: e6
 ---
