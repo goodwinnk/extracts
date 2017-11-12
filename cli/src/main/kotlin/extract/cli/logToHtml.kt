@@ -1,7 +1,7 @@
 package extract.cli
 
 import extract.core.*
-import java.io.File
+
 
 private val colors = listOf(
         "PowderBlue",
@@ -16,8 +16,6 @@ private val colors = listOf(
         "Tan"
 )
 
-private const val TEMPLATE_PATH = "cli/src/main/resources/log-template"
-
 data class LogToHtml(val htmlText: String)
 
 data class GenerateOptions(
@@ -28,15 +26,10 @@ data class GenerateOptions(
 )
 
 fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
-    val templateDir = File(TEMPLATE_PATH)
-    val cssFile = File(templateDir, "log.css")
-    val mainFile = File(templateDir, "log.html")
-    val templateFile = File(templateDir, "commit.html")
-    val tagTemplateFile = File(templateDir, "tag.html")
-
-    val mainTextTemplate = mainFile.readText()
-    val commitTemplateText = templateFile.readText()
-    val tagTemplateText = tagTemplateFile.readText()
+    val mainTemplateText = readResourceFile("log.html")
+    val commitTemplateText = readResourceFile("commit.html")
+    val tagTemplateText = readResourceFile("tag.html")
+    val cssTemplateText = readResourceFile("log.css")
 
     val commitsTextBuilder = StringBuilder()
     val commits = readCommits(
@@ -65,12 +58,18 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
     }
 
     val commitsText = commitsTextBuilder.toString()
-    val htmlText = mainTextTemplate
-            .replace("#css-file", cssFile.readText())
+    val htmlText = mainTemplateText
+            .replace("#css-file", cssTemplateText)
             .replace("<!--title-->", generateOptions.repositoryName)
             .replace("<!--commits-->", commitsText)
 
     return LogToHtml(htmlText)
+}
+
+private fun readResourceFile(relativePath: String): String {
+    val klass = GenerateOptions::class.java
+    val resourceStream = klass.getResourceAsStream("/log-template/$relativePath")
+    return resourceStream.reader().buffered().readText()
 }
 
 private fun ExtractLabel.toHtml(template: String): String {
