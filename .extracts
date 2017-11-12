@@ -36,6 +36,12 @@ extracts:
     ]
     style: e4
 
+  - name: .extracts
+    files: [
+      ".extracts",
+    ]
+    style: e4
+
   - name: Tests
     files: [
       "**/src/test/**"
