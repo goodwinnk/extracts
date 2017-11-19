@@ -22,8 +22,8 @@ data class GenerateOptions(
         val repositoryName: String,
         val gitPath: String,
         val extractsFilePath: String,
-        val numberOfCommits: Int
-)
+        val revision: String?,
+        val numberOfCommits: Int)
 
 fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
     val mainTemplateText = readResourceFile("log.html")
@@ -32,8 +32,7 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
     val cssTemplateText = readResourceFile("log.css")
 
     val commitsTextBuilder = StringBuilder()
-    val commits = readCommits(
-            generateOptions.gitPath, "refs/heads/master", generateOptions.numberOfCommits)
+    val commits = readCommits(generateOptions.gitPath, generateOptions.revision, generateOptions.numberOfCommits)
     val colors = HashMap<String, String>()
 
     val extracts = parseFile(generateOptions.extractsFilePath)

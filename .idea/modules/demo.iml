@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":demo" external.linked.project.path="$MODULE_DIR$/../../demo" external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.namtadam.extracts" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":demo" external.linked.project.path="$MODULE_DIR$/../../demo" external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.namtadam.extracts" external.system.module.version="0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JVM 1.8" useProjectSettings="false">
@@ -48,7 +48,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.0-rc-39" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: args4j:args4j:2.33" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.8.0.201706111038-r" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.9.0.201710071750-r" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.slf4j:slf4j-simple:1.6.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.1" level="project" />
@@ -69,7 +69,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.0-rc-39" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: args4j:args4j:2.33" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.8.0.201706111038-r" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.9.0.201710071750-r" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.slf4j:slf4j-simple:1.6.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.1" level="project" />
@@ -92,7 +92,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: args4j:args4j:2.33" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.8.0.201706111038-r" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.9.0.201710071750-r" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-simple:1.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.1" level="project" />

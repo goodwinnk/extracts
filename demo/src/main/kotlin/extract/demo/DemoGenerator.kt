@@ -54,7 +54,8 @@ private fun generateForRepository(repository: DemoRepository) {
                     repositoryName = repository.name,
                     gitPath = repository.gitPath,
                     extractsFilePath = "$RESOURCES_PATH/${repository.yamlPath}",
-                    numberOfCommits = 100
+                    numberOfCommits = 100,
+                    revision = null
             )
     )
 

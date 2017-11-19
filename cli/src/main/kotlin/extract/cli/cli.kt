@@ -2,6 +2,7 @@ package extract.cli
 
 import java.io.File
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream
+import extract.core.ConfigureGitException
 import org.kohsuke.args4j.CmdLineException
 import org.kohsuke.args4j.CmdLineParser
 import org.kohsuke.args4j.Option
@@ -28,7 +29,10 @@ data class Options(
         var help: Boolean = false,
 
         @set:Option(name = "-repository", aliases = ["-r"])
-        var repository: File = File("")
+        var repository: File = File(""),
+
+        @set:Option(name = "-revision", usage = "Revision where log should start. HEAD commit is used by default.")
+        var revision: String? = null
 )
 
 class ParserException(message: String?, val usage: String, cause: Throwable) : Exception(message, cause)
@@ -50,11 +54,6 @@ object Runner {
         }
 
         val repository = options.repository
-        val gitFile = childFile(repository, ".git")
-        if (!gitFile.exists()) {
-            System.err.println("Can't find git repository at ${repository.canonicalPath}")
-            return
-        }
 
         val extractsFile = options.extracts ?: childFile(repository, ".extracts")
         if (!extractsFile.exists()) {
@@ -64,11 +63,17 @@ object Runner {
 
         val repositoryDirName = repository.canonicalFile.name
 
-        val logToHtml = logToHtml(GenerateOptions(
-                repositoryName = repositoryDirName,
-                gitPath = gitFile.path,
-                extractsFilePath = extractsFile.path,
-                numberOfCommits = options.number))
+        val logToHtml = try {
+            logToHtml(GenerateOptions(
+                    repositoryName = repositoryDirName,
+                    gitPath = repository.path,
+                    extractsFilePath = extractsFile.path,
+                    numberOfCommits = options.number,
+                    revision = options.revision))
+        } catch (cge: ConfigureGitException) {
+            System.err.println(cge.message)
+            return
+        }
 
         val outputFile = options.output ?: File.createTempFile(repositoryDirName, ".html")
         outputFile.createNewFile()
