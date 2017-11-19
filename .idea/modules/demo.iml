@@ -86,13 +86,11 @@
     <orderEntry type="module" module-name="cli" scope="TEST" />
     <orderEntry type="module" module-name="core" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.0-rc-39" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.0-rc-39" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.0-rc-39" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: args4j:args4j:2.33" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-commons:1.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apiguardian:apiguardian-api:1.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.opentest4j:opentest4j:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jgit:org.eclipse.jgit:4.8.0.201706111038-r" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-simple:1.6.1" level="project" />

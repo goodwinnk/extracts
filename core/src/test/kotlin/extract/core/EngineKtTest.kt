@@ -1,7 +1,7 @@
 package extract.core
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.Assert
+import org.junit.Test
 
 internal class EngineKtTest {
     @Test
@@ -12,7 +12,7 @@ internal class EngineKtTest {
                         "path", "\${1}", "\${0}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
-        Assertions.assertEquals(
+        Assert.assertEquals(
                 ExtractLabel(
                         "YouTrack", "KT-20135",
                         hint = "Open created actual class in editor #KT-20135 Fixed",
@@ -27,9 +27,9 @@ internal class EngineKtTest {
 
     @Test
     fun fileMatchTest() {
-        Assertions.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
-        Assertions.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
-        Assertions.assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
+        Assert.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
+        Assert.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
+        Assert.assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
     }
 
     @Test
@@ -51,7 +51,7 @@ internal class EngineKtTest {
                         badge = "\${matches}\\\${count}")
         )
 
-        Assertions.assertEquals(
+        Assert.assertEquals(
                 ExtractLabel(
                         "YouTrack",
                         text = "2\\3",

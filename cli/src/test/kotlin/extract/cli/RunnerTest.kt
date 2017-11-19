@@ -1,7 +1,7 @@
 package extract.cli
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.Assert
+import org.junit.Test
 
 class RunnerTest {
     @Test
@@ -29,18 +29,18 @@ class RunnerTest {
     fun doTest(args: List<String>, expectedOptions: Options, errorMessage: String? = null) {
         try {
             val (options, _) = Runner.parseArguments(args.toTypedArray())
-            Assertions.assertEquals(expectedOptions, options)
+            Assert.assertEquals(expectedOptions, options)
 
             if (errorMessage != null) {
-                Assertions.fail<Any>("Parse error was expected")
+                Assert.fail("Parse error was expected")
             }
         } catch (ex: ParserException) {
             if (errorMessage == null) {
                 throw ex
             }
 
-            Assertions.assertEquals(errorMessage, ex.message, "Bad parse error")
-            Assertions.assertEquals(USAGE, ex.usage.replace("\r", ""), "Bad usage")
+            Assert.assertEquals("Bad parse error", errorMessage, ex.message)
+            Assert.assertEquals("Bad usage", USAGE, ex.usage.replace("\r", ""))
         }
     }
 
@@ -54,6 +54,8 @@ class RunnerTest {
              | -number (-n) N      : Limit the number of commits to output. Default is 50.
              | -open               : Is result history should be open automatically. Default
              |                       is TRUE.
+             | -revision VAL       : Revision where log should start. HEAD commit is used by
+             |                       default.
              |
             """.trimMargin()
     }

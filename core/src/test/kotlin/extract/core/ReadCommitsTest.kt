@@ -1,7 +1,7 @@
 package extract.core
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.Assert
+import org.junit.Test
 
 class ReadCommitsTest {
     val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
@@ -52,34 +52,34 @@ class ReadCommitsTest {
     @Test
     fun readSeveralCommits() {
         val commits = readCommits(OWN_GIT_PATH, "a6a653763b676c0a88ac07039a734d3add845cbd", 3)
-        Assertions.assertEquals(3, commits.size)
+        Assert.assertEquals(3, commits.size)
 
         val first = commits.first()
-        Assertions.assertEquals("a6a653763b676c0a88ac07039a734d3add845cbd", first.hash)
-        Assertions.assertEquals("Abstract commit information", first.title)
+        Assert.assertEquals("a6a653763b676c0a88ac07039a734d3add845cbd", first.hash)
+        Assert.assertEquals("Abstract commit information", first.title)
 
         val last = commits.last()
-        Assertions.assertEquals("e720f557c51d957dd3c5cdb3ecbf83cb9a916a83", last.hash)
-        Assertions.assertEquals("Parse example file with Jackson", last.title)
+        Assert.assertEquals("e720f557c51d957dd3c5cdb3ecbf83cb9a916a83", last.hash)
+        Assert.assertEquals("Parse example file with Jackson", last.title)
     }
 
     @Test
     fun readTooManyCommits() {
         val commits = readCommits(OWN_GIT_PATH, "a6a653763b676c0a88ac07039a734d3add845cbd", 1000)
-        Assertions.assertEquals(5, commits.size)
+        Assert.assertEquals(5, commits.size)
     }
 
     @Test
     fun readBranch() {
         val commits = readCommits(OWN_GIT_PATH, "refs/heads/master", 1)
-        Assertions.assertEquals(1, commits.size)
+        Assert.assertEquals(1, commits.size)
     }
 
     private fun checkCommit(expected: CommitInfo) {
         val commits = readCommits(OWN_GIT_PATH, expected.hash, 1)
         val commit = commits.single()
 
-        Assertions.assertEquals(expected, commit)
+        Assert.assertEquals(expected, commit)
     }
 }
 
