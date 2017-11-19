@@ -14,8 +14,14 @@ distributions {
 startScripts {
     doLast {
         def scriptPath = "build/scripts"
-        file("$scriptPath/${project.name}.bat").renameTo("$scriptPath/${DIST_NAME}.bat")
-        file("$scriptPath/${project.name}").renameTo("$scriptPath/$DIST_NAME")
+
+        def batFile = file("$scriptPath/${project.name}.bat")
+        batFile.renameTo("$scriptPath/${DIST_NAME}.bat")
+        batFile.delete()
+
+        def shFile = file("$scriptPath/${project.name}")
+        shFile.renameTo("$scriptPath/$DIST_NAME")
+        shFile.delete()
     }
 }
 
