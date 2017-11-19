@@ -27,11 +27,6 @@ class RunnerTest {
     }
 
     fun doTest(args: List<String>, expectedOptions: Options, errorMessage: String? = null) {
-        val optionsCheck = {
-            val options = Runner.parseArguments(args.toTypedArray())
-            Assertions.assertEquals(expectedOptions, options)
-        }
-
         try {
             val (options, _) = Runner.parseArguments(args.toTypedArray())
             Assertions.assertEquals(expectedOptions, options)
