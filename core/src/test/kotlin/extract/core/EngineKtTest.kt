@@ -65,13 +65,13 @@ internal class EngineKtTest {
     }
 }
 
-private val DUMMY_USER = User("dummyUserName", "dummyUserEmail")
+private val dummyUser = User("dummyUserName", "dummyUserEmail")
 
 fun testCommit(
         hash: String = "dummyHash",
         parentHashes: List<String> = listOf(),
-        author: User = DUMMY_USER,
-        committer: User = DUMMY_USER,
+        author: User = dummyUser,
+        committer: User = dummyUser,
         time: Int = 0,
         title: String = "dummyTitle",
         message: String = "dummyMessage",
