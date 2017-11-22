@@ -18,6 +18,8 @@ private class ExtractInternal {
 
     @JsonProperty("title-pattern")
     var titlePattern: String? = null
+    @JsonProperty("message-pattern")
+    var messagePattern: String? = null
     var files: List<String> = listOf()
 
     var text: String? = null
@@ -27,16 +29,19 @@ private class ExtractInternal {
     var style: String? = null
     var badge: String? = null
 
-    override fun toString(): String {
-        return "$name, $titlePattern, $files, $icon, $text, $hint, $url, $style, $badge"
-    }
+    override fun toString() =
+            "$name, $titlePattern, $messagePattern, $files, $icon, $text, $hint, $url, $style, $badge"
 
     fun toExtract(): Extract {
         if (name == null) {
             throw IllegalStateException("Extract doesn't have name: $this")
         }
 
-        return Extract(name!!, titlePattern, files,
+        return Extract(
+                name!!,
+                titlePattern = titlePattern,
+                messagePattern = messagePattern,
+                files = files,
                 icon = icon,
                 text = text,
                 hint = hint ?: text,

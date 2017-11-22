@@ -8,7 +8,7 @@ internal class EngineKtTest {
     fun assignLabelWithPatterns() {
         val label = assignLabel(
                 testCommit(title = "Open created actual class in editor #KT-20135 Fixed"),
-                Extract("YouTrack", "^.*(KT-\\d+).*$", listOf(),
+                Extract("YouTrack", "^.*(KT-\\d+).*$", null, listOf(),
                         "path", "\${1}", "\${0}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
@@ -22,7 +22,51 @@ internal class EngineKtTest {
                         badges = listOf()),
                 label
         )
+    }
 
+    @Test
+    fun assignLabelWithMessagePattern() {
+        val title = "Open created actual class in editor"
+        val label = assignLabel(
+                testCommit(hash = "123", title = title, message = "$title\n\n #KT-20135 Fixed"),
+                Extract("YouTrack", null, "^.*(KT-\\d+).*$", listOf(),
+                        "path", "\${1}", "\${1}", "https://youtrack.jetbrains.com/issue/\${1}")
+        )
+
+        Assert.assertEquals(
+                ExtractLabel(
+                        "YouTrack", "KT-20135",
+                        hint = "KT-20135",
+                        icon = "path",
+                        url = "https://youtrack.jetbrains.com/issue/KT-20135",
+                        style = null,
+                        badges = listOf()),
+                label
+        )
+    }
+
+    @Test
+    fun assignLabelByBothPatterns() {
+        val title = "Open created actual class in editor"
+        val extract =
+                Extract("Some",
+                        titlePattern = "^.*(first).*$",
+                        messagePattern = "^.*(second).*$",
+                        text = "\${1}")
+
+        Assert.assertEquals(
+                ExtractLabel(name = "Some", text = "first", icon = null, hint = null, url = null, style = null, badges = listOf()),
+                assignLabel(
+                        testCommit(hash = "123", title = "bla bla bla first", message = "bla bla bla first\n\nfoo foo foo first second"),
+                        extract)
+        )
+
+        Assert.assertEquals(
+                ExtractLabel(name = "Some", text = "second", icon = null, hint = null, url = null, style = null, badges = listOf()),
+                assignLabel(
+                        testCommit(hash = "345", title = "bla bla bla", message = "bla bla bla\n\nfoo foo foo first second"),
+                        extract)
+        )
     }
 
     @Test

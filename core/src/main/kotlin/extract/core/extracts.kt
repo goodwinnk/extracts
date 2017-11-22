@@ -4,6 +4,7 @@ data class Extract(
         val name: String,
 
         val titlePattern: String? = null,
+        val messagePattern: String? = null,
         val files: List<String> = listOf(),
 
         val icon: String? = null,

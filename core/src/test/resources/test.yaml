@@ -16,3 +16,6 @@ extracts:
 
   - name: WithBadge
     badge: "${matched}"
+
+  - name: WithMessagePattern
+    message-pattern: "^.*(KT-\\d+).*$"

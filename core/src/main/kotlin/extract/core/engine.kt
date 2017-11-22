@@ -17,25 +17,41 @@ fun assignLabels(commitInfo: CommitInfo, extracts: Extracts): List<ExtractLabel>
 
 fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     val values = MutablePredefinedVariables(commitInfo)
-    val titlePattern = extract.titlePattern
-    if (titlePattern != null) {
-        val titleCompiledPattern = Pattern.compile(titlePattern)
-        val matcher = titleCompiledPattern.matcher(commitInfo.title)
-        if (matcher.find()) {
-            return extract.createExtractLabel(matcher, values)
+
+    run {
+        val titlePattern = extract.titlePattern
+        if (titlePattern != null) {
+            val titleCompiledPattern = Pattern.compile(titlePattern)
+            val matcher = titleCompiledPattern.matcher(commitInfo.title)
+            if (matcher.find()) {
+                return extract.createExtractLabel(matcher, values)
+            }
         }
     }
 
-    if (extract.files.isNotEmpty()) {
-        val isActionMatches = if (extract.hasVariable(PredefinedVariables.MATCHES)) {
-            values.matches = commitInfo.fileActions.count { fileAction -> pathMatch(fileAction.path, extract.files) }
-            values.matches != 0
-        } else {
-            commitInfo.fileActions.any { fileAction -> pathMatch(fileAction.path, extract.files) }
+    run {
+        val messagePattern = extract.messagePattern
+        if (messagePattern != null) {
+            val messageCompiledPattern = Pattern.compile(messagePattern, Pattern.DOTALL)
+            val matcher = messageCompiledPattern.matcher(commitInfo.message)
+            if (matcher.find()) {
+                return extract.createExtractLabel(matcher, values)
+            }
         }
+    }
 
-        if (isActionMatches) {
-            return extract.createExtractLabel(null, values)
+    run {
+        if (extract.files.isNotEmpty()) {
+            val isActionMatches = if (extract.hasVariable(PredefinedVariables.MATCHES)) {
+                values.matches = commitInfo.fileActions.count { fileAction -> pathMatch(fileAction.path, extract.files) }
+                values.matches != 0
+            } else {
+                commitInfo.fileActions.any { fileAction -> pathMatch(fileAction.path, extract.files) }
+            }
+
+            if (isActionMatches) {
+                return extract.createExtractLabel(null, values)
+            }
         }
     }
 
