@@ -42,7 +42,7 @@ bin/extracts -r {path to repository with .extracts file}
 
 ## Extracts Setup
 
-Check the at [examples](/demo/src/main/resources/).
+Check [example](/demo/src/main/resources/) yaml files.
 
 ### Examples
 
