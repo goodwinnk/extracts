@@ -1,8 +1,31 @@
 # Commit Extracts
 
+## Motivation
+
+Git considers repository as a mere bunch of files and folders and does not know anything 
+about project structure, modifications in "images/logo.png", "core/Engine.java" or ".gitignore" 
+files would be effectively same to Git. As there might be a lot of files changed in a commit,
+tools for history usually show only author, date and message in the list, that makes reading 
+commit messages one by one the main option when any investigation needed. 
+
+With Extracts project you can automate collecting an important information for your project 
+from commits and show it as a list of labels in the history. It might be sub-projects or 
+modules names, links to issues in your tracker, or even particular files highlights. This will 
+make the log far more useful and easier to work with.
+
 ![Extracts](docs/Concept.png?raw=true "Extracts")
 
-## Console Interface
+### Install
+
+Download and unpack the latest release from the [releases](https://github.com/goodwinnk/extract/releases).
+
+### Run
+
+```
+bin/extracts -r {path to repository with .extracts file}
+```
+
+### CLI arguments
 
 ```
 -extracts (-f) FILE : Path to extracts file. "repository/.extracts" path is
@@ -18,6 +41,8 @@
 ```
 
 ## Extracts Setup
+
+Check the at [examples](/demo/src/main/resources/).
 
 ### Examples
 
@@ -53,8 +78,8 @@
 - Highlight a special file is affected in the commit
 
 ```
-  - name: JS
+  - name: ChangeLog
     files: [
-      js/**
+      ChangeLog.md
     ]
 ```
