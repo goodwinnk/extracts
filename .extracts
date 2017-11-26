@@ -40,11 +40,17 @@ extracts:
     files: [
       ".extracts",
     ]
-    style: e4
+    style: e2
 
   - name: Tests
     files: [
       "**/src/test/**"
     ]
     style: e6
+
+  - name: README
+    files: [
+      "README.md"
+    ]
+    style: e2
 ---
