@@ -75,7 +75,7 @@ Check the at [examples](/demo/src/main/resources/).
     ]
 ```
 
-- Highlight a special file is affected in the commit
+- Highlight a special file affected by the commit
 
 ```
   - name: ChangeLog
