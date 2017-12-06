@@ -47,7 +47,6 @@ internal class EngineKtTest {
 
     @Test
     fun assignLabelByBothPatterns() {
-        val title = "Open created actual class in editor"
         val extract =
                 Extract("Some",
                         titlePattern = "^.*(first).*$",
