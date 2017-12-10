@@ -5,32 +5,23 @@ import org.junit.Assert
 import org.junit.BeforeClass
 import org.junit.Test
 import java.io.File
-import java.nio.file.Files
-
 
 class ReadCommitsWorkTreeTest {
-    companion object {
-        var tempDir: File? = null
+    companion object : TestDataGitInitializer() {
+        override val testClassName = ReadCommitsWorkTreeTest::class.java.simpleName
+        override val basePath = "../core/src/test/testData/worktree/"
+        override val workTreeDirNames = listOf("other")
 
         @JvmStatic
         @BeforeClass
-        fun beforeClass() {
-            val testDir = Files.createTempDirectory(this::class.java.simpleName).toFile()
-            Assert.assertTrue(testDir.isDirectory)
-
-            tempDir = testDir
-
-            val baseDir = File(BASE_PATH)
-            baseDir.copyRecursively(testDir, true)
-
-            renameWorkTreeRepo(testDir, true)
+        override fun beforeClass() {
+            super.beforeClass()
         }
 
         @JvmStatic
         @AfterClass
-        fun afterClass() {
-            tempDir?.deleteRecursively()
-            tempDir = null
+        override fun afterClass() {
+            super.afterClass()
         }
     }
 
@@ -76,31 +67,5 @@ class ReadCommitsWorkTreeTest {
         val commit = commits.single()
 
         Assert.assertEquals(expected, commit)
-    }
-}
-
-private const val BASE_PATH = "../core/src/test/testData/worktree/"
-private const val TEMP_GIT = "temp-git"
-private const val DOT_GIT = ".git"
-
-private fun renameWorkTreeRepo(baseDir: File, toGit: Boolean) {
-    val mainDir = File(baseDir, "main")
-    val otherDir = File(baseDir, "other")
-
-    val mainGitDir = File(mainDir, DOT_GIT)
-    val otherDitFile = File(otherDir, DOT_GIT)
-    if (toGit) {
-        File(mainDir, TEMP_GIT).renameTo(mainGitDir)
-        File(otherDir, TEMP_GIT).renameTo(otherDitFile)
-
-        val otherInMainGitDirFile = File(mainGitDir, "worktrees/other/gitdir")
-
-        val filesWithBaseDir = listOf(otherInMainGitDirFile, otherDitFile)
-        for (file in filesWithBaseDir) {
-            file.writeText(file.readText().replace("\$BASE_DIR", baseDir.canonicalPath))
-        }
-    } else {
-        mainGitDir.renameTo(File(mainDir, TEMP_GIT))
-        otherDitFile.renameTo(File(otherDir, TEMP_GIT))
     }
 }
