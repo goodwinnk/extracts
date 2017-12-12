@@ -12,13 +12,15 @@ abstract class TestDataGitInitializer {
     open val baseDirName: String = "main"
     open val workTreeDirNames: List<String> = listOf()
 
+    fun mainGitPath() = File(File(tempDir!!, baseDirName), DOT_GIT).absolutePath
+
     open fun beforeClass() {
         val testDir = Files.createTempDirectory(testClassName).toFile()
         Assert.assertTrue(testDir.isDirectory)
 
         tempDir = testDir
 
-        val baseDir = File(BASE_PATH)
+        val baseDir = File(basePath)
         baseDir.copyRecursively(testDir, true)
 
         prepareTestDataRepository(testDir, baseDirName, workTreeDirNames)
@@ -30,7 +32,6 @@ abstract class TestDataGitInitializer {
     }
 }
 
-private const val BASE_PATH = "../core/src/test/testData/worktree/"
 private const val TEMP_GIT = "temp-git"
 private const val DOT_GIT = ".git"
 

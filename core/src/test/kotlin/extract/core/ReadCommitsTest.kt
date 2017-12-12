@@ -1,86 +1,116 @@
 package extract.core
 
+import org.junit.AfterClass
 import org.junit.Assert
+import org.junit.BeforeClass
 import org.junit.Test
 
 class ReadCommitsTest {
+    companion object : TestDataGitInitializer() {
+        override val testClassName = ReadCommitsTest::class.java.simpleName
+        override val basePath = "../core/src/test/testData/readCommits/"
+
+        @JvmStatic
+        @BeforeClass
+        override fun beforeClass() {
+            super.beforeClass()
+        }
+
+        @JvmStatic
+        @AfterClass
+        override fun afterClass() {
+            super.afterClass()
+        }
+    }
+
     val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
 
     @Test
     fun readFirstCommit() {
         checkCommit(
                 CommitInfo(
-                        hash = "4e028c4d4c6cb4bd292d07a950056a8f568e66c6",
+                        hash = "eb3d607a078307b096d5c7c479b48322bfa2e967",
                         parentHashes = listOf(),
                         author = nk,
                         committer = nk,
-                        time = 1506291116,
-                        title = "Init commit",
-                        message = "Init commit\n",
+                        time = 1513116076,
+                        title = "init",
+                        message = "init\n",
                         fileActions = listOf(
-                                FileAction(Action.ADD, "build.gradle"),
-                                FileAction(Action.ADD, "gradle/wrapper/gradle-wrapper.jar"),
-                                FileAction(Action.ADD, "gradle/wrapper/gradle-wrapper.properties"),
-                                FileAction(Action.ADD, "gradlew"),
-                                FileAction(Action.ADD, "gradlew.bat"),
-                                FileAction(Action.ADD, "settings.gradle"),
-                                FileAction(Action.ADD, "src/main/kotlin/extract/demo/main.kt"),
-                                FileAction(Action.ADD, "src/main/kotlin/extract/demo/parser.kt"),
-                                FileAction(Action.ADD, "src/test/resources/example.yaml")
-                        ))
+                                FileAction(Action.ADD, "first.txt"),
+                                FileAction(Action.ADD, "second.txt"),
+                                FileAction(Action.ADD, "third.txt")
+                        )),
+                mainGitPath()
         )
     }
 
     @Test
-    fun readMiddleCommit() {
+    fun readMiddleDeleteCommit() {
         checkCommit(
                 CommitInfo(
-                        "e720f557c51d957dd3c5cdb3ecbf83cb9a916a83",
-                        parentHashes = listOf("469f3104cb7762e8a2202aab8824ebeea0763c98"),
+                        "1ec85e17cc5c4537c1bd0f00730035a3c9a924dc",
+                        parentHashes = listOf("eb3d607a078307b096d5c7c479b48322bfa2e967"),
                         author = nk,
                         committer = nk,
-                        time = 1506670977,
-                        title = "Parse example file with Jackson",
-                        message = "Parse example file with Jackson\n",
+                        time = 1513116128,
+                        title = "Delete third",
+                        message = "Delete third\n",
                         fileActions = listOf(
-                                FileAction(Action.MODIFY, path = "build.gradle"),
-                                FileAction(Action.MODIFY, path = "src/main/kotlin/extract/demo/parser.kt"),
-                                FileAction(Action.MODIFY, path = "src/test/resources/example.yaml")
-                        )))
+                                FileAction(action=Action.DELETE, path="/dev/null")
+                        )),
+                mainGitPath()
+        )
+    }
+
+    @Test
+    fun readMiddleModifyCommit() {
+        checkCommit(
+                CommitInfo(
+                        "090661dac86a607de00292592513214c8760c348",
+                        parentHashes = listOf("1ec85e17cc5c4537c1bd0f00730035a3c9a924dc"),
+                        author = nk,
+                        committer = nk,
+                        time = 1513116175,
+                        title = "Modify first",
+                        message = "Modify first\n\none -> one one\n",
+                        fileActions = listOf(
+                                FileAction(action = Action.MODIFY, path = "first.txt")
+                        )),
+                mainGitPath()
+        )
     }
 
     @Test
     fun readSeveralCommits() {
-        val commits = readCommits(OWN_GIT_PATH, "a6a653763b676c0a88ac07039a734d3add845cbd", 3)
+        val commits = readCommits(mainGitPath(), "ec18450180ceceea54ad1a614bcdba2932aad032", 3)
         Assert.assertEquals(3, commits.size)
 
         val first = commits.first()
-        Assert.assertEquals("a6a653763b676c0a88ac07039a734d3add845cbd", first.hash)
-        Assert.assertEquals("Abstract commit information", first.title)
+        Assert.assertEquals("ec18450180ceceea54ad1a614bcdba2932aad032", first.hash)
+        Assert.assertEquals("Rename second -> third", first.title)
 
         val last = commits.last()
-        Assert.assertEquals("e720f557c51d957dd3c5cdb3ecbf83cb9a916a83", last.hash)
-        Assert.assertEquals("Parse example file with Jackson", last.title)
+        Assert.assertEquals("1ec85e17cc5c4537c1bd0f00730035a3c9a924dc", last.hash)
+        Assert.assertEquals("Delete third", last.title)
     }
 
     @Test
     fun readTooManyCommits() {
-        val commits = readCommits(OWN_GIT_PATH, "a6a653763b676c0a88ac07039a734d3add845cbd", 1000)
-        Assert.assertEquals(5, commits.size)
+        val commits = readCommits(mainGitPath(), "ec18450180ceceea54ad1a614bcdba2932aad032", 1000)
+        Assert.assertEquals(4, commits.size)
     }
 
     @Test
     fun readBranch() {
-        val commits = readCommits(OWN_GIT_PATH, "refs/heads/master", 1)
+        val commits = readCommits(mainGitPath(), "refs/heads/master", 1)
         Assert.assertEquals(1, commits.size)
     }
 
-    private fun checkCommit(expected: CommitInfo) {
-        val commits = readCommits(OWN_GIT_PATH, expected.hash, 1)
+    private fun checkCommit(expected: CommitInfo, gitPath: String) {
+        val commits = readCommits(gitPath, expected.hash, 1)
         val commit = commits.single()
 
         Assert.assertEquals(expected, commit)
     }
 }
-
-private val OWN_GIT_PATH = "../.git"

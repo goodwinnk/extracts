@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 ed56e11563425422941c6049f28d7d3a96c66ec0 Nikolay Krasko <goodwinnk@gmail.com> 1513116028 +0300	commit (initial): init
+ed56e11563425422941c6049f28d7d3a96c66ec0 eb3d607a078307b096d5c7c479b48322bfa2e967 Nikolay Krasko <goodwinnk@gmail.com> 1513116076 +0300	commit (amend): init
+eb3d607a078307b096d5c7c479b48322bfa2e967 1ec85e17cc5c4537c1bd0f00730035a3c9a924dc Nikolay Krasko <goodwinnk@gmail.com> 1513116128 +0300	commit: Delete third
+1ec85e17cc5c4537c1bd0f00730035a3c9a924dc 090661dac86a607de00292592513214c8760c348 Nikolay Krasko <goodwinnk@gmail.com> 1513116175 +0300	commit: Modify first
+090661dac86a607de00292592513214c8760c348 ec18450180ceceea54ad1a614bcdba2932aad032 Nikolay Krasko <goodwinnk@gmail.com> 1513116245 +0300	commit: Rename second -> third
