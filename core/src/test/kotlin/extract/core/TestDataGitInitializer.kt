@@ -12,7 +12,7 @@ abstract class TestDataGitInitializer {
     open val baseDirName: String = "main"
     open val workTreeDirNames: List<String> = listOf()
 
-    fun mainGitPath() = File(File(tempDir!!, baseDirName), DOT_GIT).absolutePath
+    fun mainGitPath(): String = File(File(tempDir!!, baseDirName), DOT_GIT).absolutePath
 
     open fun beforeClass() {
         val testDir = Files.createTempDirectory(testClassName).toFile()

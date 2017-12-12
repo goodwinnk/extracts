@@ -7,7 +7,7 @@ import org.junit.Test
 
 class ReadCommitsTest {
     companion object : TestDataGitInitializer() {
-        override val testClassName = ReadCommitsTest::class.java.simpleName
+        override val testClassName: String = ReadCommitsTest::class.java.simpleName
         override val basePath = "../core/src/test/testData/readCommits/"
 
         @JvmStatic
@@ -23,7 +23,7 @@ class ReadCommitsTest {
         }
     }
 
-    val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
+    private val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
 
     @Test
     fun readFirstCommit() {

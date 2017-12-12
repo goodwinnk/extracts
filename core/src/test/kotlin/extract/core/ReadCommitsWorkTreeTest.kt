@@ -8,7 +8,7 @@ import java.io.File
 
 class ReadCommitsWorkTreeTest {
     companion object : TestDataGitInitializer() {
-        override val testClassName = ReadCommitsWorkTreeTest::class.java.simpleName
+        override val testClassName: String = ReadCommitsWorkTreeTest::class.java.simpleName
         override val basePath = "../core/src/test/testData/worktree/"
         override val workTreeDirNames = listOf("other")
 
@@ -25,7 +25,7 @@ class ReadCommitsWorkTreeTest {
         }
     }
 
-    val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
+    private val nk = User("Nikolay Krasko", "goodwinnk@gmail.com")
 
     @Test
     fun readInMain() {
