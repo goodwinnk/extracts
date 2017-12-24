@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "noImplicitAny": true,
+        "rootDir": "src",
+        "outDir": "dist/js"
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "github-extracts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Show extracts in GitHub log",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack",
+    "watch": "./node_modules/.bin/webpack -w"
+  },
+  "author": "Nikolay Krasko (goodwinnk@gmail.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goodwinnk/extract.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chrome": "~0.0.56",
+    "ts-loader": "~3.2.0",
+    "typescript": "~2.6.2",
+    "webpack": "~3.10.0"
+  }
+}
