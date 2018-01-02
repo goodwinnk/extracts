@@ -1,0 +1,55 @@
+.extract-tag {
+    display: inline-block;
+    padding: 2px 4px;
+    margin-left: 4px;
+    border: 1px solid;
+    white-space: nowrap;
+    font-size: 12px;
+    line-height: 12px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.badge {
+    font-size: 10px;
+    padding: 0 0 0 3px;
+    margin-left: 3px;
+    border-left-width: 1px;
+    border-left-style: dotted;
+}
+
+.e0 {
+    color: gray!important;
+    background-color: white!important;
+}
+
+.e1 {
+    color: #3d85c6!important;
+    background-color: #e0f1fb!important;
+}
+
+.e2 {
+    color: #444 !important;
+    background-color: #fed74a !important;
+}
+
+.e3 {
+    color: #fff!important;
+    background-color: #7dbd36!important;
+}
+
+.e4 {
+    color: #fff!important;
+    background-color: #ce6700!important;
+}
+
+.e5 {
+    color: #4da400!important;
+    background-color: #e6f6cf!important;
+}
+
+.e6 {
+    color: #fff!important;
+    background-color: #878787!important;
+}
