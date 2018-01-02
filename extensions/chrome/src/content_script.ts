@@ -1,24 +1,47 @@
 window.onload = function () {
-    modifyLog();
+    ExtractsContentScript.modifyLog();
 };
 
-function modifyLog() {
-    let elements = document.getElementsByClassName("commit-links-cell table-list-cell");
-    console.log("Number of found commits: " + elements.length);
+namespace ExtractsContentScript {
+    const COMMIT_CLASS_NAME = "commit";
+    const LINKS_CELL_CLASS_NAME = "commit-links-cell";
+    const COMMIT_DATA_ATTRIBUTE = "data-channel";
 
-    let maxIndex = Math.min(elements.length, 10);
+    // language=RegExp
+    const COMMIT_DATA_PATTERN = new RegExp("^repo:(\\w+):commit:(\\w+)$"); // repo:{number}:commit:{hash}
 
-    for (let i = 0; i < maxIndex; i++) {
-        let commitElement = elements.item(i);
-        commitElement.appendChild(createExtractTag("e1", "Dummy Title", "dummy"));
+    export function modifyLog() {
+        let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
+        let maxIndex = Math.min(commitsElements.length, 10);
+
+        for (let i = 0; i < maxIndex; i++) {
+            let commitElement = commitsElements.item(i);
+
+            let linksCellElements = commitElement.getElementsByClassName(LINKS_CELL_CLASS_NAME);
+            if (linksCellElements.length != 1) continue;
+
+            let dataAttribute = commitElement.getAttribute(COMMIT_DATA_ATTRIBUTE);
+            if (!dataAttribute) continue;
+
+            let [repoId, hash] = parseCommitData(dataAttribute);
+            console.log(`RepoId: ${repoId} Commit hash: ${hash}`);
+
+            let linksCellElement = linksCellElements.item(0);
+            linksCellElement.appendChild(createExtractTag("e1", "Dummy Title", "dummy"));
+        }
     }
-}
 
-function createExtractTag(styleClass: string, title: string, extractText: string) {
-    let tagSpan = document.createElement("span");
-    tagSpan.className = "extract-tag " + styleClass;
-    tagSpan.title = title;
-    tagSpan.innerText = extractText;
+    function parseCommitData(commitData: string): [string, string] {
+        let matched = COMMIT_DATA_PATTERN.exec(commitData);
+        return [matched[1], matched[2]];
+    }
 
-    return tagSpan;
+    function createExtractTag(styleClass: string, title: string, extractText: string) {
+        let tagSpan = document.createElement("span");
+        tagSpan.className = "extract-tag " + styleClass;
+        tagSpan.title = title;
+        tagSpan.innerText = extractText;
+
+        return tagSpan;
+    }
 }
