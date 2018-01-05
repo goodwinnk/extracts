@@ -13,7 +13,9 @@
     "type": "git",
     "url": "https://github.com/goodwinnk/extract.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "another-rest-client": "^0.3.5"
+  },
   "devDependencies": {
     "@types/chrome": "~0.0.56",
     "ts-loader": "~3.2.0",

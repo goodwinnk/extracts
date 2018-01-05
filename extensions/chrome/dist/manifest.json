@@ -27,6 +27,7 @@
   ],
   "permissions": [
     "activeTab",
+    "webRequest",
     "https://github.com/*"
   ],
   "optional_permissions": [

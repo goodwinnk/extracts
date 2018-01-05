@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "noImplicitAny": true,
-        "rootDir": "src",
-        "outDir": "dist/js"
-    }
+  "compilerOptions": {
+    "target": "es6",
+    "rootDir": "src",
+    "outDir": "dist/js",
+    "sourceMap": true
+  }
 }

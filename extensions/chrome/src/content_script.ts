@@ -1,5 +1,10 @@
+/// <reference> another-rest-client.d.ts
+import * as RestClient from 'another-rest-client';
+
 window.onload = function () {
+    console.log("Extracts onload");
     ExtractsContentScript.modifyLog();
+    ExtractsContentScript.fetchCommitData("JetBrains", "kotlin", "2cdc246a274ff3fff92a7c880a905945ed6c0833");
 };
 
 namespace ExtractsContentScript {
@@ -31,8 +36,9 @@ namespace ExtractsContentScript {
         }
     }
 
-    function parseCommitData(commitData: string): [string, string] {
+    function parseCommitData(commitData: string): [string, string] | null {
         let matched = COMMIT_DATA_PATTERN.exec(commitData);
+        if (matched == null) return null;
         return [matched[1], matched[2]];
     }
 
@@ -43,5 +49,16 @@ namespace ExtractsContentScript {
         tagSpan.innerText = extractText;
 
         return tagSpan;
+    }
+
+    export function fetchCommitData(owner: string, repo: string, commitHash: string) {
+        let api = new RestClient('https://api.github.com');
+        api.res(
+            {repos: ['releases', 'commits']}
+        );
+
+        api.repos(`${owner}/${repo}`).commits(commitHash).get().then(function (commitData) {
+            console.log(commitData.commit.message);
+        });
     }
 }
