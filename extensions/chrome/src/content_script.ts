@@ -1,7 +1,10 @@
 import * as ExtractsGitHub from "./github";
+import * as YamlParser from "js-yaml";
 
 window.onload = function () {
     console.log("Extracts onload");
+    console.log(YamlParser.load('greeting: hello\nname: world'));
+
     ExtractsContentScript.modifyLog();
     ExtractsGitHub.fetchCommitData("JetBrains", "kotlin", "2cdc246a274ff3fff92a7c880a905945ed6c0833");
 };

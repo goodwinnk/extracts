@@ -14,10 +14,12 @@
     "url": "https://github.com/goodwinnk/extract.git"
   },
   "dependencies": {
-    "another-rest-client": "^0.3.5"
+    "another-rest-client": "^0.3.5",
+    "js-yaml": "~3.10.0"
   },
   "devDependencies": {
     "@types/chrome": "~0.0.56",
+    "@types/js-yaml": "3.10.1",
     "ts-loader": "~3.2.0",
     "typescript": "~2.6.2",
     "webpack": "~3.10.0",
