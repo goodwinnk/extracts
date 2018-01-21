@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/github.ts',
+    entry: './src/github-node.ts',
     devtool: 'inline-source-map',
     target: 'node',
     module: {

@@ -2,8 +2,6 @@
 import * as ExtractsGitHub from "../../../src/github"
 import * as nodeXMLHttpRequest from 'XMLHttpRequest';
 
-export var XMLHttpRequest = nodeXMLHttpRequest.XMLHttpRequest;
-
 declare var global: any;
 global.XMLHttpRequest = nodeXMLHttpRequest.XMLHttpRequest;
 
