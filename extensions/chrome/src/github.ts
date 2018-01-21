@@ -1,12 +1,12 @@
 import * as RestClient from "another-rest-client";
 import {User, Action, FileAction, CommitInfo} from "./core";
 
-export function fetchCommitData(owner: string, repo: string, commitHash: string) {
-    let api = new RestClient('https://api.github.com');
-    api.res(
-        {repos: ['releases', 'commits']}
-    );
+let api = new RestClient('https://api.github.com');
+api.res(
+    {repos: ['releases', 'commits', 'contents']}
+);
 
+export function fetchCommitData(owner: string, repo: string, commitHash: string) {
     api.repos(`${owner}/${repo}`).commits(commitHash).get().then(function (commitData: any) {
         let fileActions = commitData.files.map((fileData: any): FileAction => {
             let action;
@@ -37,5 +37,12 @@ export function fetchCommitData(owner: string, repo: string, commitHash: string)
             fileActions
         );
         console.log(commitInfo)
+    });
+}
+
+// GET /repos/:owner/:repo/contents/:path
+export function fetchFileContent(owner: string, repo: string, path: string) {
+    api.repos(`${owner}/${repo}`).contents(path).get().then(function (contentData: any) {
+        console.log(atob(contentData.content));
     });
 }
