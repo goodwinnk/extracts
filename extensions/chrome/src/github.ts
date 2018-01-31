@@ -41,8 +41,18 @@ export function fetchCommitData(owner: string, repo: string, commitHash: string)
 }
 
 // GET /repos/:owner/:repo/contents/:path
-export function fetchFileContent(owner: string, repo: string, path: string) {
-    api.repos(`${owner}/${repo}`).contents(path).get().then(function (contentData: any) {
-        console.log(atob(contentData.content));
-    });
+export async function fetchFileContent(owner: string, repo: string, path: string): Promise<string> {
+    let requestPromise = api.repos(`${owner}/${repo}`).contents(path).get() as Promise<any>;
+    return requestPromise.then(
+        function (contentData: any): string {
+            let content = contentData.content;
+            if (content == null) {
+                return null;
+            }
+
+            return atob(content as string);
+        },
+        function (reason: any): string {
+            return null;
+        });
 }

@@ -23,6 +23,8 @@
     "@types/chrome": "~0.0.56",
     "@types/js-yaml": "3.10.1",
     "@types/mocha": "^2.2.46",
+    "@types/node": "^9.4.0",
+    "buffer": "^5.0.8",
     "chai": "^4.1.2",
     "mocha": "^5.0.0",
     "ts-loader": "~3.2.0",
