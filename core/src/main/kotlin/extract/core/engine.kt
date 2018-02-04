@@ -1,7 +1,5 @@
 package extract.core
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 import kotlin.properties.Delegates
 
 fun assignLabels(commitInfos: List<CommitInfo>, extracts: Extracts): Map<String, List<ExtractLabel>> {
@@ -12,7 +10,7 @@ fun assignLabels(commitInfos: List<CommitInfo>, extracts: Extracts): Map<String,
 }
 
 fun assignLabels(commitInfo: CommitInfo, extracts: Extracts): List<ExtractLabel> {
-    return extracts.extracts.map { assignLabel(commitInfo, it) }.filterNotNull()
+    return extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
 }
 
 fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
@@ -21,10 +19,10 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     run {
         val titlePattern = extract.titlePattern
         if (titlePattern != null) {
-            val titleCompiledPattern = Pattern.compile(titlePattern)
-            val matcher = titleCompiledPattern.matcher(commitInfo.title)
-            if (matcher.find()) {
-                return extract.createExtractLabel(matcher, values)
+            val titleCompiledRegex = Regex(titlePattern)
+            val matchResult = titleCompiledRegex.matchEntire(commitInfo.title)
+            if (matchResult != null) {
+                return extract.createExtractLabel(matchResult, values)
             }
         }
     }
@@ -32,10 +30,10 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     run {
         val messagePattern = extract.messagePattern
         if (messagePattern != null) {
-            val messageCompiledPattern = Pattern.compile(messagePattern, Pattern.DOTALL)
-            val matcher = messageCompiledPattern.matcher(commitInfo.message)
-            if (matcher.find()) {
-                return extract.createExtractLabel(matcher, values)
+            val messageCompiledRegex = Regex(messagePattern, RegexOption.DOT_MATCHES_ALL)
+            val matchResult = messageCompiledRegex.matchEntire(commitInfo.message)
+            if (matchResult != null) {
+                return extract.createExtractLabel(matchResult, values)
             }
         }
     }
@@ -58,15 +56,15 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     return null
 }
 
-fun Extract.createExtractLabel(matcher: Matcher?, values: PredefinedValues): ExtractLabel {
+fun Extract.createExtractLabel(matchResult: MatchResult?, values: PredefinedValues): ExtractLabel {
     return ExtractLabel(
             name,
-            text = text?.rewrite(matcher, values),
+            text = text?.rewrite(matchResult, values),
             icon = icon,
-            hint = hint?.rewrite(matcher, values),
-            url = url?.rewrite(matcher, values),
+            hint = hint?.rewrite(matchResult, values),
+            url = url?.rewrite(matchResult, values),
             style = style,
-            badges = listOf(badge?.rewrite(matcher, values)).filterNotNull()
+            badges = listOfNotNull(badge?.rewrite(matchResult, values))
     )
 }
 
@@ -77,7 +75,7 @@ private fun Extract.hasVariable(variableName: String): Boolean {
     return text.has(template) || hint.has(template) || url.has(template) || badge.has(template)
 }
 
-private fun String.rewrite(matcher: Matcher?, values: PredefinedValues): String {
+private fun String.rewrite(matcher: MatchResult?, values: PredefinedValues): String {
     if (!this.contains("\${")) {
         return this
     }
@@ -85,8 +83,9 @@ private fun String.rewrite(matcher: Matcher?, values: PredefinedValues): String 
     var result = rewrite(values)
 
     if (matcher != null) {
-        for (i in (matcher.groupCount() downTo 0)) {
-            result = result.replace(toTemplate(i.toString()), matcher.group(i))
+        val groups = matcher.groups
+        for (i in (groups.size - 1 downTo 0)) {
+            result = result.replace(toTemplate(i.toString()), groups[i]!!.value)
         }
     }
 
