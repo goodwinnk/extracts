@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":core-common:core-js" external.linked.project.path="$MODULE_DIR$/../../../../core-common/core-js" external.root.project.path="$MODULE_DIR$/../../../.." external.system.id="GRADLE" external.system.module.group="com.namtadam.extracts" external.system.module.version="0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="3" platform="JavaScript " useProjectSettings="false">
+        <implements>core-common</implements>
+        <testOutputPath>$MODULE_DIR$/../../../../core-common/core-js/build/classes/kotlin/test/core-js_test.js</testOutputPath>
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xmulti-platform" />
+        </compilerSettings>
+        <compilerArguments>
+          <option name="outputFile" value="$MODULE_DIR$/../../../../core-common/core-js/build/classes/kotlin/main/core-js.js" />
+          <option name="noStdlib" value="true" />
+          <option name="metaInfo" value="true" />
+          <option name="target" value="v5" />
+          <option name="main" value="call" />
+          <option name="languageVersion" value="1.2" />
+          <option name="apiVersion" value="1.2" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array />
+          </option>
+        </compilerArguments>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/../../../../core-common/core-js/out/production/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../../core-common/core-js/out/test/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../core-common/core-js">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/src/test/kotlin" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../core-common/core-js/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="core-common" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-js:1.2.21" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-js:1.2.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-js:1.2.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-js:1.2.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-annotations-common:1.2.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.21" level="project" />
+  </component>
+</module>

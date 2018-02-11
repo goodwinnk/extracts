@@ -37,8 +37,6 @@ object PredefinedVariables {
 
 data class Extracts(val extracts: List<Extract>)
 
-const val EMPTY_HASH = "EMPTY_HASH"
-
 data class CommitInfo(
         val hash: String,
         val parentHashes: List<String>,

@@ -30,10 +30,12 @@ fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     run {
         val messagePattern = extract.messagePattern
         if (messagePattern != null) {
-            val messageCompiledRegex = Regex(messagePattern, RegexOption.DOT_MATCHES_ALL)
-            val matchResult = messageCompiledRegex.matchEntire(commitInfo.message)
-            if (matchResult != null) {
-                return extract.createExtractLabel(matchResult, values)
+            val messageCompiledRegex = Regex(messagePattern)
+            for (line in commitInfo.message.lines()) {
+                val matchResult = messageCompiledRegex.matchEntire(line)
+                if (matchResult != null) {
+                    return extract.createExtractLabel(matchResult, values)
+                }
             }
         }
     }

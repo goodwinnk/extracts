@@ -1,9 +1,10 @@
 package extract.core
 
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
-internal class EngineKtTest {
+class EngineKtTest {
     @Test
     fun assignLabelWithPatterns() {
         val label = assignLabel(
@@ -12,7 +13,7 @@ internal class EngineKtTest {
                         "path", "\${1}", "\${0}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
-        Assert.assertEquals(
+        assertEquals(
                 ExtractLabel(
                         "YouTrack", "KT-20135",
                         hint = "Open created actual class in editor #KT-20135 Fixed",
@@ -33,7 +34,7 @@ internal class EngineKtTest {
                         "path", "\${1}", "\${1}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
-        Assert.assertEquals(
+        assertEquals(
                 ExtractLabel(
                         "YouTrack", "KT-20135",
                         hint = "KT-20135",
@@ -53,14 +54,14 @@ internal class EngineKtTest {
                         messagePattern = "^.*(second).*$",
                         text = "\${1}")
 
-        Assert.assertEquals(
+        assertEquals(
                 ExtractLabel(name = "Some", text = "first", icon = null, hint = null, url = null, style = null, badges = listOf()),
                 assignLabel(
                         testCommit(hash = "123", title = "bla bla bla first", message = "bla bla bla first\n\nfoo foo foo first second"),
                         extract)
         )
 
-        Assert.assertEquals(
+        assertEquals(
                 ExtractLabel(name = "Some", text = "second", icon = null, hint = null, url = null, style = null, badges = listOf()),
                 assignLabel(
                         testCommit(hash = "345", title = "bla bla bla", message = "bla bla bla\n\nfoo foo foo first second"),
@@ -70,9 +71,9 @@ internal class EngineKtTest {
 
     @Test
     fun fileMatchTest() {
-        Assert.assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
-        Assert.assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
-        Assert.assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
+        assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
+        assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
+        assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
     }
 
     @Test
@@ -94,7 +95,7 @@ internal class EngineKtTest {
                         badge = "\${matches}\\\${count}")
         )
 
-        Assert.assertEquals(
+        assertEquals(
                 ExtractLabel(
                         "YouTrack",
                         text = "2\\3",

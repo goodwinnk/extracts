@@ -2,4 +2,6 @@ rootProject.name = 'extract'
 include 'core'
 include 'demo'
 include 'cli'
-
+include 'core-common'
+include 'core-common:core-jvm'
+include 'core-common:core-js'
