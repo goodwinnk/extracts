@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -7,7 +8,7 @@ module.exports = {
         popup: path.join(__dirname, 'src/popup.ts'),
         options: path.join(__dirname, 'src/options.ts'),
         content_script: path.join(__dirname, 'src/content_script.ts'),
-        vendor: ['another-rest-client', 'js-yaml']
+        vendor: ['another-rest-client', 'js-yaml', 'kotlin', 'core-js']
     },
     module: {
         loaders: [
@@ -31,6 +32,11 @@ module.exports = {
         filename: '[name].js'
     },
     plugins: [
+        new CopyWebpackPlugin([
+            { from: '../../core-common/core-js/build/classes/kotlin/main', to: '../../node_modules/core-js' },
+            { from: '../../core-common/core-js/build/resources/main', to: '../../node_modules/core-js' }
+        ]),
+
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: Infinity
