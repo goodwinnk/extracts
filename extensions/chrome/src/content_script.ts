@@ -1,4 +1,3 @@
-import * as ExtractsGitHub from "./github";
 import * as YamlParser from "js-yaml";
 import {githubLocation, PageKind} from "./github-location";
 import {fetchFileContent} from "./github";
@@ -13,13 +12,11 @@ window.onload = async function () {
     if (gitHubLocation.kind != PageKind.commits) return;
     let parsedDocuments = YamlParser.loadAll(extractsContent) as Array<any>;
 
-    switch (parsedDocuments.length) {
-        case 1:
-            modifyLog(parsedDocuments[0]);
-            return;
-        default:
-            return;
+    if (parsedDocuments.length == 0) {
+        return;
     }
+
+    modifyLog(parsedDocuments[0]);
 };
 
 const COMMIT_CLASS_NAME = "commit";
