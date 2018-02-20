@@ -10,29 +10,29 @@ class ParserKtTest {
         assertEquals(5, extracts.size)
 
         assertEquals(
-                Extract("YouTrack", "^.*(KT-\\d+).*$", null, listOf(),
+                Extract("YouTrack", "^.*(KT-\\d+).*$", null, arrayOf(),
                         icon = "path", text = "\${1}", hint = "\${1}", url = "https://youtrack.jetbrains.com/issue/\${1}"),
                 extracts[0])
 
         assertEquals(
-                Extract("IDE", null, null, listOf("idea/**")),
+                Extract("IDE", null, null, arrayOf("idea/**")),
                 extracts[1]
         )
 
         assertEquals(
-                Extract("Minor", null, null, listOf(), style = "e1"),
+                Extract("Minor", null, null, arrayOf(), style = "e1"),
                 extracts[2]
         )
 
         assertEquals(
-                Extract("WithBadge", null, null, listOf(), badge = "\${matched}"),
+                Extract("WithBadge", null, null, arrayOf(), badge = "\${matched}"),
                 extracts[3]
         )
 
         assertEquals(
                 Extract("WithMessagePattern",
                         titlePattern = null, messagePattern = "^.*(KT-\\d+).*$",
-                        files = listOf(), badge = null),
+                        files = arrayOf(), badge = null),
                 extracts[4]
         )
     }

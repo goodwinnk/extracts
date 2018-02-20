@@ -20,7 +20,7 @@ private class ExtractInternal {
     var titlePattern: String? = null
     @JsonProperty("message-pattern")
     var messagePattern: String? = null
-    var files: List<String> = listOf()
+    var files: Array<String> = arrayOf()
 
     var text: String? = null
     var icon: String? = null

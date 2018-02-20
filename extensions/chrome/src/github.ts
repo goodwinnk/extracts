@@ -1,5 +1,9 @@
 import * as RestClient from "another-rest-client";
-import {FileAction, Action, CommitInfo, User}  from "core-js";
+import {extract} from "core-js";
+import FileAction = extract.core.FileAction;
+import Action = extract.core.Action;
+import CommitInfo = extract.core.CommitInfo;
+import User = extract.core.User;
 
 let api = new RestClient('https://api.github.com');
 api.res(

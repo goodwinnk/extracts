@@ -118,7 +118,7 @@ private inline fun String.rewriteOptionalVariable(name: String, value: () -> Any
 
 private fun toTemplate(name: String) = "\${$name}"
 
-fun pathMatch(path: String, patterns: List<String>): Boolean {
+fun pathMatch(path: String, patterns: Array<String>): Boolean {
     return patterns.any { pattern ->
         val startsWithStars = pattern.startsWith("**")
         val endsWithStars = pattern.endsWith("**")

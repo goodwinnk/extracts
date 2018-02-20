@@ -9,7 +9,7 @@ class EngineKtTest {
     fun assignLabelWithPatterns() {
         val label = assignLabel(
                 testCommit(title = "Open created actual class in editor #KT-20135 Fixed"),
-                Extract("YouTrack", "^.*(KT-\\d+).*$", null, listOf(),
+                Extract("YouTrack", "^.*(KT-\\d+).*$", null, arrayOf(),
                         "path", "\${1}", "\${0}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
@@ -30,7 +30,7 @@ class EngineKtTest {
         val title = "Open created actual class in editor"
         val label = assignLabel(
                 testCommit(hash = "123", title = title, message = "$title\n\n #KT-20135 Fixed"),
-                Extract("YouTrack", null, "^.*(KT-\\d+).*$", listOf(),
+                Extract("YouTrack", null, "^.*(KT-\\d+).*$", arrayOf(),
                         "path", "\${1}", "\${1}", "https://youtrack.jetbrains.com/issue/\${1}")
         )
 
@@ -71,9 +71,9 @@ class EngineKtTest {
 
     @Test
     fun fileMatchTest() {
-        assertTrue(pathMatch(".idea/some", listOf(".idea/**")))
-        assertTrue(pathMatch("Changes.md", listOf("Changes.md")))
-        assertTrue(pathMatch("one/two/ui/three", listOf("**/ui/**")))
+        assertTrue(pathMatch(".idea/some", arrayOf(".idea/**")))
+        assertTrue(pathMatch("Changes.md", arrayOf("Changes.md")))
+        assertTrue(pathMatch("one/two/ui/three", arrayOf("**/ui/**")))
     }
 
     @Test
@@ -87,7 +87,7 @@ class EngineKtTest {
                                 FileAction(Action.RENAME, "second.other")
                         )),
                 Extract("YouTrack",
-                        titlePattern = null, files = listOf("**.test"),
+                        titlePattern = null, files = arrayOf("**.test"),
                         icon = "path",
                         text = "\${matches}\\\${count}",
                         hint = "\${matches}\\\${count}",
