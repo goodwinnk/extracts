@@ -1,6 +1,9 @@
 import * as YamlParser from "js-yaml";
 import {githubLocation, PageKind} from "./github-location";
 import {fetchFileContent} from "./github";
+import {parseExtracts} from "./parser";
+import {extract} from "core-js";
+import Extract = extract.core.Extract;
 
 window.onload = async function () {
     let gitHubLocation = githubLocation(location.href);
@@ -10,13 +13,12 @@ window.onload = async function () {
     if (extractsContent == null) return;
 
     if (gitHubLocation.kind != PageKind.commits) return;
-    let parsedDocuments = YamlParser.loadAll(extractsContent) as Array<any>;
-
-    if (parsedDocuments.length == 0) {
+    let extracts = parseExtracts(extractsContent);
+    if (extracts.length == 0) {
         return;
     }
 
-    modifyLog(parsedDocuments[0]);
+    modifyLog(extracts);
 };
 
 const COMMIT_CLASS_NAME = "commit";
@@ -26,7 +28,7 @@ const COMMIT_DATA_ATTRIBUTE = "data-channel";
 // language=RegExp
 const COMMIT_DATA_PATTERN = new RegExp("^repo:(\\w+):commit:(\\w+)$"); // repo:{number}:commit:{hash}
 
-export function modifyLog(parsedExtracts: any) {
+export function modifyLog(parsedExtracts: Array<Extract>) {
     let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
     let maxIndex = Math.min(commitsElements.length, 10);
 
