@@ -30,13 +30,13 @@ class ReadCommitsTest {
         checkCommit(
                 CommitInfo(
                         hash = "eb3d607a078307b096d5c7c479b48322bfa2e967",
-                        parentHashes = listOf(),
+                        parentHashes = arrayOf(),
                         author = nk,
                         committer = nk,
                         time = 1513116076,
                         title = "init",
                         message = "init\n",
-                        fileActions = listOf(
+                        fileActions = arrayOf(
                                 FileAction(Action.ADD, "first.txt"),
                                 FileAction(Action.ADD, "second.txt"),
                                 FileAction(Action.ADD, "third.txt")
@@ -50,13 +50,13 @@ class ReadCommitsTest {
         checkCommit(
                 CommitInfo(
                         "1ec85e17cc5c4537c1bd0f00730035a3c9a924dc",
-                        parentHashes = listOf("eb3d607a078307b096d5c7c479b48322bfa2e967"),
+                        parentHashes = arrayOf("eb3d607a078307b096d5c7c479b48322bfa2e967"),
                         author = nk,
                         committer = nk,
                         time = 1513116128,
                         title = "Delete third",
                         message = "Delete third\n",
-                        fileActions = listOf(
+                        fileActions = arrayOf(
                                 FileAction(action=Action.DELETE, path="/dev/null")
                         )),
                 mainGitPath()
@@ -68,13 +68,13 @@ class ReadCommitsTest {
         checkCommit(
                 CommitInfo(
                         "090661dac86a607de00292592513214c8760c348",
-                        parentHashes = listOf("1ec85e17cc5c4537c1bd0f00730035a3c9a924dc"),
+                        parentHashes = arrayOf("1ec85e17cc5c4537c1bd0f00730035a3c9a924dc"),
                         author = nk,
                         committer = nk,
                         time = 1513116175,
                         title = "Modify first",
                         message = "Modify first\n\none -> one one\n",
-                        fileActions = listOf(
+                        fileActions = arrayOf(
                                 FileAction(action = Action.MODIFY, path = "first.txt")
                         )),
                 mainGitPath()

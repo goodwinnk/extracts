@@ -33,13 +33,13 @@ class ReadCommitsWorkTreeTest {
                 "main",
                 CommitInfo(
                         hash = "13c4d0200df99431abb24f7a88370f1dafaaad3c",
-                        parentHashes = listOf("05f5173943f1244dbf807b4311e268d14a0cd76c"),
+                        parentHashes = arrayOf("05f5173943f1244dbf807b4311e268d14a0cd76c"),
                         author = nk,
                         committer = nk,
                         time = 1511121311,
                         title = "Main only",
                         message = "Main only\n",
-                        fileActions = listOf(FileAction(action = Action.MODIFY, path = "test.txt"))
+                        fileActions = arrayOf(FileAction(action = Action.MODIFY, path = "test.txt"))
                 )
         )
     }
@@ -50,13 +50,13 @@ class ReadCommitsWorkTreeTest {
                 "other",
                 CommitInfo(
                         "25d390be9f6fb95e15bc0dbed7c492c63d25ec43",
-                        parentHashes = listOf("05f5173943f1244dbf807b4311e268d14a0cd76c"),
+                        parentHashes = arrayOf("05f5173943f1244dbf807b4311e268d14a0cd76c"),
                         author = nk,
                         committer = nk,
                         time = 1511127701,
                         title = "Other only",
                         message = "Other only\n",
-                        fileActions = listOf(FileAction(action = Action.MODIFY, path = "test.txt"))))
+                        fileActions = arrayOf(FileAction(action = Action.MODIFY, path = "test.txt"))))
     }
 
     private fun checkCommit(workTreeSubDir: String, expected: CommitInfo) {

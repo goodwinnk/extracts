@@ -57,7 +57,35 @@ data class ExtractLabel(
         val url: String?,
         val style: String?,
         val badges: Array<String>
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ExtractLabel
+
+        if (name != other.name) return false
+        if (text != other.text) return false
+        if (icon != other.icon) return false
+        if (hint != other.hint) return false
+        if (url != other.url) return false
+        if (style != other.style) return false
+        if (!badges.contentDeepEquals(other.badges)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (text?.hashCode() ?: 0)
+        result = 31 * result + (icon?.hashCode() ?: 0)
+        result = 31 * result + (hint?.hashCode() ?: 0)
+        result = 31 * result + (url?.hashCode() ?: 0)
+        result = 31 * result + (style?.hashCode() ?: 0)
+        result = 31 * result + badges.contentDeepHashCode()
+        return result
+    }
+}
 
 interface PredefinedValues {
     val count: Int
@@ -73,7 +101,7 @@ data class Extracts(val extracts: List<Extract>)
 
 data class CommitInfo(
         val hash: String,
-        val parentHashes: List<String>,
+        val parentHashes: Array<String>,
 
         val author: User,
         val committer: User,
@@ -82,8 +110,38 @@ data class CommitInfo(
         val title: String,
         val message: String,
 
-        val fileActions: List<FileAction>
-)
+        val fileActions: Array<FileAction>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as CommitInfo
+
+        if (hash != other.hash) return false
+        if (!parentHashes.contentDeepEquals(other.parentHashes)) return false
+        if (author != other.author) return false
+        if (committer != other.committer) return false
+        if (time != other.time) return false
+        if (title != other.title) return false
+        if (message != other.message) return false
+        if (!fileActions.contentDeepEquals(other.fileActions)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = hash.hashCode()
+        result = 31 * result + parentHashes.contentDeepHashCode()
+        result = 31 * result + author.hashCode()
+        result = 31 * result + committer.hashCode()
+        result = 31 * result + time
+        result = 31 * result + title.hashCode()
+        result = 31 * result + message.hashCode()
+        result = 31 * result + fileActions.contentDeepHashCode()
+        return result
+    }
+}
 
 enum class Action {
     ADD,

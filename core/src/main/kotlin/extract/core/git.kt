@@ -84,7 +84,7 @@ fun readCommits(repositoryPath: String, revString: String?, numberOfCommits: Int
             with(commit) {
                 CommitInfo(
                         hash = ObjectId.toString(id),
-                        parentHashes = parents.map { ObjectId.toString(it) },
+                        parentHashes = parents.map { ObjectId.toString(it) }.toTypedArray(),
                         author = authorIdent.toUser(),
                         committer = committerIdent.toUser(),
                         time = commitTime,
@@ -99,7 +99,7 @@ fun readCommits(repositoryPath: String, revString: String?, numberOfCommits: Int
 
 fun PersonIdent.toUser() = User(name, emailAddress)
 
-fun collectActions(git: Git, commit: RevCommit): List<FileAction> {
+fun collectActions(git: Git, commit: RevCommit): Array<FileAction> {
     val reader = git.repository.newObjectReader()
 
     val oldTreeIterator =
@@ -123,7 +123,7 @@ fun collectActions(git: Git, commit: RevCommit): List<FileAction> {
 
     return diffCommand.call().map { entry ->
         FileAction(entry.changeType.toAction(), entry.newPath)
-    }
+    }.toTypedArray()
 }
 
 private fun DiffEntry.ChangeType.toAction() =

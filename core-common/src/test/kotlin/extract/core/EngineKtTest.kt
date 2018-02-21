@@ -81,7 +81,7 @@ class EngineKtTest {
         val label = assignLabel(
                 testCommit(
                         title = "Some",
-                        fileActions = listOf(
+                        fileActions = arrayOf(
                                 FileAction(Action.ADD, "first.test"),
                                 FileAction(Action.MODIFY, "second.test"),
                                 FileAction(Action.RENAME, "second.other")
@@ -113,11 +113,11 @@ private val dummyUser = User("dummyUserName", "dummyUserEmail")
 
 fun testCommit(
         hash: String = "dummyHash",
-        parentHashes: List<String> = listOf(),
+        parentHashes: Array<String> = arrayOf(),
         author: User = dummyUser,
         committer: User = dummyUser,
         time: Int = 0,
         title: String = "dummyTitle",
         message: String = "dummyMessage",
-        fileActions: List<FileAction> = listOf()
+        fileActions: Array<FileAction> = arrayOf()
         ) = CommitInfo(hash, parentHashes, author, committer, time, title, message, fileActions)
