@@ -1,5 +1,25 @@
 declare module "core-js" {
     export namespace extract.core {
+        export function assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel;
+
+        export class ExtractLabel {
+            readonly name: String;
+            readonly text: String;
+            readonly icon: String;
+            readonly hint: String;
+            readonly url: String;
+            readonly style: String;
+            readonly badges: Array<String>;
+
+            constructor(name: String,
+                        text: String,
+                        icon: String,
+                        hint: String,
+                        url: String,
+                        style: String,
+                        badges: Array<String>)
+        }
+
         export enum Action {
             ADD,
             MODIFY,

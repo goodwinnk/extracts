@@ -20,7 +20,7 @@ class EngineKtTest {
                         icon = "path",
                         url = "https://youtrack.jetbrains.com/issue/KT-20135",
                         style = null,
-                        badges = listOf()),
+                        badges = arrayOf()),
                 label
         )
     }
@@ -41,7 +41,7 @@ class EngineKtTest {
                         icon = "path",
                         url = "https://youtrack.jetbrains.com/issue/KT-20135",
                         style = null,
-                        badges = listOf()),
+                        badges = arrayOf()),
                 label
         )
     }
@@ -55,14 +55,14 @@ class EngineKtTest {
                         text = "\${1}")
 
         assertEquals(
-                ExtractLabel(name = "Some", text = "first", icon = null, hint = null, url = null, style = null, badges = listOf()),
+                ExtractLabel(name = "Some", text = "first", icon = null, hint = null, url = null, style = null, badges = arrayOf()),
                 assignLabel(
                         testCommit(hash = "123", title = "bla bla bla first", message = "bla bla bla first\n\nfoo foo foo first second"),
                         extract)
         )
 
         assertEquals(
-                ExtractLabel(name = "Some", text = "second", icon = null, hint = null, url = null, style = null, badges = listOf()),
+                ExtractLabel(name = "Some", text = "second", icon = null, hint = null, url = null, style = null, badges = arrayOf()),
                 assignLabel(
                         testCommit(hash = "345", title = "bla bla bla", message = "bla bla bla\n\nfoo foo foo first second"),
                         extract)
@@ -103,7 +103,7 @@ class EngineKtTest {
                         icon = "path",
                         url = "2\\3",
                         style = null,
-                        badges = listOf("2\\3")),
+                        badges = arrayOf("2\\3")),
                 label
         )
     }

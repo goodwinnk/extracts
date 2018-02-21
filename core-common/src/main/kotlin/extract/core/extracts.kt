@@ -56,7 +56,7 @@ data class ExtractLabel(
         val hint: String?,
         val url: String?,
         val style: String?,
-        val badges: List<String>
+        val badges: Array<String>
 )
 
 interface PredefinedValues {
