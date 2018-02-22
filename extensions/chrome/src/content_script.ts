@@ -1,9 +1,10 @@
 import * as YamlParser from "js-yaml";
-import {githubLocation, PageKind} from "./github-location";
-import {fetchFileContent} from "./github";
+import {GitHubLocation, githubLocation, PageKind} from "./github-location";
+import {fetchCommitData, fetchFileContent} from "./github";
 import {parseExtracts} from "./parser";
 import {extract} from "core-js";
 import Extract = extract.core.Extract;
+import ExtractLabel = extract.core.ExtractLabel;
 
 window.onload = async function () {
     let gitHubLocation = githubLocation(location.href);
@@ -18,7 +19,7 @@ window.onload = async function () {
         return;
     }
 
-    modifyLog(extracts);
+    modifyLog(gitHubLocation, extracts);
 };
 
 const COMMIT_CLASS_NAME = "commit";
@@ -28,7 +29,7 @@ const COMMIT_DATA_ATTRIBUTE = "data-channel";
 // language=RegExp
 const COMMIT_DATA_PATTERN = new RegExp("^repo:(\\w+):commit:(\\w+)$"); // repo:{number}:commit:{hash}
 
-export function modifyLog(parsedExtracts: Array<Extract>) {
+export async function modifyLog(githubLocation: GitHubLocation, extracts: Array<Extract>) {
     let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
     let maxIndex = Math.min(commitsElements.length, 10);
 
@@ -42,10 +43,15 @@ export function modifyLog(parsedExtracts: Array<Extract>) {
         if (!dataAttribute) continue;
 
         let [repoId, hash] = parseCommitData(dataAttribute);
-        console.log(`RepoId: ${repoId} Commit hash: ${hash}`);
+        let commitInfo = await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
 
-        let linksCellElement = linksCellElements.item(0);
-        linksCellElement.appendChild(createExtractTag("e1", "Dummy Title", "dummy"));
+        for (let extract_ of extracts) {
+            let extractLabel = extract.core.assignLabel(commitInfo, extract_);
+            if (extractLabel != null) {
+                let linksCellElement = linksCellElements.item(0);
+                linksCellElement.appendChild(createExtractTag(extractLabel));
+            }
+        }
     }
 }
 
@@ -55,11 +61,15 @@ function parseCommitData(commitData: string): [string, string] | null {
     return [matched[1], matched[2]];
 }
 
-function createExtractTag(styleClass: string, title: string, extractText: string) {
+function createExtractTag(extractLabel: ExtractLabel) {
     let tagSpan = document.createElement("span");
-    tagSpan.className = "extract-tag " + styleClass;
-    tagSpan.title = title;
-    tagSpan.innerText = extractText;
+
+    let text = extractLabel.text ? extractLabel.text : extractLabel.name;
+    let hint = extractLabel.hint ? extractLabel.hint : text;
+
+    tagSpan.className = "extract-tag " + (extractLabel.style ? extractLabel.style : "e1");
+    tagSpan.title = hint;
+    tagSpan.innerText = text;
 
     return tagSpan;
 }

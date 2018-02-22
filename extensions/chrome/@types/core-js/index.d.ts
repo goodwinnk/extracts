@@ -3,21 +3,21 @@ declare module "core-js" {
         export function assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel;
 
         export class ExtractLabel {
-            readonly name: String;
-            readonly text: String;
-            readonly icon: String;
-            readonly hint: String;
-            readonly url: String;
-            readonly style: String;
-            readonly badges: Array<String>;
+            readonly name: string;
+            readonly text: string;
+            readonly icon: string;
+            readonly hint: string;
+            readonly url: string;
+            readonly style: string;
+            readonly badges: Array<string>;
 
-            constructor(name: String,
-                        text: String,
-                        icon: String,
-                        hint: String,
-                        url: String,
-                        style: String,
-                        badges: Array<String>)
+            constructor(name: string,
+                        text: string,
+                        icon: string,
+                        hint: string,
+                        url: string,
+                        style: string,
+                        badges: Array<string>)
         }
 
         export enum Action {
