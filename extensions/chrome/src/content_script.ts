@@ -19,11 +19,12 @@ window.onload = async function () {
         return;
     }
 
+    // noinspection JSIgnoredPromiseFromCall
     modifyLog(gitHubLocation, extracts);
 };
 
 const COMMIT_CLASS_NAME = "commit";
-const LINKS_CELL_CLASS_NAME = "commit-links-cell";
+const COMMIT_TITLE_CELL_CLASS_NAME = "commit-title";
 const COMMIT_DATA_ATTRIBUTE = "data-channel";
 
 // language=RegExp
@@ -36,20 +37,20 @@ export async function modifyLog(githubLocation: GitHubLocation, extracts: Array<
     for (let i = 0; i < maxIndex; i++) {
         let commitElement = commitsElements.item(i);
 
-        let linksCellElements = commitElement.getElementsByClassName(LINKS_CELL_CLASS_NAME);
-        if (linksCellElements.length != 1) continue;
+        let titleElements = commitElement.getElementsByClassName(COMMIT_TITLE_CELL_CLASS_NAME);
+        if (titleElements.length != 1) continue;
+        let titleElement = titleElements.item(0);
 
         let dataAttribute = commitElement.getAttribute(COMMIT_DATA_ATTRIBUTE);
         if (!dataAttribute) continue;
 
-        let [repoId, hash] = parseCommitData(dataAttribute);
+        let [_, hash] = parseCommitData(dataAttribute);
         let commitInfo = await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
 
         for (let extract_ of extracts) {
             let extractLabel = extract.core.assignLabel(commitInfo, extract_);
             if (extractLabel != null) {
-                let linksCellElement = linksCellElements.item(0);
-                linksCellElement.appendChild(createExtractTag(extractLabel));
+                titleElement.appendChild(createExtractLabelElement(extractLabel));
             }
         }
     }
@@ -61,8 +62,8 @@ function parseCommitData(commitData: string): [string, string] | null {
     return [matched[1], matched[2]];
 }
 
-function createExtractTag(extractLabel: ExtractLabel) {
-    let tagSpan = document.createElement("span");
+function createExtractLabelElement(extractLabel: ExtractLabel) {
+    let tagSpan: HTMLElement = document.createElement("span");
 
     let text = extractLabel.text ? extractLabel.text : extractLabel.name;
     let hint = extractLabel.hint ? extractLabel.hint : text;
