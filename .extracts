@@ -12,6 +12,30 @@ extracts:
     ]
     style: e3
 
+  - name: core-common
+    files: [
+      "core-common/**",
+    ]
+    style: e3
+
+  - name: core-js
+    files: [
+      "core-common/core-js/**",
+    ]
+    style: e3
+
+  - name: core-jvm
+    files: [
+      "core-common/core-jvm/**",
+    ]
+    style: e3
+
+  - name: chrome
+    files: [
+      "extensions/chrome/**",
+    ]
+    style: e3
+
   - name: demo
     files: [
       "demo/**",
@@ -42,9 +66,10 @@ extracts:
     ]
     style: e2
 
-  - name: Tests
+  - name: tests
     files: [
-      "**/src/test/**"
+      "**/src/test/**",
+      "**.spec.ts"
     ]
     style: e6
 
