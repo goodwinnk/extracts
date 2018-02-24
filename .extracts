@@ -78,4 +78,10 @@ extracts:
       "README.md"
     ]
     style: e2
+
+  - name: .travis
+    files: [
+      ".travis.yml"
+    ]
+    style: e2
 ---
