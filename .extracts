@@ -36,6 +36,12 @@ extracts:
     ]
     style: e3
 
+  - name: manifest.json
+    files: [
+      "**/manifest.json",
+    ]
+    style: e3
+
   - name: demo
     files: [
       "demo/**",
@@ -57,6 +63,25 @@ extracts:
   - name: .idea
     files: [
       ".idea/**",
+    ]
+    style: e4
+
+  - name: npm
+    files: [
+      "**/package.json",
+      "**/package-lock.json",
+    ]
+    style: e4
+
+  - name: webpack
+    files: [
+      "**/webpack.config.js",
+    ]
+    style: e4
+
+  - name: tsconfig
+    files: [
+      "**/tsconfig.json"
     ]
     style: e4
 
