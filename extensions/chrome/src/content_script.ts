@@ -5,23 +5,40 @@ import {parseExtracts} from "./parser";
 import {extract} from "core-js";
 import Extract = extract.core.Extract;
 import ExtractLabel = extract.core.ExtractLabel;
+import {ConnectedEvent, isUpdateExtractEvent} from "./events";
 
 window.onload = async function () {
     let gitHubLocation = githubLocation(location.href);
     if (gitHubLocation == null) return;
 
     let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
+
+    console.log("Send connection event");
+    let connectedEvent = new ConnectedEvent(gitHubLocation, extractsContent);
+    let check = connectedEvent instanceof ConnectedEvent;
+
+    chrome.runtime.sendMessage(connectedEvent);
+
     if (extractsContent == null) return;
 
-    if (gitHubLocation.kind != PageKind.commits) return;
-    let extracts = parseExtracts(extractsContent);
-    if (extracts.length == 0) {
-        return;
-    }
-
-    // noinspection JSIgnoredPromiseFromCall
-    modifyLog(gitHubLocation, extracts);
+    //
+    // if (gitHubLocation.kind != PageKind.commits) return;
+    // let extracts = parseExtracts(extractsContent);
+    // if (extracts.length == 0) {
+    //     return;
+    // }
+    //
+    // // noinspection JSIgnoredPromiseFromCall
+    // updateExtracts(gitHubLocation, extracts);
 };
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (isUpdateExtractEvent(request)) {
+            let extractText = request.extractsText;
+        }
+    }
+);
 
 const COMMIT_CLASS_NAME = "commit";
 const COMMIT_TITLE_CELL_CLASS_NAME = "commit-title";
@@ -30,7 +47,7 @@ const COMMIT_DATA_ATTRIBUTE = "data-channel";
 // language=RegExp
 const COMMIT_DATA_PATTERN = new RegExp("^repo:(\\w+):commit:(\\w+)$"); // repo:{number}:commit:{hash}
 
-export async function modifyLog(githubLocation: GitHubLocation, extracts: Array<Extract>) {
+export async function updateExtracts(githubLocation: GitHubLocation, extracts: Array<Extract>) {
     let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
 
     for (let i = 0; i < commitsElements.length; i++) {

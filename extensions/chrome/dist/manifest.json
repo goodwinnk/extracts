@@ -7,9 +7,10 @@
     "page": "options.html",
     "chrome_style": true
   },
-  "browser_action": {
+  "page_action": {
     "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "Edit Extracts File"
   },
   "content_scripts": [
     {
@@ -25,6 +26,9 @@
       ]
     }
   ],
+  "background": {
+    "scripts": ["js/vendor.js", "js/background.js"]
+  },
   "permissions": [
     "activeTab",
     "webRequest",
