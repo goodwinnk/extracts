@@ -1,4 +1,4 @@
-import {ConnectedEvent, isConnectionEvent, isExtractLoadedEvent} from "./events";
+import {isExtractLoadedEvent} from "./events";
 import {fetchFileContent} from "./github";
 import {githubLocation} from "./github-location";
 

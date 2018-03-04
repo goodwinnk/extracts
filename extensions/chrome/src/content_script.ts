@@ -1,44 +1,16 @@
-import * as YamlParser from "js-yaml";
-import {GitHubLocation, githubLocation, PageKind} from "./github-location";
-import {fetchCommitData, fetchFileContent} from "./github";
-import {parseExtracts} from "./parser";
+import {GitHubLocation} from "./github-location";
+import {fetchCommitData} from "./github";
 import {extract} from "core-js";
+import {isUpdateExtractEvent} from "./events";
 import Extract = extract.core.Extract;
 import ExtractLabel = extract.core.ExtractLabel;
-import {ConnectedEvent, isUpdateExtractEvent} from "./events";
 
-window.onload = async function () {
-    let gitHubLocation = githubLocation(location.href);
-    if (gitHubLocation == null) return;
-
-    let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
-
-    console.log("Send connection event");
-    let connectedEvent = new ConnectedEvent(gitHubLocation, extractsContent);
-    let check = connectedEvent instanceof ConnectedEvent;
-
-    chrome.runtime.sendMessage(connectedEvent);
-
-    if (extractsContent == null) return;
-
-    //
-    // if (gitHubLocation.kind != PageKind.commits) return;
-    // let extracts = parseExtracts(extractsContent);
-    // if (extracts.length == 0) {
-    //     return;
-    // }
-    //
-    // // noinspection JSIgnoredPromiseFromCall
-    // updateExtracts(gitHubLocation, extracts);
-};
-
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if (isUpdateExtractEvent(request)) {
-            let extractText = request.extractsText;
-        }
+chrome.runtime.onMessage.addListener(request => {
+    if (isUpdateExtractEvent(request)) {
+        // noinspection JSIgnoredPromiseFromCall
+        updateExtracts(request.githubLocation, request.extracts);
     }
-);
+});
 
 const COMMIT_CLASS_NAME = "commit";
 const COMMIT_TITLE_CELL_CLASS_NAME = "commit-title";
