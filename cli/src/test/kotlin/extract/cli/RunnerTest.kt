@@ -46,16 +46,18 @@ class RunnerTest {
 
     companion object {
         val USAGE = """
-             | -extracts (-f) FILE : Path to extracts file. "repository/.extracts" path is
-             |                       used by default.
-             | -help               : Get the program options help
-             | -html-log FILE      : Output html file. System temporary directory is used by
-             |                       default.
-             | -number (-n) N      : Limit the number of commits to output. Default is 50.
-             | -open               : Is result history should be open automatically. Default
-             |                       is TRUE.
-             | -revision VAL       : Revision where log should start. HEAD commit is used by
-             |                       default.
+             | -extracts (-f) FILE   : Path to extracts file. "repository/.extracts" path is
+             |                         used by default.
+             | -help                 : Get the program options help
+             | -html-log FILE        : Output html file. System temporary directory is used
+             |                         by default.
+             | -number (-n) N        : Limit the number of commits to output. Default is 50.
+             | -open                 : Is result history should be open automatically.
+             |                         Default is TRUE.
+             | -repository (-r) FILE : GIT repository path. A working directory is used by
+             |                         default.
+             | -revision VAL         : Revision where log should start. HEAD commit is used
+             |                         by default.
              |
             """.trimMargin()
     }

@@ -10,6 +10,11 @@ import java.awt.Desktop
 
 data class Options(
         @set:Option(
+                name = "-repository", aliases = ["-r"],
+                usage = "GIT repository path. A working directory is used by default.")
+        var repository: File = File(""),
+
+        @set:Option(
                 name = "-extracts", aliases = ["-f"],
                 usage = "Path to extracts file. \"repository/.extracts\" path is used by default.")
         var extracts: File? = null,
@@ -27,9 +32,6 @@ data class Options(
 
         @set:Option(name = "-help", help = true, usage = "Get the program options help")
         var help: Boolean = false,
-
-        @set:Option(name = "-repository", aliases = ["-r"])
-        var repository: File = File(""),
 
         @set:Option(name = "-revision", usage = "Revision where log should start. HEAD commit is used by default.")
         var revision: String? = null
