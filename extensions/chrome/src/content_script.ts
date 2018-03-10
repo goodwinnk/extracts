@@ -4,6 +4,7 @@ import {extract} from "core-js";
 import {isUpdateExtractEvent} from "./events";
 import Extract = extract.core.Extract;
 import ExtractLabel = extract.core.ExtractLabel;
+import CommitInfo = extract.core.CommitInfo;
 
 chrome.runtime.onMessage.addListener(request => {
     if (isUpdateExtractEvent(request)) {
@@ -21,38 +22,55 @@ const EXTRACT_CLASS_NAME = "extract-tag";
 const COMMIT_DATA_PATTERN = new RegExp("^repo:(\\w+):commit:(\\w+)$"); // repo:{number}:commit:{hash}
 
 export async function updateExtracts(githubLocation: GitHubLocation, extracts: Array<Extract>) {
+    clearExtractTags();
+
     let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
 
     for (let i = 0; i < commitsElements.length; i++) {
         let commitElement = commitsElements.item(i);
 
-        let titleElements = commitElement.getElementsByClassName(COMMIT_TITLE_CELL_CLASS_NAME);
-        if (titleElements.length != 1) continue;
-        let titleElement = titleElements.item(0);
-
-        let dataAttribute = commitElement.getAttribute(COMMIT_DATA_ATTRIBUTE);
-        if (!dataAttribute) continue;
-
-        let [_, hash] = parseCommitData(dataAttribute);
+        let titleElement = findTitleElement(commitElement as HTMLElement);
+        if (!titleElement) continue;
 
         let cachedCommitInfo = titleElement["commitInfo"];
-        let commitInfo =
-            cachedCommitInfo ?
-                cachedCommitInfo :
-                await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
+        let commitInfo: CommitInfo;
+        if (cachedCommitInfo) {
+            commitInfo = cachedCommitInfo;
+        } else {
+            let dataAttribute = commitElement.getAttribute(COMMIT_DATA_ATTRIBUTE);
+            if (!dataAttribute) continue;
 
-        titleElement["commitInfo"] = commitInfo;
+            let [_, hash] = parseCommitData(dataAttribute);
 
-        let commitExtracts = titleElement.getElementsByClassName(EXTRACT_CLASS_NAME);
-        for (let labelIndex = 0; labelIndex < commitExtracts.length; labelIndex++) {
-            commitExtracts.item(labelIndex).remove();
+            commitInfo = await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
         }
+        titleElement["commitInfo"] = commitInfo;
 
         for (let extract_ of extracts) {
             let extractLabel = extract.core.assignLabel(commitInfo, extract_);
             if (extractLabel != null) {
                 titleElement.appendChild(createExtractLabelElement(extractLabel));
             }
+        }
+    }
+}
+
+function findTitleElement(commitElement: HTMLElement): HTMLElement {
+    let titleElements = commitElement.getElementsByClassName(COMMIT_TITLE_CELL_CLASS_NAME);
+    if (titleElements.length != 1) return null;
+    return titleElements.item(0) as HTMLElement;
+}
+
+function clearExtractTags() {
+    let commitsElements = document.getElementsByClassName(COMMIT_CLASS_NAME);
+
+    for (let i = 0; i < commitsElements.length; i++) {
+        let titleElement = findTitleElement(commitsElements.item(i) as HTMLElement);
+        if (!titleElement) continue;
+
+        let commitExtracts = Array.from(titleElement.getElementsByClassName(EXTRACT_CLASS_NAME));
+        for (let j = 0; j < commitExtracts.length; j++) {
+            titleElement.removeChild(commitExtracts[j]);
         }
     }
 }

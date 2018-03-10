@@ -31,7 +31,6 @@ export function updateExtracts(extractsText: string, tabId: number, gitHubLocati
     let extracts = parseExtracts(extractsText);
     if (extracts.length == 0) {
         // Some errors should be reported
-        return;
     }
 
     chrome.tabs.sendMessage(tabId, new UpdateExtractsEvent(gitHubLocation, extracts));
