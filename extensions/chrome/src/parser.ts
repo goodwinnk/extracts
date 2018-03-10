@@ -5,7 +5,7 @@ import Extract = CoreJs.extract.core.Extract;
 export function parseExtracts(text: string): Array<Extract> {
     let documents = YamlParser.loadAll(text) as Array<any>;
     if (documents.length == 0) {
-        return null;
+        return [];
     }
 
     let parsed = documents[0];

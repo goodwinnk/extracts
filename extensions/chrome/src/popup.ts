@@ -1,34 +1,37 @@
-import {isExtractLoadedEvent} from "./events";
 import {fetchFileContent} from "./github";
-import {githubLocation} from "./github-location";
+import {GitHubLocation, githubLocation} from "./github-location";
+import {updateExtracts} from "./background";
 
 const EXTRACT_EDITOR_ID = "extracts-editor";
+const FORM_EDITOR_ID = "editor-form";
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        console.log("GOT!");
-        if (isExtractLoadedEvent(request)) {
-            document.getElementById(EXTRACT_EDITOR_ID).innerText = request.extractsText ? request.extractsText : "";
-        }
-    }
-);
+let gitHubLocation: GitHubLocation = null;
+let tabId: number = null;
+let extractEditorElement: HTMLTextAreaElement = null;
 
 window.onload = async function () {
-    console.log(`LOADED!: ${location.href}`);
+    chrome.tabs.query({active: true, currentWindow: true}, async (tabs: Array<chrome.tabs.Tab>) => {
+        let tab = tabs[0];
+        tabId = tab.id;
 
-    let gitHubLocation = githubLocation(location.href);
-    if (gitHubLocation == null) return;
+        gitHubLocation = githubLocation(tab.url);
+        if (gitHubLocation == null) return;
 
-    console.log("GitHubLocation!");
+        let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
 
-    let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
+        let text = extractsContent ? extractsContent : "";
+        extractEditorElement = document.getElementById(EXTRACT_EDITOR_ID) as HTMLTextAreaElement;
+        extractEditorElement.innerText = text;
 
-    let text = extractsContent ? extractsContent : "";
-    console.log(text);
-
-    document.getElementById(EXTRACT_EDITOR_ID).innerText = text;
+        document.getElementById(FORM_EDITOR_ID).addEventListener("submit", (submitEvent: Event) => {
+            submitEvent.preventDefault();
+            applyExtractsText();
+            return false;
+        });
+    });
 };
 
-function applyExtractsText(formData: any) {
-    console.log(formData.extracts);
+function applyExtractsText() {
+    let innerText = extractEditorElement.value;
+    updateExtracts(innerText, tabId, gitHubLocation);
 }

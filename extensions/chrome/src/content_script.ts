@@ -34,7 +34,14 @@ export async function updateExtracts(githubLocation: GitHubLocation, extracts: A
         if (!dataAttribute) continue;
 
         let [_, hash] = parseCommitData(dataAttribute);
-        let commitInfo = await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
+
+        let cachedCommitInfo = titleElement["commitInfo"];
+        let commitInfo =
+            cachedCommitInfo ?
+                cachedCommitInfo :
+                await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
+
+        titleElement["commitInfo"] = commitInfo;
 
         let commitExtracts = titleElement.getElementsByClassName(EXTRACT_CLASS_NAME);
         for (let labelIndex = 0; labelIndex < commitExtracts.length; labelIndex++) {

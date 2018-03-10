@@ -1,4 +1,4 @@
-import {githubLocation, PageKind} from "./github-location";
+import {GitHubLocation, githubLocation, PageKind} from "./github-location";
 import {fetchFileContent} from "./github";
 import {parseExtracts} from "./parser";
 import {UpdateExtractsEvent} from "./events";
@@ -19,14 +19,20 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tabInfo) => {
 
     chrome.pageAction.show(tabId);
 
-    let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
-    if (extractsContent == null) return;
+    let extractText = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
+    if (extractText == null) return;
 
     if (gitHubLocation.kind != PageKind.commits) return;
-    let extracts = parseExtracts(extractsContent);
+
+    updateExtracts(extractText, tabId, gitHubLocation);
+});
+
+export function updateExtracts(extractsText: string, tabId: number, gitHubLocation: GitHubLocation) {
+    let extracts = parseExtracts(extractsText);
     if (extracts.length == 0) {
+        // Some errors should be reported
         return;
     }
 
     chrome.tabs.sendMessage(tabId, new UpdateExtractsEvent(gitHubLocation, extracts));
-});
+}
