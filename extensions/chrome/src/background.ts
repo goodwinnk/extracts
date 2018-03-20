@@ -4,6 +4,11 @@ import {parseExtracts} from "./parser";
 import {UpdateExtractsEvent} from "./events";
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tabInfo) => {
+    let testVal = await localStorageGet("some") as string;
+    console.log(`Ahha! ${testVal}`);
+
+    await localStorageSet("some", "testValue");
+
     if (changeInfo.status != "complete") {
         chrome.pageAction.hide(tabId);
         return;
@@ -34,4 +39,30 @@ export function updateExtracts(extractsText: string, tabId: number, gitHubLocati
     }
 
     chrome.tabs.sendMessage(tabId, new UpdateExtractsEvent(gitHubLocation, extracts));
+}
+
+async function localStorageSet(key: string, items: any): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        let item = {};
+        item[key] = JSON.stringify(items);
+        chrome.storage.local.set(item, () => {
+            if (chrome.runtime.lastError) {
+                reject();
+            } else {
+                resolve();
+            }
+        })
+    });
+}
+
+async function localStorageGet<T>(key: string): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+        chrome.storage.local.get([key], (result: any) => {
+            if (chrome.runtime.lastError) {
+                reject();
+            } else {
+                resolve(result[key] as T);
+            }
+        })
+    });
 }

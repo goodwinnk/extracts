@@ -32,6 +32,7 @@
   "permissions": [
     "activeTab",
     "webRequest",
+    "storage",
     "https://github.com/*"
   ],
   "optional_permissions": [
