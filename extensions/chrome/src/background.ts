@@ -3,12 +3,16 @@ import {fetchFileContent} from "./github";
 import {parseExtracts} from "./parser";
 import {UpdateExtractsEvent} from "./events";
 
+const CUSTOM = "custom";
+
+class RepoSettings {
+    constructor(
+        readonly template: string,
+        readonly extractsFile: string
+    ) {}
+}
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tabInfo) => {
-    let testVal = await localStorageGet("some") as string;
-    console.log(`Ahha! ${testVal}`);
-
-    await localStorageSet("some", "testValue");
-
     if (changeInfo.status != "complete") {
         chrome.pageAction.hide(tabId);
         return;
@@ -24,13 +28,31 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tabInfo) => {
 
     chrome.pageAction.show(tabId);
 
-    let extractText = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
-    if (extractText == null) return;
-
     if (gitHubLocation.kind != PageKind.commits) return;
 
-    updateExtracts(extractText, tabId, gitHubLocation);
+    let extractsFile = await loadExtractsFile(gitHubLocation);
+    if (!extractsFile) return;
+
+    updateExtracts(extractsFile, tabId, gitHubLocation);
 });
+
+export async function loadExtractsFile(gitHubLocation: GitHubLocation): Promise<string> {
+    let repoKey = storageKey(gitHubLocation);
+    let repoSettings = await localStorageGet<RepoSettings>(repoKey);
+
+    let extractsFile: string;
+    if (repoSettings && repoSettings.template == CUSTOM) {
+        extractsFile = repoSettings.extractsFile;
+    } else {
+        extractsFile = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts")
+    }
+
+    return extractsFile
+}
+
+function storageKey(gitHubLocation: GitHubLocation) {
+    return `${gitHubLocation.owner}_${gitHubLocation.repo}`;
+}
 
 export function updateExtracts(extractsText: string, tabId: number, gitHubLocation: GitHubLocation) {
     let extracts = parseExtracts(extractsText);
@@ -39,6 +61,18 @@ export function updateExtracts(extractsText: string, tabId: number, gitHubLocati
     }
 
     chrome.tabs.sendMessage(tabId, new UpdateExtractsEvent(gitHubLocation, extracts));
+}
+
+export function saveCustomExtractsFile(extractsText: string, gitHubLocation: GitHubLocation) {
+    let repoKey = storageKey(gitHubLocation);
+    let repoSettings = new RepoSettings(CUSTOM, extractsText);
+
+    localStorageSet(repoKey, repoSettings);
+}
+
+export function dropCustomExtractsFile(gitHubLocation: GitHubLocation) {
+    let repoKey = storageKey(gitHubLocation);
+    localStorageRemove(repoKey);
 }
 
 async function localStorageSet(key: string, items: any): Promise<void> {
@@ -61,8 +95,17 @@ async function localStorageGet<T>(key: string): Promise<T> {
             if (chrome.runtime.lastError) {
                 reject();
             } else {
-                resolve(result[key] as T);
+                let objStr = result[key];
+                if (objStr) {
+                    resolve(JSON.parse(objStr) as T);
+                } else {
+                    resolve(null);
+                }
             }
         })
     });
+}
+
+function localStorageRemove<T>(key: string) {
+    chrome.storage.local.remove([key]);
 }

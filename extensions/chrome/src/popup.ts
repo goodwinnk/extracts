@@ -1,9 +1,10 @@
-import {fetchFileContent} from "./github";
 import {GitHubLocation, githubLocation} from "./github-location";
-import {updateExtracts} from "./background";
+import {saveCustomExtractsFile, updateExtracts, loadExtractsFile, dropCustomExtractsFile} from "./background";
 
 const EXTRACT_EDITOR_ID = "extracts-editor";
-const FORM_EDITOR_ID = "editor-form";
+const APPLY_BUTTON_ID = "editor-form";
+const SAVE_CUSTOM_BUTTON_ID = "save-custom";
+const DROP_CUSTOM_BUTTON_ID = "drop-custom";
 
 let gitHubLocation: GitHubLocation = null;
 let tabId: number = null;
@@ -17,19 +18,42 @@ window.onload = async function () {
         gitHubLocation = githubLocation(tab.url);
         if (gitHubLocation == null) return;
 
-        let extractsContent = await fetchFileContent(gitHubLocation.owner, gitHubLocation.repo, ".extracts");
-
-        let text = extractsContent ? extractsContent : "";
         extractEditorElement = document.getElementById(EXTRACT_EDITOR_ID) as HTMLTextAreaElement;
-        extractEditorElement.innerText = text;
 
-        document.getElementById(FORM_EDITOR_ID).addEventListener("submit", (submitEvent: Event) => {
-            submitEvent.preventDefault();
+        reloadExtractsText();
+
+        document.getElementById(APPLY_BUTTON_ID).addEventListener("click", (mouseEvent: MouseEvent) => {
             applyExtractsText();
+            return false;
+        });
+
+        document.getElementById(SAVE_CUSTOM_BUTTON_ID).addEventListener("click", (mouseEvent: MouseEvent) => {
+            onCustomSettingsSave();
+            return false;
+        });
+
+        document.getElementById(DROP_CUSTOM_BUTTON_ID).addEventListener("click", (mouseEvent: MouseEvent) => {
+            onDropCustomSettings();
             return false;
         });
     });
 };
+
+async function reloadExtractsText() {
+    let extractsFile = await loadExtractsFile(gitHubLocation);
+    let text = extractsFile ? extractsFile : "";
+    extractEditorElement.innerText = text;
+}
+
+function onDropCustomSettings() {
+    dropCustomExtractsFile(gitHubLocation);
+    reloadExtractsText();
+}
+
+function onCustomSettingsSave() {
+    let innerText = extractEditorElement.value;
+    saveCustomExtractsFile(innerText, gitHubLocation);
+}
 
 function applyExtractsText() {
     let innerText = extractEditorElement.value;
