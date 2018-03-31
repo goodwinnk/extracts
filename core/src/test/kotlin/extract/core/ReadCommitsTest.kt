@@ -57,7 +57,7 @@ class ReadCommitsTest {
                         title = "Delete third",
                         message = "Delete third\n",
                         fileActions = arrayOf(
-                                FileAction(action=Action.DELETE, path="/dev/null")
+                                FileAction(action=Action.DELETE, path="third.txt")
                         )),
                 mainGitPath()
         )

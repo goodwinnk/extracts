@@ -122,7 +122,9 @@ fun collectActions(git: Git, commit: RevCommit): Array<FileAction> {
     }
 
     return diffCommand.call().map { entry ->
-        FileAction(entry.changeType.toAction(), entry.newPath)
+        FileAction(
+                entry.changeType.toAction(),
+                if (entry.changeType == DiffEntry.ChangeType.DELETE) entry.oldPath else entry.newPath)
     }.toTypedArray()
 }
 
