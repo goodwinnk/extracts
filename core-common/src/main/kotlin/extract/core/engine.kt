@@ -13,6 +13,21 @@ fun assignLabels(commitInfo: CommitInfo, extracts: Extracts): List<ExtractLabel>
     return extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
 }
 
+fun matchedPaths(commitInfo: CommitInfo, extracts: Extracts, labels: Array<ExtractLabel>): List<FileActionMatch> {
+    val nameToExtract = extracts.extracts.associateBy { extract -> extract.name }
+
+    val labelToExtract = labels.map { it to nameToExtract[it.name] }
+
+    return commitInfo.fileActions.map { fileAction ->
+        val matchedLabels = labelToExtract.filter { (_, extract) ->
+            if (extract == null) return@filter false
+            pathMatch(fileAction.path, extract.files)
+        }.map { (label, _) -> label }
+
+        FileActionMatch(fileAction, matchedLabels.toTypedArray())
+    }
+}
+
 fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
     val values = MutablePredefinedVariables(commitInfo)
 

@@ -197,6 +197,14 @@ body {
     padding: 8px;
 }
 
+.matched {
+    color: limegreen;
+}
+
+.unmatched {
+    color: indianred;
+}
+
 /* Popup arrow */
 .popup .popuptext::after {
     content: "";

@@ -49,6 +49,29 @@ data class Extract(
     }
 }
 
+data class FileActionMatch(
+        val fileAction: FileAction,
+        val labels: Array<ExtractLabel>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as FileActionMatch
+
+        if (fileAction != other.fileAction) return false
+        if (!labels.contentDeepEquals(other.labels)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = fileAction.hashCode()
+        result = 31 * result + labels.contentDeepHashCode()
+        return result
+    }
+}
+
 data class ExtractLabel(
         val name: String,
         val text: String?,

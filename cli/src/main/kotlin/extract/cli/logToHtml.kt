@@ -39,14 +39,15 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
     val labelsMapping = assignLabels(commits, extracts)
 
     for (commit in commits) {
-        val labels = labelsMapping[commit.hash]
-        val tagsHtml = labels?.joinToString(separator = "\n") { label -> label.toHtml(tagTemplateText) }
+        val labels = labelsMapping[commit.hash] ?: emptyList()
+        val tagsHtml = labels.joinToString(separator = "\n") { label -> label.toHtml(tagTemplateText) }
 
         val color = colors.getOrPut(commit.author.name, { extract.cli.colors[colors.size % extract.cli.colors.size] })
 
+        val popupContent = commit.toHtml(extracts, labels, tagTemplateText)
         val commitText = commitTemplateText
                 .replace("<!--popup-id-->", "popup-${commit.hash}")
-                .replace("<!--popup-content-->", commit.toHtml())
+                .replace("<!--popup-content-->", popupContent)
                 .replace("<!--title-->", commit.title)
                 .replace("<!--author-->", commit.author.name)
                 .replace("<!--date-->", epochSecondsToString(commit.time))
@@ -91,10 +92,14 @@ private fun ExtractLabel.toHtml(template: String): String {
             .replace("<!--text-->", withBadges)
 }
 
-private fun CommitInfo.toHtml(): String {
+private fun CommitInfo.toHtml(extracts: Extracts, labels: List<ExtractLabel>, tagTemplateText: String): String {
     val messageHtml = message.escapeHTML().replace("\n", "<br/>")
-    val actionsHtml = fileActions.joinToString(separator = "<br/>") { it.toHtml() }
-    return "$messageHtml<br/>$actionsHtml"
+    val matchedPaths = matchedPaths(this, extracts, labels.toTypedArray())
+    val actionsHtml = matchedPaths.joinToString(separator = "\n") {
+        val matchStyle = if (it.labels.isEmpty()) "unmatched" else "matched"
+        "<div class='$matchStyle'>${it.fileAction.toHtml()}</div>"
+    }
+    return "$messageHtml<br/><div>$actionsHtml</div>"
 }
 
 private fun FileAction.toHtml(): String {
