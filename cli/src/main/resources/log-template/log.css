@@ -180,11 +180,6 @@ body {
 /*=========== popup ========== */
 /* Popup container - can be anything you want */
 .popup {
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 .tippy-tooltip.popup-theme {
