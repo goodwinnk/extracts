@@ -201,10 +201,6 @@ body {
     color: limegreen;
 }
 
-.unmatched {
-    color: indianred;
-}
-
 /* Popup arrow */
 .popup .popuptext::after {
     content: "";

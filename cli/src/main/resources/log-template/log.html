@@ -23,7 +23,15 @@
             const elements = commitElement.getElementsByClassName('popup');
             return elements.item(0);
         },
-        interactive: true,
+        animateFill: false,
+        theme: "popup"
+    });
+
+    tippy(".extract-tag", {
+        html: function (commitElement) {
+            const elements = commitElement.getElementsByClassName('popup');
+            return elements.item(0);
+        },
         animateFill: false,
         theme: "popup"
     });
