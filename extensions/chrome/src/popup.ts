@@ -42,7 +42,7 @@ window.onload = async function () {
 async function reloadExtractsText() {
     let extractsFile = await loadExtractsFile(gitHubLocation);
     let text = extractsFile ? extractsFile : "";
-    extractEditorElement.innerText = text;
+    extractEditorElement.innerHTML = text;
 }
 
 function onDropCustomSettings() {

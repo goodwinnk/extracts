@@ -43,10 +43,16 @@ export async function updateExtracts(githubLocation: GitHubLocation, extracts: A
             let [_, hash] = parseCommitData(dataAttribute);
 
             commitInfo = await fetchCommitData(githubLocation.owner, githubLocation.repo, hash);
+
+            if (!commitInfo) {
+                console.log(`Couldn't fetch commit information for: ${githubLocation.owner}, ${githubLocation.repo} ${hash}`);
+                return;
+            }
         }
         titleElement["commitInfo"] = commitInfo;
 
-        for (let extract_ of extracts) {
+        for (let j = 0; j < extracts.length; j++) {
+            let extract_ = extracts[j];
             let extractLabel = extract.core.assignLabel(commitInfo, extract_);
             if (extractLabel != null) {
                 titleElement.appendChild(createExtractLabelElement(extractLabel));

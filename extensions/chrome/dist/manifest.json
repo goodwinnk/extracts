@@ -31,9 +31,11 @@
   },
   "permissions": [
     "activeTab",
+    "tabs",
     "webRequest",
     "storage",
-    "https://github.com/*"
+    "https://github.com/*",
+    "https://api.github.com/*"
   ],
   "optional_permissions": [
     "<all_urls>"
