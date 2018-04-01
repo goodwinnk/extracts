@@ -69,8 +69,13 @@ ol {
     border-top: 1px solid #eaecef;
 }
 
-.commit .commit-title {
+.commit {
     color: #444d56;
+}
+
+.commit-title {
+    color: #444d56;
+    display: inline;
 }
 
 .commit-author-section {
@@ -119,6 +124,10 @@ ol {
 body {
     min-width: 1020px;
     word-wrap: break-word;
+}
+
+.extracts {
+    display: inline;
 }
 
 .extract-tag {
