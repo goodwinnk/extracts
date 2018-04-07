@@ -45,6 +45,24 @@ extracts:
     ]
     style: e5
 
+  - name: kapt3
+    files: [
+      plugins/kapt3/**
+    ]
+    style: e5
+
+  - name: Scripting
+    files: [
+      plugins/scripting/**
+    ]
+    style: e5
+
+  - name: JPS
+    files: [
+      jps-plugin/**
+    ]
+    style: e5
+
   - name: JS
     files: [
       js/**
