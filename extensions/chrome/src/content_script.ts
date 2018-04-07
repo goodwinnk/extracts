@@ -88,15 +88,22 @@ function parseCommitData(commitData: string): [string, string] | null {
 }
 
 function createExtractLabelElement(extractLabel: ExtractLabel): HTMLElement {
-    let tagSpan: HTMLElement = document.createElement("span");
+    let extractElement: HTMLElement;
+    if (extractLabel.url) {
+        let anchorElement = document.createElement("a") as HTMLAnchorElement;
+        anchorElement.href = extractLabel.url;
+        extractElement = anchorElement;
+    } else {
+        extractElement = document.createElement("span");
+    }
 
     let text = extractLabel.text ? extractLabel.text : extractLabel.name;
     let hint = extractLabel.hint ? extractLabel.hint : text;
-    let styleClass = extractLabel.style ? extractLabel.style : "e1";
+    let styleClass = extractLabel.style ? extractLabel.style : "e0";
 
-    tagSpan.className = `${EXTRACT_CLASS_NAME} ${styleClass}`;
-    tagSpan.title = hint;
-    tagSpan.innerText = text;
+    extractElement.className = `${EXTRACT_CLASS_NAME} ${styleClass}`;
+    extractElement.title = hint;
+    extractElement.innerText = text;
 
-    return tagSpan;
+    return extractElement;
 }
