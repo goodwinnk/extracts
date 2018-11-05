@@ -33,6 +33,12 @@ extracts:
     ]
     style: e3
 
+  - name: spec
+    files: [
+      compiler/tests-spec**
+    ]
+    style: e3
+
   - name: Libraries
     files: [
       libraries/**
@@ -42,6 +48,12 @@ extracts:
   - name: StdLib
     files: [
       libraries/stdlib/**
+    ]
+    style: e5
+
+  - name: builtins
+    files: [
+      core/builtins/**
     ]
     style: e5
 
@@ -93,5 +105,18 @@ extracts:
       .idea/**,
       .gitignore,
       .gitattributes
+    ]
+
+  - name: bunch
+    badge: "${matches}"
+    style: e4
+    files: [
+      "**.173",
+      "**.181",
+      "**.182",
+      "**.183",
+      "**.as31",
+      "**.as32",
+      "**.as33"
     ]
 ...
