@@ -34,7 +34,10 @@ data class Options(
         var help: Boolean = false,
 
         @set:Option(name = "-revision", usage = "Revision where log should start. HEAD commit is used by default.")
-        var revision: String? = null
+        var revision: String? = null,
+
+        @set:Option(name = "-url-prefix", usage = "Project url")
+        var urlPrefix: String? = null
 )
 
 class ParserException(message: String?, val usage: String, cause: Throwable) : Exception(message, cause)

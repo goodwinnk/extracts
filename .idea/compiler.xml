@@ -4,6 +4,24 @@
     <bytecodeTargetLevel>
       <module name="cli_main" target="1.8" />
       <module name="cli_test" target="1.8" />
+      <module name="com.namtadam.extracts.cli.main" target="1.8" />
+      <module name="com.namtadam.extracts.cli.test" target="1.8" />
+      <module name="com.namtadam.extracts.core-common.main" target="1.8" />
+      <module name="com.namtadam.extracts.core-common.test" target="1.8" />
+      <module name="com.namtadam.extracts.core-js.main" target="1.8" />
+      <module name="com.namtadam.extracts.core-js.test" target="1.8" />
+      <module name="com.namtadam.extracts.core-jvm.main" target="1.8" />
+      <module name="com.namtadam.extracts.core-jvm.test" target="1.8" />
+      <module name="com.namtadam.extracts.core.main" target="1.8" />
+      <module name="com.namtadam.extracts.core.test" target="1.8" />
+      <module name="com.namtadam.extracts.demo.main" target="1.8" />
+      <module name="com.namtadam.extracts.demo.test" target="1.8" />
+      <module name="core-common_main" target="1.8" />
+      <module name="core-common_test" target="1.8" />
+      <module name="core-js_main" target="1.8" />
+      <module name="core-js_test" target="1.8" />
+      <module name="core-jvm_main" target="1.8" />
+      <module name="core-jvm_test" target="1.8" />
       <module name="core_main" target="1.8" />
       <module name="core_test" target="1.8" />
       <module name="demo_main" target="1.8" />
