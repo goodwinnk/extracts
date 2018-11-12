@@ -16,6 +16,8 @@
       <module name="com.namtadam.extracts.core.test" target="1.8" />
       <module name="com.namtadam.extracts.demo.main" target="1.8" />
       <module name="com.namtadam.extracts.demo.test" target="1.8" />
+      <module name="com.namtadam.extracts.pull-requests.main" target="1.8" />
+      <module name="com.namtadam.extracts.pull-requests.test" target="1.8" />
       <module name="core-common_main" target="1.8" />
       <module name="core-common_test" target="1.8" />
       <module name="core-js_main" target="1.8" />
