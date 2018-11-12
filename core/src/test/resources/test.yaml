@@ -19,3 +19,9 @@ extracts:
 
   - name: WithMessagePattern
     message-pattern: "^.*(KT-\\d+).*$"
+
+  - name: WithTrueLabel
+    label: true
+
+  - name: WithWordsLabel
+    label-name: With Words Label

@@ -12,7 +12,9 @@ data class Extract(
         val hint: String? = null,
         val url: String? = null,
         val style: String? = null,
-        val badge: String? = null
+        val badge: String? = null,
+
+        val labelName: String? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -30,6 +32,7 @@ data class Extract(
         if (url != other.url) return false
         if (style != other.style) return false
         if (badge != other.badge) return false
+        if (labelName != other.labelName) return false
 
         return true
     }
@@ -45,6 +48,7 @@ data class Extract(
         result = 31 * result + (url?.hashCode() ?: 0)
         result = 31 * result + (style?.hashCode() ?: 0)
         result = 31 * result + (badge?.hashCode() ?: 0)
+        result = 31 * result + (labelName?.hashCode() ?: 0)
         return result
     }
 }
@@ -79,7 +83,8 @@ data class ExtractLabel(
         val hint: String?,
         val url: String?,
         val style: String?,
-        val badges: Array<String>
+        val badges: Array<String>,
+        val labelName: String?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -94,6 +99,7 @@ data class ExtractLabel(
         if (url != other.url) return false
         if (style != other.style) return false
         if (!badges.contentDeepEquals(other.badges)) return false
+        if (labelName != other.labelName) return false
 
         return true
     }
@@ -106,6 +112,7 @@ data class ExtractLabel(
         result = 31 * result + (url?.hashCode() ?: 0)
         result = 31 * result + (style?.hashCode() ?: 0)
         result = 31 * result + badges.contentDeepHashCode()
+        result = 31 * result + (labelName?.hashCode() ?: 0)
         return result
     }
 }

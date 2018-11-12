@@ -1,7 +1,7 @@
 package extract.core
 
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class EngineKtTest {
@@ -20,7 +20,8 @@ class EngineKtTest {
                         icon = "path",
                         url = "https://youtrack.jetbrains.com/issue/KT-20135",
                         style = null,
-                        badges = arrayOf()),
+                        badges = arrayOf(),
+                        labelName = null),
                 label
         )
     }
@@ -41,7 +42,8 @@ class EngineKtTest {
                         icon = "path",
                         url = "https://youtrack.jetbrains.com/issue/KT-20135",
                         style = null,
-                        badges = arrayOf()),
+                        badges = arrayOf(),
+                        labelName = null),
                 label
         )
     }
@@ -55,14 +57,18 @@ class EngineKtTest {
                         text = "\${1}")
 
         assertEquals(
-                ExtractLabel(name = "Some", text = "first", icon = null, hint = null, url = null, style = null, badges = arrayOf()),
+                ExtractLabel(
+                        name = "Some", text = "first", icon = null, hint = null, url = null,
+                        style = null, badges = arrayOf(), labelName = null),
                 assignLabel(
                         testCommit(hash = "123", title = "bla bla bla first", message = "bla bla bla first\n\nfoo foo foo first second"),
                         extract)
         )
 
         assertEquals(
-                ExtractLabel(name = "Some", text = "second", icon = null, hint = null, url = null, style = null, badges = arrayOf()),
+                ExtractLabel(
+                        name = "Some", text = "second", icon = null, hint = null, url = null,
+                        style = null, badges = arrayOf(), labelName = null),
                 assignLabel(
                         testCommit(hash = "345", title = "bla bla bla", message = "bla bla bla\n\nfoo foo foo first second"),
                         extract)
@@ -103,7 +109,34 @@ class EngineKtTest {
                         icon = "path",
                         url = "2\\3",
                         style = null,
-                        badges = arrayOf("2\\3")),
+                        badges = arrayOf("2\\3"),
+                        labelName = null),
+                label
+        )
+    }
+
+    @Test
+    fun assignNamedLabel() {
+        val label = assignLabel(
+                testCommit(
+                        title = "Some",
+                        fileActions = arrayOf(FileAction(Action.ADD, "first.test"))),
+
+                Extract("WithLabel",
+                        files = arrayOf("**.test"),
+                        labelName = "With Label")
+        )
+
+        assertEquals(
+                ExtractLabel(
+                        "WithLabel",
+                        text = null,
+                        hint = null,
+                        icon = null,
+                        url = null,
+                        style = null,
+                        badges = arrayOf(),
+                        labelName = "With Label"),
                 label
         )
     }

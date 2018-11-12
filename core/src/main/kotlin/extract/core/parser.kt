@@ -28,6 +28,10 @@ private class ExtractInternal {
     var url: String? = null
     var style: String? = null
     var badge: String? = null
+    var label: Boolean? = null
+
+    @JsonProperty("label-name")
+    var labelName: String? = null
 
     override fun toString() =
             "$name, $titlePattern, $messagePattern, $files, $icon, $text, $hint, $url, $style, $badge"
@@ -47,7 +51,8 @@ private class ExtractInternal {
                 hint = hint ?: text,
                 url = url,
                 style = style,
-                badge = badge)
+                badge = badge,
+                labelName = if (label == true || labelName != null) (labelName ?: name) else null)
     }
 }
 

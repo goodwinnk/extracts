@@ -81,7 +81,8 @@ fun Extract.createExtractLabel(matchResult: MatchResult?, values: PredefinedValu
             hint = hint?.rewrite(matchResult, values),
             url = url?.rewrite(matchResult, values),
             style = style,
-            badges = listOfNotNull(badge?.rewrite(matchResult, values)).toTypedArray()
+            badges = listOfNotNull(badge?.rewrite(matchResult, values)).toTypedArray(),
+            labelName = labelName
     )
 }
 
