@@ -1,7 +1,7 @@
 ---
 extracts:
   - name: YouTrack
-    title-pattern: "^.*(KT-\\d+).*$"
+    message-pattern: "^.*(KT-\\d+).*$"
     icon: path
     text: "${1}"
     url: "https://youtrack.jetbrains.com/issue/${1}"
@@ -27,9 +27,24 @@ extracts:
     ]
     style: e4
 
+  - name: Inspections
+    files: [
+      idea/src/org/jetbrains/kotlin/idea/quickfix/**,
+      idea/src/org/jetbrains/kotlin/idea/inspections/**,
+      idea/src/org/jetbrains/kotlin/idea/intentions/**
+    ]
+    style: e4
+
   - name: Compiler
     files: [
       compiler/**
+    ]
+    style: e3
+
+  - name: Backend
+    files: [
+      compiler/backend/**,
+      compiler/ir/**
     ]
     style: e3
 
@@ -77,7 +92,8 @@ extracts:
 
   - name: JS
     files: [
-      js/**
+      js/**,
+      compiler/ir/backend.js/**
     ]
 
   - name: ChangeLog
@@ -93,9 +109,16 @@ extracts:
 
   - name: Build
     files: [
+      "**/build.gradle.kts.**",
       "**/build.gradle.kts",
+      build.gradle.kts.**,
       build.gradle.kts,
+      versions.gradle.kts.**,
+      versions.gradle.kts,
+      buildSrs/**,
+      "**/build.gradle.**",
       "**/build.gradle",
+      build.gradle.*
       build.gradle
     ]
 
@@ -115,8 +138,12 @@ extracts:
       "**.181",
       "**.182",
       "**.183",
+      "**.191",
+      "**.192",
       "**.as31",
       "**.as32",
-      "**.as33"
+      "**.as33",
+      "**.as34",
+      "**.as35"
     ]
 ...
