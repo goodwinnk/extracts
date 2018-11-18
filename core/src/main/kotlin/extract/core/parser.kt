@@ -52,7 +52,11 @@ private class ExtractInternal {
                 url = url,
                 style = style,
                 badge = badge,
-                labelName = if (label == true || labelName != null) (labelName ?: name) else null)
+                labelName = if ((label != false) && (label == true || labelName != null || !files.isEmpty()))
+                    (labelName ?: name)
+                else
+                    null
+        )
     }
 }
 

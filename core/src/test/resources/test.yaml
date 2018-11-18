@@ -25,3 +25,7 @@ extracts:
 
   - name: WithWordsLabel
     label-name: With Words Label
+
+  - name: WithFilesButNoLabel
+    files: [idea/**]
+    label: false

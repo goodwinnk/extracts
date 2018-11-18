@@ -7,7 +7,7 @@ class ParserKtTest {
     @Test
     fun example() {
         val extracts = parseFile("src/test/resources/test.yaml").extracts
-        assertEquals(7, extracts.size)
+        assertEquals(8, extracts.size)
 
         assertEquals(
                 Extract("YouTrack", "^.*(KT-\\d+).*$", null, arrayOf(),
@@ -15,7 +15,7 @@ class ParserKtTest {
                 extracts[0])
 
         assertEquals(
-                Extract("IDE", null, null, arrayOf("idea/**")),
+                Extract("IDE", null, null, arrayOf("idea/**"), labelName = "IDE"),
                 extracts[1]
         )
 
@@ -48,6 +48,13 @@ class ParserKtTest {
                         titlePattern = null, messagePattern = null,
                         files = arrayOf(), badge = null, labelName = "With Words Label"),
                 extracts[6]
+        )
+
+        assertEquals(
+                Extract("WithFilesButNoLabel",
+                        titlePattern = null, messagePattern = null,
+                        files = arrayOf("idea/**"), badge = null, labelName = null),
+                extracts[7]
         )
     }
 }
