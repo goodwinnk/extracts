@@ -16,9 +16,19 @@ extracts:
       plugins/uast-kotlin/**
     ]
 
+  - name: J2K
+    files: [
+      j2k/**
+    ]
+
   - name: Lint
     files: [
       plugins/lint/**
+    ]
+
+  - name: Plugins
+    files: [
+      plugins/**
     ]
 
   - name: IDE
@@ -26,6 +36,12 @@ extracts:
       idea/**
     ]
     style: e4
+
+  - name: Completion
+    files: ["**/idea-completion/**"]
+
+  - name: Fomatter
+    files: ["**/formatter/**"]
 
   - name: Inspections
     files: [
@@ -48,7 +64,7 @@ extracts:
     ]
     style: e3
 
-  - name: spec
+  - name: Spec
     files: [
       compiler/tests-spec**
     ]
@@ -65,6 +81,7 @@ extracts:
       libraries/stdlib/**
     ]
     style: e5
+    label-name: Standard Library
 
   - name: builtins
     files: [
@@ -72,7 +89,7 @@ extracts:
     ]
     style: e5
 
-  - name: kapt3
+  - name: Kapt
     files: [
       plugins/kapt3/**
     ]
@@ -128,6 +145,11 @@ extracts:
       .idea/**,
       .gitignore,
       .gitattributes
+    ]
+
+  - name: Documentation
+    files: [
+      "**.md"
     ]
 
   - name: bunch
