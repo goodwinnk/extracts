@@ -9,8 +9,24 @@ fun assignLabels(commitInfos: List<CommitInfo>, extracts: Extracts): Map<String,
     )
 }
 
+fun assignLabels(commitInfos: List<CommitInfo>, extractsConfig: ExtractsConfig): Map<String, List<ExtractLabel>> {
+    val dirsForEngine = DirsForEngine(extractsConfig.dirs)
+
+    return commitInfos.associateBy(
+            keySelector = { commitInfo -> commitInfo.hash },
+            valueTransform = { commitInfo -> assignLabels(commitInfo, extractsConfig.extracts, dirsForEngine) }
+    )
+}
+
 fun assignLabels(commitInfo: CommitInfo, extracts: Extracts): List<ExtractLabel> {
     return extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
+}
+
+private fun assignLabels(commitInfo: CommitInfo, extracts: Extracts, dirsForEngine: DirsForEngine): List<ExtractLabel> {
+    val fromExtracts = extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
+    val fromDirs = dynamicFileLabels(commitInfo, dirsForEngine)
+
+    return fromExtracts + fromDirs
 }
 
 fun matchedPaths(commitInfo: CommitInfo, extracts: Extracts, labels: Array<ExtractLabel>): List<FileActionMatch> {
@@ -29,6 +45,8 @@ fun matchedPaths(commitInfo: CommitInfo, extracts: Extracts, labels: Array<Extra
 }
 
 fun assignLabel(commitInfo: CommitInfo, extract: Extract): ExtractLabel? {
+    if (extract.files.isNotEmpty()) return null
+
     val values = MutablePredefinedVariables(commitInfo)
 
     run {
@@ -154,4 +172,3 @@ private class MutablePredefinedVariables(val commitInfo: CommitInfo) : Predefine
 
     override var matches by Delegates.notNull<Int>()
 }
-

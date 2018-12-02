@@ -6,11 +6,11 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import java.io.File
 
 
-fun parseFile(path: String): Extracts {
+fun parseFile(path: String): ExtractsConfig {
     val mapper = ObjectMapper(YAMLFactory())
-    val extractsInternal = mapper.readValue(File(path), ExtractsInternal::class.java)
+    val extractsInternal = mapper.readValue(File(path), ExtractsConfigInternal::class.java)
 
-    return extractsInternal.toExtracts()
+    return extractsInternal.toExtractsConfig()
 }
 
 private class ExtractInternal {
@@ -60,16 +60,46 @@ private class ExtractInternal {
     }
 }
 
-private class ExtractsInternal : Iterable<ExtractInternal> {
+private class ExtractsConfigInternal {
     var extracts: List<ExtractInternal>? = null
+    var dirs: DirsConfig? = null
 
-    override fun iterator() = extracts!!.iterator()
-    override fun toString() = extracts.toString()
-
-    fun toExtracts(): Extracts {
+    private fun getExtracts(): Extracts {
         if (extracts == null) {
             return Extracts(listOf())
         }
         return Extracts(extracts!!.map { it.toExtract() })
+    }
+
+    private fun getDirsConfig(): Dirs {
+        if (dirs == null) {
+            return Dirs()
+        }
+
+        return dirs!!.toDirs()
+    }
+
+    fun toExtractsConfig(): ExtractsConfig {
+        return ExtractsConfig(getExtracts(), getDirsConfig())
+    }
+}
+
+private class DirsConfig {
+    var skip: Array<String>? = null
+    var drop: Array<String>? = null
+    var terminate: Array<String>? = null
+    var rename: Array<String>? = null
+
+    @JsonProperty("upper-case")
+    var upperCase: Array<String>? = null
+
+    fun toDirs(): Dirs {
+        return Dirs(
+                skip = skip ?: arrayOf(),
+                drop = drop ?: arrayOf(),
+                terminate = terminate ?: arrayOf(),
+                rename = rename ?: arrayOf(),
+                upperCase = upperCase ?: arrayOf()
+        )
     }
 }

@@ -6,7 +6,8 @@ import org.junit.Test
 class ParserKtTest {
     @Test
     fun example() {
-        val extracts = parseFile("src/test/resources/test.yaml").extracts
+        val extractsConfig = parseFile("src/test/resources/test.yaml")
+        val extracts = extractsConfig.extracts.extracts
         assertEquals(8, extracts.size)
 
         assertEquals(
@@ -55,6 +56,19 @@ class ParserKtTest {
                         titlePattern = null, messagePattern = null,
                         files = arrayOf("idea/**"), badge = null, labelName = null),
                 extracts[7]
+        )
+
+        val dirs = extractsConfig.dirs
+
+        assertEquals(
+                Dirs(
+                        skip = arrayOf("one", "two"),
+                        drop = arrayOf("three", "four"),
+                        terminate = arrayOf("five"),
+                        rename = arrayOf("six", "seven"),
+                        upperCase = arrayOf("eight")
+                ),
+                dirs
         )
     }
 }

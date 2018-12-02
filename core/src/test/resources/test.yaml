@@ -29,3 +29,18 @@ extracts:
   - name: WithFilesButNoLabel
     files: [idea/**]
     label: false
+
+dirs:
+  skip: ["one", "two"]
+
+  drop: ["three", "four"]
+
+  terminate: [
+    "five"
+  ]
+
+  rename: [
+    "six", "seven"
+  ]
+
+  upper-case: ["eight"]

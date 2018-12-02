@@ -127,7 +127,54 @@ object PredefinedVariables {
     const val MATCHES = "matches"
 }
 
+class ExtractsConfig(
+    val extracts: Extracts,
+    val dirs: Dirs
+)
+
 data class Extracts(val extracts: List<Extract>)
+
+class Dirs(
+        val skip: Array<String> = arrayOf(),
+        val drop: Array<String> = arrayOf(),
+        val terminate: Array<String> = arrayOf(),
+        val rename: Array<String> = arrayOf(),
+        val upperCase: Array<String> = arrayOf()
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as Dirs
+
+        if (!skip.contentEquals(other.skip)) return false
+        if (!drop.contentEquals(other.drop)) return false
+        if (!terminate.contentEquals(other.terminate)) return false
+        if (!rename.contentEquals(other.rename)) return false
+        if (!upperCase.contentEquals(other.upperCase)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = skip.contentHashCode()
+        result = 31 * result + drop.contentHashCode()
+        result = 31 * result + terminate.contentHashCode()
+        result = 31 * result + rename.contentHashCode()
+        result = 31 * result + upperCase.contentHashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "Dirs(" +
+                "skip=[${skip.joinToString()}], " +
+                "drop=[${drop.joinToString()}], " +
+                "terminate=[${terminate.joinToString()}], " +
+                "rename=[${rename.joinToString()}], " +
+                "upperCase=[${upperCase.joinToString()}]" +
+                ")"
+    }
+}
 
 data class CommitInfo(
         val hash: String,

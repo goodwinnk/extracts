@@ -1,0 +1,84 @@
+---
+extracts:
+  - name: YouTrack
+    message-pattern: "^.*(KT-\\d+).*$"
+    icon: path
+    text: "${1}"
+    url: "https://youtrack.jetbrains.com/issue/${1}"
+    style: e6
+
+  - name: Minor
+    title-pattern: "^(Minor|Refactoring):.*"
+    icon: path1
+
+  - name: ChangeLog
+    icon: path3
+    files: [
+      ChangeLog.md
+    ]
+
+  - name: Build
+    files: [
+      "**/build.gradle.kts.**",
+      "**/build.gradle.kts",
+      build.gradle.kts.**,
+      build.gradle.kts,
+      versions.gradle.kts.**,
+      versions.gradle.kts,
+      buildSrs/**,
+      "**/build.gradle.**",
+      "**/build.gradle",
+      build.gradle.*
+      build.gradle
+    ]
+
+  - name: Documentation
+    files: [
+      "**.md"
+    ]
+
+  - name: bunch
+    badge: "${matches}"
+    style: e4
+    files: [
+      "**.173",
+      "**.181",
+      "**.182",
+      "**.183",
+      "**.191",
+      "**.192",
+      "**.as31",
+      "**.as32",
+      "**.as33",
+      "**.as34",
+      "**.as35"
+    ]
+
+dirs:
+  skip: ["src", "org", "jetbrains", "kotlin", "testData", "test", "main", "tests"]
+
+  drop: ["Kotlin", "Impl"]
+
+  terminate: [
+    "testData",
+    "inspectionsLocal",
+    "idea/testData/quickfix",
+    "libraries/tools/kotlin-gradle-plugin-integration-tests/src/test/resources/testProject"
+  ]
+
+  rename: [
+    "META-INF", "META-INF",
+    "stdlib", "Standard Library",
+    "cidr-plugin", "CIDR",
+    "clion-plugin", "CLion",
+    "idea-completion", "Completion",
+    "kotlin-gralde-plugin", "Gradle Plugin",
+    "expectactual", "Expect Actual",
+    "ir.psi2ir", "PSI to IR"
+  ]
+
+  upper-case: [
+    "ui", "ir", "js", "fir", "ide", "psi", "io", "mpp", "uast", "j2k", "jvm", "cli",
+    "jdk", "jdk7", "jdk8", "jre", "jre7", "jre8", "idea"
+  ]
+...

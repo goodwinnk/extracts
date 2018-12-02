@@ -40,7 +40,7 @@ fun logToHtml(generateOptions: GenerateOptions): LogToHtml {
 
     for (commit in commits) {
         val labels = labelsMapping[commit.hash] ?: emptyList()
-        val fileActionMatches = matchedPaths(commit, extracts, labels.toTypedArray())
+        val fileActionMatches = matchedPaths(commit, extracts.extracts, labels.toTypedArray())
 
         val tagsHtml = labels.joinToString(separator = "\n") { label ->
             val matchedPaths = fileActionMatches.filter { it.labels.contains(label) }.map { it.fileAction.path }.toSet()
