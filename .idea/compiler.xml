@@ -30,6 +30,8 @@
       <module name="demo_test" target="1.8" />
       <module name="extract_main" target="1.8" />
       <module name="extract_test" target="1.8" />
+      <module name="pull-requests_main" target="1.8" />
+      <module name="pull-requests_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
