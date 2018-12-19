@@ -9,27 +9,29 @@ fun main(args: Array<String>) {
     // Resolve? 1959 -> Compiler
     // IDL2K -> Build 1950
 
-    val extracts = parseFile("demo/src/main/resources/kotlin.yaml")
-    val labeledExtracts = Extracts(extracts.extracts.extracts.filter { it.labelName != null })
+    val extractsConfig = parseFile("demo/src/main/resources/kotlin-new.yaml")
 
     val connect = GitHub.connect()
     val repository = connect.getRepository("JetBrains/kotlin")
 
 
-    val skip: Set<Int> = setOf(1021, 1182)
+    val skip: Set<Int> = setOf(1998, 1593)
     val prs = repository.queryPullRequests()
             .state(GHIssueState.OPEN)
             .list().iterator().asSequence()
 //            .filter { it.number == 1938 }
-            .filter { it.number !in skip }
-            .filter { it.labels.isEmpty() }
+            .filter { it.number !in skip
+            }
+
+            .filter { "Refactoring" in it.labels.mapTo(HashSet()) { it.name } }
 
 
     val finalLabels = setOf(
             "Inspections",
             "IDEA",
             "Completion",
-            "Backend"
+            "Backend",
+            "Compiler"
 //            "J2K"
 //            "Compiler",
     )
@@ -45,7 +47,7 @@ fun main(args: Array<String>) {
     )
 
     for (pr in prs) {
-        val labels = getLabels(labeledExtracts, pr.fetchCommitInfos())
+        val labels = getLabels(extractsConfig, pr.fetchCommitInfos())
                 .map {
                     val newName = map[it.name]
                     if (newName != null) {
@@ -90,15 +92,9 @@ fun main(args: Array<String>) {
     }
 }
 
-private fun getLabels(labeledExtracts: Extracts, commitInfos: List<CommitInfo>): LinkedHashSet<ExtractLabel> {
-    val labels = LinkedHashSet<ExtractLabel>()
-
-    for (commitInfo in commitInfos) {
-        val commitLabels = assignLabels(commitInfo, labeledExtracts)
-        labels.addAll(commitLabels)
-    }
-
-    return labels
+private fun getLabels(extractsConfig: ExtractsConfig, commitInfos: List<CommitInfo>): Collection<ExtractLabel> {
+    val assignLabels = assignLabels(commitInfos, extractsConfig)
+    return assignLabels.values.flatten().toSet().sortedBy { it.badges.firstOrNull() ?: "0" }
 }
 
 private fun GHPullRequest.fetchCommitInfos(): List<CommitInfo> {
