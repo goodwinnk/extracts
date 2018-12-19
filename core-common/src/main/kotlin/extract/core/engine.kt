@@ -22,6 +22,10 @@ fun assignLabels(commitInfo: CommitInfo, extracts: Extracts): List<ExtractLabel>
     return extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
 }
 
+fun assignLabels(commitInfo: CommitInfo, extractsConfig: ExtractsConfig): List<ExtractLabel> {
+    return assignLabels(listOf(commitInfo), extractsConfig)[commitInfo.hash]!!
+}
+
 private fun assignLabels(commitInfo: CommitInfo, extracts: Extracts, dirsForEngine: DirsForEngine): List<ExtractLabel> {
     val fromExtracts = extracts.extracts.mapNotNull { assignLabel(commitInfo, it) }
     val fromDirs = dynamicFileLabels(commitInfo, dirsForEngine)
