@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "another-rest-client": "^0.3.5",
-    "js-yaml": "~3.10.0",
+    "js-yaml": "~3.13.1",
     "kotlin": "^1.2.21"
   },
   "devDependencies": {
