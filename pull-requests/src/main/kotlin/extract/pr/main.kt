@@ -20,10 +20,10 @@ fun main(args: Array<String>) {
             .state(GHIssueState.OPEN)
             .list().iterator().asSequence()
 //            .filter { it.number == 1938 }
-            .filter { it.number !in skip
-            }
+            .filter { it.number !in skip }
+            .filter { it.labels.isEmpty() }
 
-            .filter { "Refactoring" in it.labels.mapTo(HashSet()) { it.name } }
+//            .filter { "Refactoring" in it.labels.mapTo(HashSet()) { it.name } }
 
 
     val finalLabels = setOf(
@@ -79,7 +79,6 @@ fun main(args: Array<String>) {
         println("  New: $newLabels")
 
         if (!newLabels.isEmpty()) {
-
             val assignLabels = newLabels.filter { it in finalLabels }
             if (!assignLabels.isEmpty()) {
 
