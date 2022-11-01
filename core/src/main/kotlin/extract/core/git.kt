@@ -20,7 +20,7 @@ private val COMMON_DIR_FILE_NAME = "commondir"
 
 private fun configureRepository(path: String): Repository {
     val pathFile = File(path)
-    val gitFile = if (pathFile.name == Constants.DOT_GIT) {
+    val gitFile = if (pathFile.name == Constants.DOT_GIT || pathFile.name.endsWith(Constants.DOT_GIT)) {
         pathFile
     } else {
         File(pathFile.absolutePath, Constants.DOT_GIT)
@@ -64,6 +64,10 @@ private fun configureRepository(path: String): Repository {
 }
 
 private val Repository.fullBranchWithWorkTree: String get() {
+    if (isBare) {
+        return fullBranch
+    }
+
     if (workTree == null) {
         return fullBranch
     }

@@ -1,6 +1,6 @@
 applyKotlin()
 
 dependencies {
-    compile group: 'org.kohsuke', name: 'github-api', version: '1.94'
-    compile project(":core")
+    implementation group: 'org.kohsuke', name: 'github-api', version: '1.94'
+    implementation project(":core")
 }

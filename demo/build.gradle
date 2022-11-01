@@ -1,5 +1,13 @@
+plugins {
+    id 'application'
+}
+
 applyKotlin()
 
 dependencies {
-    compile project(":cli")
+    implementation project(":cli")
+}
+
+application {
+    mainClass = 'extract.demo.DemoGeneratorKt'
 }

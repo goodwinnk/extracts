@@ -3,6 +3,7 @@ package extract.demo
 import extract.cli.GenerateOptions
 import extract.cli.logToHtml
 import java.io.File
+import java.io.IOException
 
 private const val OUT_PATH = "demo/out/extracts"
 private const val RESOURCES_PATH = "demo/src/main/resources"
@@ -15,6 +16,7 @@ fun main(args: Array<String>) {
         gitFile.readLines().asSequence()
                 .map { it.trim() }
                 .filter { !it.isEmpty() }
+                .filter { !it.trim().startsWith("#") }
                 .map { line ->
                     val params = line.split(" ").map { it.trim() }
                     if (params.size !in 3..4) {
@@ -47,7 +49,7 @@ fun main(args: Array<String>) {
 
 private fun generateForRepository(repository: DemoRepository) {
     val repoOutDir = File(OUT_PATH, repository.name)
-    repoOutDir.mkdir()
+    repoOutDir.mkdirs()
 
     val htmlOutput = logToHtml(
             GenerateOptions(
@@ -60,6 +62,10 @@ private fun generateForRepository(repository: DemoRepository) {
     )
 
     val logOutFile = File(repoOutDir, "log.html")
-    logOutFile.createNewFile()
+    try {
+        logOutFile.createNewFile()
+    } catch (e: IOException) {
+        throw IOException("Can't create $logOutFile", e)
+    }
     logOutFile.writeText(htmlOutput.htmlText)
 }
